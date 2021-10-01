@@ -1,0 +1,53 @@
+._local {
+	display: flex;
+	flex-direction: column;
+
+	:global {
+            .ant-select{
+                  width: 100%;
+            }
+
+            .btn_add{
+                  width: 120px;
+            }
+            
+		.more_wrap {
+			display: none;
+			margin-bottom: 20px;
+			padding: 30px;
+			padding-bottom: 14px;
+			border: 1px solid var(--color_border);
+			border-radius: 6px;
+			background-color: var(--color_bg_menu);
+			opacity: 0;
+
+			&.opacity {
+				opacity: 1;
+			}
+
+			&.display {
+				display: flex;
+			}
+
+			.title_wrap {
+				margin-bottom: 16px;
+
+				.title {
+					color: var(--color_title);
+					font-weight: 600;
+					font-size: 14px;
+				}
+
+				.icon_wrap {
+					width: 24px;
+					height: 24px;
+					border-radius: 50%;
+
+					&:hover {
+						background-color: var(--color_bg_nav);
+					}
+				}
+			}
+		}
+	}
+}

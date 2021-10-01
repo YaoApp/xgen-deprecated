@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from 'react'
-import { connect } from 'umi'
+import { connect, useHistory } from 'umi'
 import store from 'store'
 import { install } from '@/utils/pwa'
 import Nav from './components/Nav'
@@ -13,6 +13,11 @@ if (process.env.NODE_ENV === 'production') install()
 const Index = (props: IProps) => {
 	const { dispatch, children, loading, app_data } = props
 	const { menu, current_nav, current_menu, visible_menu } = app_data
+	const {
+		location: { pathname }
+	} = useHistory()
+
+	if (pathname === '/login') return children
 
 	useEffect(() => {
 		dispatch({

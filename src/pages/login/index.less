@@ -1,0 +1,101 @@
+._local {
+	display: flex;
+	width: 100vw;
+	height: 100vh;
+	background-color: var(--color_bg_nav);
+
+	:global {
+		.bg_wrap {
+			width: 100% / 12 * 8;
+			height: 100%;
+			background-color: var(--color_bg);
+
+			.bg {
+				max-width: 60%;
+				width: 60%;
+			}
+		}
+
+		.login_wrap {
+			width: 100% / 12 * 4;
+			height: 100%;
+
+			.login {
+				margin: 0 auto;
+                        margin-top: -60px;
+				padding: 0 48px;
+				max-width: 420px;
+			}
+
+			.logo_wrap {
+				margin-bottom: 60px;
+
+				.logo {
+					max-width: 50px;
+				}
+			}
+
+			.title_wrap {
+				margin-bottom: 48px;
+
+				.title {
+					margin-bottom: 6px;
+					color: var(--color_main);
+					font-weight: 400;
+					font-size: 28px;
+				}
+
+				.desc {
+					color: var(--color_page_title);
+					font-weight: 300;
+				}
+			}
+
+			.form_wrap {
+                        .input_wrap {
+					margin-bottom: 16px;
+				}
+
+				.ant-input-affix-wrapper {
+                              position: relative;
+                              box-sizing: border-box;
+					height: 60px !important;
+                              border: 1px solid transparent !important;
+					background-color: var(--color_bg_menu);
+
+                              &::after{
+                                    position: absolute;
+                                    top: 15px;
+                                    left: 48px;
+                                    content: '手机号';
+                              }
+
+                              &-focused{
+                                    border: 1px solid var(--color_main) !important;
+                                    box-shadow: none !important;
+
+                                    i{
+                                          color: var(--color_main) !important;
+                                    }
+                              }
+
+                              i{
+                                    color: #cecece !important;
+                                    transition: color ease 0.3s;
+                              }
+
+					.ant-input {
+						background-color: transparent;
+					}
+				}
+
+				.btn_login {
+					margin-top: 24px;
+					width: 140px;
+					height: 46px;
+                              font-weight: 600;
+				}
+			}
+		}
+	}
+}

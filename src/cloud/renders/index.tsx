@@ -1,1 +1,1 @@
-export { default as Getter } from './Getter'
+export { default as List } from './List'

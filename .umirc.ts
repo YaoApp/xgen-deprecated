@@ -67,7 +67,7 @@ export default defineConfig({
 	},
 	proxy: {
 		'/api': {
-			target: '',
+			target: 'http://local.iqka.com:5099',
 			changeOrigin: true
 		}
 	}
