@@ -1,0 +1,54 @@
+.no_wrap {
+	white-space: nowrap;
+}
+
+.clickable {
+	transition: transform ease 0.12s;
+
+	&:active {
+		transform: scale(0.9);
+	}
+}
+
+.custom_tooltip {
+	border-radius: 6px;
+	background-color: var(--color_bg_nav);
+	font-size: 12px;
+	line-height: 1;
+
+	.label {
+		padding: 0 12px;
+		height: 30px;
+		border-bottom: 1px solid var(--color_border);
+	}
+
+	.value_wrap {
+		padding: 0 12px;
+		height: 30px;
+
+		.dot {
+			margin-right: 6px;
+			width: 12px;
+			height: 12px;
+			border-radius: 50%;
+		}
+
+		.value {
+			color: var(--color_title);
+			font-weight: 700;
+		}
+	}
+}
+
+.custom_legend {
+	.dot {
+		margin-right: 6px;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+	}
+
+	.value {
+		font-size: 12px;
+	}
+}

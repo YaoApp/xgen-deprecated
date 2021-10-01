@@ -1,0 +1,31 @@
+._local {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	display: flex;
+	overflow-y: hidden;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 80px;
+	height: 100vh;
+	background-color: var(--color_bg_nav);
+	color: white;
+
+	:global {
+		.nav_item {
+			height: 64px;
+
+			&.active {
+				i {
+					color: var(--color_main) !important;
+				}
+			}
+
+			i {
+				color: rgba(255, 255, 255, 0.8) !important;
+				transition: color ease 0.3s;
+			}
+		}
+	}
+}

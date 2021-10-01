@@ -1,0 +1,25 @@
+._local {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	:global {
+		.option_item {
+			height: 64px;
+
+			i {
+				color: rgba(255, 255, 255, 0.8) !important;
+			}
+
+			.ant-badge {
+				.ant-badge-dot {
+					width: 14px;
+					height: 14px;
+					border: 2px solid var(--color_bg_nav);
+					background-color: var(--color_main);
+					box-shadow: none;
+				}
+			}
+		}
+	}
+}
