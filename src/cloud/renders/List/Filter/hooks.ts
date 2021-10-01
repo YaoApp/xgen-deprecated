@@ -27,7 +27,7 @@ export const useVisibleMore = () => {
 }
 
 export const useFilters = (data: any) => {
-	if (!data.filters) return
+	if (!data.filters) return []
 
 	const _filters = data.filters
 	const _layouts = data.list.layout.filters
@@ -40,6 +40,6 @@ export const useFilters = (data: any) => {
 
 		return total
 	}, [])
-      
+
 	return filters
 }
