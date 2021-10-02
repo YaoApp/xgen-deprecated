@@ -1,10 +1,3 @@
-import { Page } from '@/components'
-import styles from './index.less'
+import { Redirect } from 'umi'
 
-export default function IndexPage() {
-	return (
-		<Page title='数据看板'>
-			<h1 className={styles.title}>Page index</h1>
-		</Page>
-	)
-}
+export default () => <Redirect to='/kanban'></Redirect>

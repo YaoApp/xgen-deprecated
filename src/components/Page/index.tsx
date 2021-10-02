@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { connect } from 'umi'
 import { Tooltip } from 'antd'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import clsx from 'clsx'
 import { Icon } from '@/components'
 import styles from './index.less'
@@ -41,15 +42,11 @@ const Index = (props: IProps) => {
 						className='icon_wrap cursor_point flex justify_center align_center transition_normal clickable'
 						onClick={toggleMenu}
 					>
-						<Icon
-							className='icon_back'
-							name={
-								visible_menu
-									? 'arrow-back-ios-outline'
-									: 'icon-menu'
-							}
-							size={23}
-						></Icon>
+						{visible_menu ? (
+							<MenuFoldOutlined className='icon_fold' />
+						) : (
+							<MenuUnfoldOutlined className='icon_fold' />
+						)}
 					</a>
 					<span className='page_title'>{title}</span>
 				</div>

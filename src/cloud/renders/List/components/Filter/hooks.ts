@@ -26,11 +26,11 @@ export const useVisibleMore = () => {
 	return { visible_more, display_more, opacity_more, setVisibleMore }
 }
 
-export const useFilters = (data: any) => {
-	if (!data.filters) return []
+export const useFilters = (setting: any) => {
+	if (!setting.filters) return []
 
-	const _filters = data.filters
-	const _layouts = data.list.layout.filters
+	const _filters = setting.filters
+	const _layouts = setting.list.layout.filters
 
 	const filters = _layouts.reduce((total: Array<any>, item: any) => {
 		total.push({

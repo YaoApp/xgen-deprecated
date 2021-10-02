@@ -9,20 +9,20 @@ export const menu = [
 		id: 2,
 		name: '可信云云服务库',
 		icon: 'icon-cloud',
-		path: '/service/list',
+		path: '/list/service',
 		blocks: true,
 		children: [
 			{
 				id: 11,
 				name: '云服务库',
-				path: '/service/list',
+				path: '/list/service',
 				icon: 'icon-list',
 				visible_menu: true
 			},
 			{
 				id: 12,
 				name: '添加服务',
-				path: '/service/create',
+				path: '/form/service',
 				icon: 'icon-plus',
 				visible_menu: false
 			}

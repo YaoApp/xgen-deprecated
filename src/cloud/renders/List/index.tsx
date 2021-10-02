@@ -1,14 +1,14 @@
 import { Page } from '@/components'
-import Filter from './Filter'
-import Table from './Table'
+import Filter from './components/Filter'
+import Table from './components/Table'
 
-const Index = (data: any) => {
-      if (!data.decription) return null
-      
+const Index = ({ setting = {}, list, pagination }: any) => {
+	if (!setting.decription) return null
+
 	return (
-		<Page title={data.decription}>
-			<Filter data={data}></Filter>
-			<Table data={data}></Table>
+		<Page title={setting.decription}>
+			<Filter setting={setting}></Filter>
+			<Table {...{ setting, list, pagination }}></Table>
 		</Page>
 	)
 }

@@ -74,8 +74,6 @@ const Index = () => {
 					</Pie>
 					<Tooltip
 						content={({ payload }) => {
-							console.log(payload)
-
 							return (
 								<div className='custom_tooltip flex flex_column'>
 									<span className='label flex align_center'>

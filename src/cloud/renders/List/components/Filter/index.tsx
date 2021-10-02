@@ -1,16 +1,51 @@
-import { Row, Col, Button, Tooltip } from 'antd'
+import { useEffect } from 'react'
+import { Row, Col, Button, Form } from 'antd'
+import { history, useParams } from 'umi'
 import clsx from 'clsx'
 import { Icon } from '@/components'
 import Dynamic from '@/cloud/core'
 import { useVisibleMore, useFilters } from './hooks'
 import styles from './index.less'
 
-const Index = ({ data }: any) => {
-	const { visible_more, display_more, opacity_more, setVisibleMore } = useVisibleMore()
-	const filters = useFilters(data)
+const { useForm } = Form
+
+const Index = ({ setting }: any) => {
+	const params = useParams<{ name: string }>()
+	const [form] = useForm()
+	const { getFieldsValue, setFieldsValue, resetFields } = form
+	const { display_more, opacity_more, setVisibleMore } = useVisibleMore()
+	const filters = useFilters(setting)
+	const query = history.location.query
+
+	useEffect(() => {
+		if (!Object.keys(query as any).length) return resetFields()
+
+		setFieldsValue(query)
+	}, [query])
+
+	const onFinish = (v: any) => {
+		history.push({
+			pathname: history.location.pathname,
+			query: {
+				...query,
+				...v
+			}
+		})
+	}
+
+	const onReset = () => {
+		resetFields()
+		onFinish(getFieldsValue())
+	}
 
 	return (
-		<div className={styles._local}>
+		<Form
+			className={styles._local}
+			form={form}
+			name={`form_filter_${history.location.pathname}`}
+			onFinish={onFinish}
+			onReset={onReset}
+		>
 			<Row gutter={16} justify='space-between' style={{ marginBottom: 20 }}>
 				{filters.map((item: any, index: number) => (
 					<Col span={item.span} key={index}>
@@ -19,7 +54,10 @@ const Index = ({ data }: any) => {
 							type='form'
 							props={{
 								type: item.input.type,
-								props: item.input.props
+								props: {
+									...item.input.props,
+									name: item.bind
+								}
 							}}
 						></Dynamic>
 					</Col>
@@ -28,12 +66,16 @@ const Index = ({ data }: any) => {
 					<Button
 						className='w_100 flex justify_center align_center'
 						type='primary'
+						htmlType='submit'
 					>
 						搜索
 					</Button>
 				</Col>
 				<Col span={2}>
-					<Button className='w_100 flex justify_center align_center'>
+					<Button
+						className='w_100 flex justify_center align_center'
+						htmlType='reset'
+					>
 						重置
 					</Button>
 				</Col>
@@ -54,8 +96,13 @@ const Index = ({ data }: any) => {
 							className='btn_add w_100 flex justify_center align_center'
 							type='primary'
 							icon={<Icon name='icon-plus' size={15}></Icon>}
+							onClick={() =>
+								history.push({
+									pathname: `/form/${params.name}`
+								})
+							}
 						>
-							{data.list.actions.create.props.label}
+							{setting.list.actions.create.props.label}
 						</Button>
 					</div>
 				</Col>
@@ -78,7 +125,7 @@ const Index = ({ data }: any) => {
 				</div>
 				<Row gutter={16} style={{ marginBottom: 16 }}></Row>
 			</div>
-		</div>
+		</Form>
 	)
 }
 
