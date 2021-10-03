@@ -1,25 +1,11 @@
-import { history } from 'umi'
+import { message } from 'antd'
 import modelExtend from 'dva-model-extend'
 import qs from 'query-string'
 import pageModel from '@/utils/model'
-import { getSetting } from '@/services/app'
-import { search } from './service'
-import type { Model } from '@/typings/dva'
-
-export interface IModelList {
-	setting: any
-	list: Array<any>
-	pagination: {
-		current: number
-		pageSize: number
-		total: number
-		showSizeChanger: boolean
-	}
-}
+import { getSetting, search, save } from '@/services/app'
+import type { IModelList } from 'umi'
 
 export default modelExtend(pageModel, {
-	namespace: history.location.pathname,
-
 	state: {
 		setting: {},
 		list: [],
@@ -55,6 +41,13 @@ export default modelExtend(pageModel, {
 					}
 				}
 			})
+		},
+		*save({ payload: { name, data } }, { call }) {
+			const res = yield call(save, { name, data })
+
+			if (res && res.error) {
+				message.error('操作失败')
+			}
 		}
 	}
-}) as Model
+})

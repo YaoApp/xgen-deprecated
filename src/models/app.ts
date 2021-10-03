@@ -17,7 +17,7 @@ export default {
 		menu,
 		current_nav: store.get('current_nav') || 0,
 		current_menu: store.get('current_menu') || 0,
-		visible_menu: false
+		visible_menu: true
 	} as IModelApp,
 
 	subscriptions: {
@@ -35,3 +35,19 @@ export default {
 		}
 	}
 } as Model
+
+export interface IModelList {
+	setting: any
+	list: Array<any>
+	pagination: {
+		current: number
+		pageSize: number
+		total: number
+		showSizeChanger: boolean
+	}
+}
+
+export interface IModelForm {
+	setting: any
+	data: any
+}

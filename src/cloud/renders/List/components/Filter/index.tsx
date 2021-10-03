@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Row, Col, Button, Form } from 'antd'
-import { history, useParams } from 'umi'
+import { history, useParams, getDvaApp } from 'umi'
 import clsx from 'clsx'
 import { Icon } from '@/components'
 import Dynamic from '@/cloud/core'
@@ -96,11 +96,16 @@ const Index = ({ setting }: any) => {
 							className='btn_add w_100 flex justify_center align_center'
 							type='primary'
 							icon={<Icon name='icon-plus' size={15}></Icon>}
-							onClick={() =>
-								history.push({
-									pathname: `/form/${params.name}`
+							onClick={() => {
+								getDvaApp()._store.dispatch({
+									type: 'app/updateState',
+									payload: { visible_menu: false }
 								})
-							}
+
+								history.push({
+									pathname: `/form/${params.name}/0`
+								})
+							}}
 						>
 							{setting.list.actions.create.props.label}
 						</Button>

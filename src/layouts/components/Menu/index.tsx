@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Link } from 'umi'
+import { Link, useHistory } from 'umi'
 import { Input } from 'antd'
 import { useBoolean, useDebounceEffect } from 'ahooks'
 import clsx from 'clsx'
@@ -10,21 +10,14 @@ import type { IMenuItem } from '@/typings/menu'
 import type { IPropsMenu } from '../../type'
 
 const Index = (props: IPropsMenu) => {
-	const {
-		visible,
-		blocks,
-		title,
-		items = [],
-		current_menu,
-		setCurrentMenu,
-		setVisibleMenu
-	} = props
+	const { visible, blocks, title, items = [], setCurrentMenu, setVisibleMenu } = props
+	const history = useHistory()
 	const [visible_input, { toggle }] = useBoolean(false)
 	const [current_items, setCurrentItems] = useState<IPropsMenu['items']>([])
 	const [input, setInput] = useState('')
 
 	useEffect(() => {
-		if (!items.length) return
+		if (!items.length) return setCurrentItems([])
 
 		setCurrentItems(items)
 	}, [items, visible_input])
@@ -39,8 +32,8 @@ const Index = (props: IPropsMenu) => {
 		{ wait: 300 }
 	)
 
-	const onMenuItem = useCallback((item: IMenuItem) => {
-		setCurrentMenu(item.id)
+	const onMenuItem = useCallback((item: IMenuItem, index: number) => {
+		setCurrentMenu(index)
 		setVisibleMenu(!!item.visible_menu)
 	}, [])
 
@@ -83,11 +76,13 @@ const Index = (props: IPropsMenu) => {
 							<Link
 								className={clsx([
 									'menu_item flex align_center transition_normal',
-									current_menu === item.id ? 'active' : ''
+									item.path === history.location.pathname
+										? 'active'
+										: ''
 								])}
 								to={item.path}
 								key={index}
-								onClick={() => onMenuItem(item)}
+								onClick={() => onMenuItem(item, index)}
 							>
 								<div className='icon_wrap flex justify_center align_center'>
 									<Icon name={item.icon}></Icon>

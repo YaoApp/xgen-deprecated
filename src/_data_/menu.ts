@@ -3,7 +3,8 @@ export const menu = [
 		id: 0,
 		name: '数据大屏',
 		icon: 'icon-activity',
-		path: '/kanban'
+		path: '/kanban',
+		children: []
 	},
 	{
 		id: 2,
@@ -14,38 +15,15 @@ export const menu = [
 		children: [
 			{
 				id: 11,
-				name: '云服务库',
+				name: '可信云云服务库',
 				path: '/list/service',
 				icon: 'icon-list',
 				visible_menu: true
 			},
 			{
 				id: 12,
-				name: '添加服务',
-				path: '/form/service',
-				icon: 'icon-plus',
-				visible_menu: false
-			}
-		]
-	},
-	{
-		id: 3,
-		name: '错误报告',
-		icon: 'icon-tool',
-		path: '/bug/list',
-		blocks: true,
-		children: [
-			{
-				id: 11,
-				name: '报告列表',
-				path: '/bug/list',
-				icon: 'icon-list',
-				visible_menu: true
-			},
-			{
-				id: 12,
-				name: '创建报告',
-				path: '/bug/create',
+				name: '添加云服务库',
+				path: '/form/service/0',
 				icon: 'icon-plus',
 				visible_menu: false
 			}

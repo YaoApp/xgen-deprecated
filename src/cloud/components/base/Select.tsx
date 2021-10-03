@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { request } from 'umi'
 import { useRequest } from 'ahooks'
 import { Select, Form } from 'antd'
@@ -9,6 +9,7 @@ const { Option } = Select
 
 interface IProps extends SelectProps<any> {
 	name: string
+	label?: string
 	remote: {
 		api: string
 		query: {
@@ -19,9 +20,17 @@ interface IProps extends SelectProps<any> {
 }
 
 const Index = (props: IProps) => {
-	const { data = [] } = useRequest(() =>
-		request(`${props.remote.api}?select=${props.remote.query.select.join(',')}`)
-	)
+	let data: any = []
+
+	if (props.remote) {
+		const res = useRequest(() =>
+			request(`${props.remote.api}?select=${props.remote.query.select.join(',')}`)
+		)
+
+		data = res.data
+	} else {
+		data = props.options
+	}
 
 	const real_props = useMemo(() => {
 		const _props = { ...props }
@@ -36,13 +45,18 @@ const Index = (props: IProps) => {
 	}, [props])
 
 	return (
-		<Item name={props.name} noStyle>
-			<Select {...real_props}>
-				{data.map((item: { id: number; name: string }) => (
-					<Option key={item.id} value={item.id}>
-						{item.name}
-					</Option>
-				))}
+		<Item label={props.label} name={props.name.replace(':', '')} noStyle={!props.label}>
+			<Select {...real_props} placeholder={props.placeholder || `请输入${props.label}`}>
+				{(data || []).map(
+					(item: { id: number; name: string; label?: string; value?: any }) => (
+						<Option
+							key={item.id || item.value}
+							value={String(item.id || item.value)}
+						>
+							{item.name || item.label}
+						</Option>
+					)
+				)}
 			</Select>
 		</Item>
 	)

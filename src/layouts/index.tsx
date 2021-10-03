@@ -36,12 +36,12 @@ const Index = (props: IProps) => {
 				type: 'app/updateState',
 				payload: {
 					current_nav: current,
-					current_menu: menu[current]?.children?.[0].id
+					current_menu: menu[current]?.children?.[0]?.id
 				} as IModelApp
 			})
 
 			store.set('current_nav', current)
-			store.set('current_menu', menu[current]?.children?.[0].id)
+			store.set('current_menu', menu[current]?.children?.[0]?.id)
 		}
 	}
 

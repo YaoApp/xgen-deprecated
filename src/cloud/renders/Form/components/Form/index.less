@@ -59,6 +59,20 @@
 			padding: 40px;
 			padding-top: 20px;
 
+			.form_item_title_wrap {
+				margin-bottom: 20px;
+
+				.section_title {
+					color: var(--color_title);
+					font-weight: 600;
+				}
+
+				.desc {
+					font-weight: 300;
+					font-size: 12px;
+				}
+			}
+
 			.form_item {
 				margin-bottom: 20px;
 
@@ -96,24 +110,10 @@
 
 			.actions_wrap {
 				&.danger {
-					.actions_title_wrap {
+					.form_item_title_wrap {
 						.section_title {
 							color: var(--color_danger);
 						}
-					}
-				}
-
-				.actions_title_wrap {
-					margin-bottom: 20px;
-
-					.section_title {
-						color: var(--color_title);
-						font-weight: 600;
-					}
-
-					.desc {
-						font-weight: 300;
-						font-size: 12px;
 					}
 				}
 

@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { connect } from 'umi'
+import { connect, useParams } from 'umi'
 import { Tooltip } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import clsx from 'clsx'
@@ -16,12 +16,15 @@ interface IProps {
 		icon: string
 		action: string
 	}>
-	visible_menu: IModelApp['visible_menu']
+	app: IModelApp
 	dispatch: Dispatch
 }
 
 const Index = (props: IProps) => {
-	const { children, className, title, options = [], visible_menu, dispatch } = props
+	const { children, className, title, options = [], app, dispatch } = props
+	const { menu, current_nav, current_menu, visible_menu } = app
+
+	const params = useParams<{ id: string }>()
 
 	const toggleMenu = useCallback(() => {
 		dispatch({
@@ -48,7 +51,14 @@ const Index = (props: IProps) => {
 							<MenuUnfoldOutlined className='icon_fold' />
 						)}
 					</a>
-					<span className='page_title'>{title}</span>
+					{params.id ? (
+						<span className='page_title'>
+							{params.id === '0' ? '添加' : '编辑'}
+							{title}
+						</span>
+					) : (
+						<span className='page_title'>{menu[current_nav].name}</span>
+					)}
 				</div>
 				<div className='options_wrap flex align_center'>
 					{options.map((item, index) => (
@@ -73,7 +83,7 @@ const Index = (props: IProps) => {
 }
 
 const getInitialProps = ({ app }: { app: IModelApp }) => ({
-	visible_menu: app.visible_menu
+	app
 })
 
 export default window.$app.memo(connect(getInitialProps)(Index))

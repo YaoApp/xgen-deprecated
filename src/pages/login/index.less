@@ -22,7 +22,7 @@
 
 			.login {
 				margin: 0 auto;
-                        margin-top: -60px;
+				margin-top: -60px;
 				padding: 0 48px;
 				max-width: 420px;
 			}
@@ -52,37 +52,92 @@
 			}
 
 			.form_wrap {
-                        .input_wrap {
+				.input_wrap {
 					margin-bottom: 16px;
+
+					.img_captcha_code {
+						top: 0;
+						right: 0;
+						z-index: 2;
+						box-sizing: border-box;
+						width: 32%;
+						height: 100%;
+						border: 1px solid transparent;
+						border-radius: 6px;
+						background-color: fade(white, 60%);
+						background-size: 100% 100%;
+						background-repeat: no-repeat;
+					}
 				}
 
 				.ant-input-affix-wrapper {
-                              position: relative;
-                              box-sizing: border-box;
+					position: relative;
+					box-sizing: border-box;
 					height: 60px !important;
-                              border: 1px solid transparent !important;
+					border: 1px solid transparent !important;
 					background-color: var(--color_bg_menu);
 
-                              &::after{
-                                    position: absolute;
-                                    top: 15px;
-                                    left: 48px;
-                                    content: '手机号';
-                              }
+					&::after {
+						position: absolute;
+						top: 18px;
+						left: 40px;
+						color: #cecece;
+						transition: all ease 0.3s;
+					}
 
-                              &-focused{
-                                    border: 1px solid var(--color_main) !important;
-                                    box-shadow: none !important;
+					&.input_mobile {
+						&::after {
+							content: '手机号';
+						}
+					}
 
-                                    i{
-                                          color: var(--color_main) !important;
-                                    }
-                              }
+					&.input_password {
+						&::after {
+							content: '密码';
+						}
+					}
 
-                              i{
-                                    color: #cecece !important;
-                                    transition: color ease 0.3s;
-                              }
+					&.input_captcha_code {
+						width: 64%;
+
+						&::after {
+							content: '验证码';
+						}
+					}
+
+					&.has_value {
+						&::after {
+							top: 6px;
+							font-size: 11px;
+						}
+					}
+
+					.ant-input-prefix {
+						i {
+							color: #cecece !important;
+							transition: color ease 0.3s;
+						}
+					}
+
+					.ant-input {
+						margin-bottom: -12px;
+					}
+
+					&-focused {
+						border: 1px solid var(--color_main) !important;
+						box-shadow: none !important;
+
+						&::after {
+							top: 6px;
+							font-size: 11px;
+						}
+
+						.ant-input-prefix {
+							i {
+								color: var(--color_main) !important;
+							}
+						}
+					}
 
 					.ant-input {
 						background-color: transparent;
@@ -93,7 +148,7 @@
 					margin-top: 24px;
 					width: 140px;
 					height: 46px;
-                              font-weight: 600;
+					font-weight: 600;
 				}
 			}
 		}

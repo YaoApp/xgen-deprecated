@@ -35,7 +35,7 @@ interface SubscriptionsMapObject {
 }
 
 export interface Model {
-	namespace: string
+	namespace?: string
 	state?: any
 	reducers?: ReducersMapObject | ReducersMapObjectWithEnhancer
 	effects?: EffectsMapObject
