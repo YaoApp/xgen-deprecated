@@ -18,15 +18,13 @@ const Index = ({ setting = {}, data = {} }: any) => {
 	const fieldset = useFieldset(setting)
 	const dispatch = getDvaApp()._store.dispatch
 
-	console.log(setting)
-
 	useEffect(() => {
 		if (params.id === '0') return
 	}, [params.id])
 
 	const onFinish = (v: any) => {
 		dispatch({
-			type: `${history.location.pathname}/create`,
+			type: `${history.location.pathname}/save`,
 			payload: { name: params.name, data: v }
 		})
 	}
