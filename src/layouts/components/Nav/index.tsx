@@ -5,15 +5,16 @@ import styles from './index.less'
 import type { IPropsNav, IPropsOptions } from '../../type'
 
 const Index = (props: IPropsNav) => {
-	const { menu, current_nav, setCurrentNav } = props
+	const { user, menu, current_nav, setCurrentNav } = props
 
-	const props_items: IPropsNav = {
+	const props_items: Omit<IPropsNav,'user'> = {
 		menu,
 		current_nav,
 		setCurrentNav
 	}
 
-	const props_options: IPropsOptions = {
+      const props_options: IPropsOptions = {
+            user,
 		setCurrentNav
 	}
 

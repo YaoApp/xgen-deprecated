@@ -1,9 +1,9 @@
 import store from 'store'
-import { menu } from '@/_data_/menu'
 import type { Model } from '@/typings/dva'
 import type { IMenu } from '@/typings/menu'
 
 export interface IModelApp {
+	user: any
 	menu: Array<IMenu>
 	current_nav: number
 	current_menu: number
@@ -14,7 +14,8 @@ export default {
 	namespace: 'app',
 
 	state: {
-		menu,
+		user: store.get('user') || [],
+		menu: store.get('menu') || [],
 		current_nav: store.get('current_nav') || 0,
 		current_menu: store.get('current_menu') || 0,
 		visible_menu: true

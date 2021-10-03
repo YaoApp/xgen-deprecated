@@ -42,13 +42,13 @@ export function onRouteChange({ matchedRoutes }: any) {
 export const request: RequestConfig = {
 	requestInterceptors: [
 		(url, options) => {
-			const session = window.sessionStorage.getItem('authorization') || ''
+			const session = `Bearer ${sessionStorage.getItem('token')}` || ''
 
 			return {
 				url,
 				options: {
 					...options,
-					headers: { Authorization: session }
+					headers: { authorization: session }
 				}
 			}
 		}
@@ -69,9 +69,7 @@ export const request: RequestConfig = {
 		}
 	],
 	async errorHandler(error) {
-		const res: any = await error?.response
-			.clone()
-			.json()
+		const res: any = await error?.response.clone().json()
 
 		if (res && res.status === 401) return history.push('/login')
 		if (res && res.message) message.error(res.message)

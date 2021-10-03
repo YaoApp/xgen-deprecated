@@ -10,14 +10,14 @@ import type { IMenuItem } from '@/typings/menu'
 import type { IPropsMenu } from '../../type'
 
 const Index = (props: IPropsMenu) => {
-	const { visible, blocks, title, items = [], setCurrentMenu, setVisibleMenu } = props
+	const { visible, blocks, title, items, setCurrentMenu, setVisibleMenu } = props
 	const history = useHistory()
 	const [visible_input, { toggle }] = useBoolean(false)
 	const [current_items, setCurrentItems] = useState<IPropsMenu['items']>([])
 	const [input, setInput] = useState('')
 
 	useEffect(() => {
-		if (!items.length) return setCurrentItems([])
+		if (!items) return
 
 		setCurrentItems(items)
 	}, [items, visible_input])

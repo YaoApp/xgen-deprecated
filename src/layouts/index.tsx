@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from 'react'
-import { connect, useHistory } from 'umi'
+import { connect, useHistory, history } from 'umi'
 import store from 'store'
 import { install } from '@/utils/pwa'
 import Nav from './components/Nav'
@@ -11,13 +11,18 @@ import type { IProps, IPropsNav, IPropsMenu, IPropsContainer } from './type'
 if (process.env.NODE_ENV === 'production') install()
 
 const Index = (props: IProps) => {
-	const { dispatch, children, loading, app_data } = props
-	const { menu, current_nav, current_menu, visible_menu } = app_data
+	const { dispatch, children, app_data } = props
+	const { user, menu, current_nav, current_menu, visible_menu } = app_data
 	const {
 		location: { pathname }
 	} = useHistory()
 
 	if (pathname === '/login') return children
+	if (!menu || !menu.length) {
+		history.push('/login')
+
+		return null
+	}
 
 	useEffect(() => {
 		dispatch({
@@ -29,6 +34,7 @@ const Index = (props: IProps) => {
 	}, [menu, current_nav])
 
 	const props_nav: IPropsNav = {
+		user,
 		menu,
 		current_nav,
 		setCurrentNav(current: IModelApp['current_nav']) {
@@ -49,7 +55,7 @@ const Index = (props: IProps) => {
 		visible: visible_menu,
 		blocks: !!menu[current_nav]?.blocks,
 		title: menu[current_nav]?.name,
-		items: menu[current_nav]?.children,
+		items: menu[current_nav]?.children || [],
 		current_menu,
 		setCurrentMenu(current: IModelApp['current_menu']) {
 			dispatch({
@@ -82,8 +88,7 @@ const Index = (props: IProps) => {
 	)
 }
 
-const getInitialProps = ({ loading, app }: { loading: Loading; app: IModelApp }) => ({
-	loading,
+const getInitialProps = ({ app }: { app: IModelApp }) => ({
 	app_data: app
 })
 

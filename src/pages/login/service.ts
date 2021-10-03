@@ -10,7 +10,13 @@ export const login = (data: {
 	password: string
 	captcha: IModelLogin['captcha']
 }) => {
-	return request(`/api/xiang/user/login`, { method: 'POST', data })
+	return request(`/api/xiang/user/login`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		data
+	})
 }
 
 export const inspect = () => {

@@ -30,3 +30,10 @@ body {
 .ant-select-selection-placeholder {
 	color: var(--color_placeholder) !important;
 }
+
+input:-internal-autofill-previewed,
+input:-internal-autofill-selected {
+	transition: background-color 5000s ease-in-out 0s !important;
+
+	-webkit-text-fill-color: #ffffff !important;
+}

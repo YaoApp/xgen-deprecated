@@ -20,6 +20,8 @@ interface IProps {
 const Index = (props: IProps) => {
 	const { className = '', name = '', size = '24', color = '#a2a5b9' } = props
 
+	if (!name) return null
+
 	const style: React.CSSProperties = useMemo(() => {
 		return {
 			fontSize: size + 'px',
@@ -28,6 +30,8 @@ const Index = (props: IProps) => {
 	}, [size, color])
 
 	const md = useMemo(() => {
+		if (!name) return {}
+
 		const arr = name.split('-')
 		const type = arr.pop()
 

@@ -5,7 +5,7 @@ import { Icon } from '@/components'
 import styles from './index.less'
 import type { IPropsNav } from '@/layouts/type'
 
-const Index = ({ menu, current_nav, setCurrentNav }: IPropsNav) => {
+const Index = ({ menu, current_nav, setCurrentNav }: Omit<IPropsNav,'user'>) => {
 	return (
 		<div className={styles._local}>
 			{menu.map((item, index) => (

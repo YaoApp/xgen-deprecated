@@ -21,5 +21,54 @@
 				}
 			}
 		}
+
+		.popover_user_wrap {
+			.ant-popover-arrow {
+				display: none;
+			}
+
+			.ant-popover-inner-content {
+				padding: 0;
+			}
+
+			.user_wrap {
+				overflow: hidden;
+				width: 260px;
+				border-radius: 6px;
+				background-color: #28282b;
+
+				.info_wrap {
+					padding: 15px;
+                              
+					.info {
+						margin-left: 12px;
+
+						.user_name {
+                                          font-weight: bold;
+						}
+
+						.user_account {
+                                          font-size: 12px;
+						}
+					}
+				}
+
+				.btn_wrap {
+					padding: 15px;
+					background-color: var(--color_bg_nav);
+
+					.btn_logout {
+                                    i{
+                                          margin-bottom: 2px;
+                                    }
+                                    
+                                    .text{
+                                          margin-left: 2px;
+                                          line-height: 1;
+                                    }
+					}
+				}
+			}
+		}
 	}
 }

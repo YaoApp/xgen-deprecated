@@ -1,7 +1,9 @@
+import { history } from 'umi'
 import modelExtend from 'dva-model-extend'
 import store from 'store'
 import pageModel from '@/utils/model'
 import { getCaptcha, login, inspect } from './service'
+import type { IModelApp } from 'umi'
 
 export interface IModelLogin {
 	app_info: {
@@ -50,8 +52,21 @@ export default modelExtend(pageModel, {
 				payload: { captcha }
 			})
 		},
-		*login({ payload }, { call }) {
+		*login({ payload }, { call, put }) {
 			const res = yield call(login, payload)
+
+			if (!res.token) return
+
+			yield put({
+				type: 'app/updateState',
+				payload: { user: res.user, menu: res.menus } as IModelApp
+			})
+
+			sessionStorage.setItem('token', res.token)
+			store.set('user', res.user)
+			store.set('menu', res.menus)
+
+			history.push('/kanban')
 		},
 		*inspect({}, { call, put }) {
 			const app_info = yield call(inspect)

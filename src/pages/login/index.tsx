@@ -20,14 +20,25 @@ const Index: ConnectRC<IProps> = (props) => {
 	const { getFieldValue } = form
 
 	const onFinish = (v: any) => {
-		if (!/^1[3|4|5|8|9][0-9]\d{4,8}$/.test(v.mobile)) {
-			return message.warning('手机号格式错误')
+		const is_email = v.mobile.indexOf('@') !== -1
+		if (is_email) {
+			if (
+				!/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(
+					v.mobile
+				)
+			) {
+				return message.warning('邮箱格式错误')
+			}
+		} else {
+			if (!/^1[3|4|5|8|9][0-9]\d{4,8}$/.test(v.mobile)) {
+				return message.warning('手机号格式错误')
+			}
 		}
 
 		dispatch({
 			type: 'login/login',
 			payload: {
-				mobile: v.mobile,
+				[is_email ? 'email' : 'mobile']: v.mobile,
 				password: v.password,
 				captcha: {
 					id: captcha.id,
@@ -70,9 +81,8 @@ const Index: ConnectRC<IProps> = (props) => {
 													? 'has_value'
 													: ''
 											])}
-											autoComplete='off'
 											type='text'
-											maxLength={11}
+											maxLength={30}
 											prefix={
 												<Icon
 													name='phone_iphone-outline'
@@ -95,7 +105,6 @@ const Index: ConnectRC<IProps> = (props) => {
 													? 'has_value'
 													: ''
 											])}
-											autoComplete='off'
 											type='password'
 											maxLength={23}
 											prefix={
