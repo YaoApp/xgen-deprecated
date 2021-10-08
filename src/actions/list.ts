@@ -1,8 +1,10 @@
 import { message } from 'antd'
 import modelExtend from 'dva-model-extend'
 import qs from 'query-string'
+
+import { getSetting, save, search } from '@/services/app'
 import pageModel from '@/utils/model'
-import { getSetting, search, save } from '@/services/app'
+
 import type { IModelList } from 'umi'
 
 export default modelExtend(pageModel, {

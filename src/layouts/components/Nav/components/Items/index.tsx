@@ -1,8 +1,11 @@
-import { Link } from 'umi'
 import { Tooltip } from 'antd'
 import clsx from 'clsx'
+import { Link } from 'umi'
+
 import { Icon } from '@/components'
+
 import styles from './index.less'
+
 import type { IPropsNav } from '@/layouts/type'
 
 const Index = ({ menu, current_nav, setCurrentNav }: Omit<IPropsNav,'user'>) => {

@@ -1,11 +1,14 @@
-import { useState, useEffect, useCallback } from 'react'
-import { Link, useHistory } from 'umi'
-import { Input } from 'antd'
 import { useBoolean, useDebounceEffect } from 'ahooks'
+import { Input } from 'antd'
 import clsx from 'clsx'
+import { useCallback, useEffect, useState } from 'react'
+import { Link, useHistory } from 'umi'
+
 import { Icon } from '@/components'
 import { fuzzyQuery } from '@/utils/helpers/filters'
+
 import styles from './index.less'
+
 import type { IMenuItem } from '@/typings/menu'
 import type { IPropsMenu } from '../../type'
 

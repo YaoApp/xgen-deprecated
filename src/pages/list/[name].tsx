@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { connect, history, useParams } from 'umi'
+
 import Dynamic from '@/cloud/core'
+
 import type { ConnectRC, IModelList } from 'umi'
 
 const namespace = history.location.pathname

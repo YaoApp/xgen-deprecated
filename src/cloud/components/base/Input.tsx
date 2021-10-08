@@ -1,4 +1,5 @@
-import { Input, Form } from 'antd'
+import { Form, Input } from 'antd'
+
 import type { InputProps } from 'antd'
 
 const { Item } = Form

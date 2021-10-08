@@ -1,8 +1,10 @@
-import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from 'recharts'
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
+
+import { data_pie } from '@/_data_/kanban'
 import { Card } from '@/components'
 import { getColor } from '@/utils/helpers/colors'
+
 import styles from './index.less'
-import { data_pie } from '@/_data_/kanban'
 
 const Index = () => {
 	return (

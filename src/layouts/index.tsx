@@ -1,10 +1,13 @@
 import { Fragment, useEffect } from 'react'
-import { connect, useHistory, history } from 'umi'
 import store from 'store'
+import { connect, history, useHistory } from 'umi'
+
 import { install } from '@/utils/pwa'
-import Nav from './components/Nav'
-import Menu from './components/Menu'
+
 import Container from './components/Container'
+import Menu from './components/Menu'
+import Nav from './components/Nav'
+
 import type { IModelApp, Loading } from 'umi'
 import type { IProps, IPropsNav, IPropsMenu, IPropsContainer } from './type'
 

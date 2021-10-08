@@ -1,7 +1,9 @@
-import { getDvaApp, history } from 'umi'
 import { message } from 'antd'
 import { findIndex } from 'lodash-es'
-import { list, form } from '@/actions'
+import { getDvaApp, history } from 'umi'
+
+import { form, list } from '@/actions'
+
 import type { RequestConfig } from 'umi'
 import type { Model } from '@/typings/dva'
 

@@ -1,4 +1,5 @@
-import { ResponsiveContainer, AreaChart, Area, Tooltip } from 'recharts'
+import { Area, AreaChart, ResponsiveContainer, Tooltip } from 'recharts'
+
 import styles from './index.less'
 
 interface IProps {

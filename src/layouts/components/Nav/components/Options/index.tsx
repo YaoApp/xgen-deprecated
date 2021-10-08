@@ -1,8 +1,11 @@
-import { NavLink, history } from 'umi'
-import { Tooltip, Avatar, Badge, Popover, Button } from 'antd'
+import { Avatar, Badge, Button, Popover, Tooltip } from 'antd'
 import store from 'store'
+import { history, NavLink } from 'umi'
+
 import { Icon } from '@/components'
+
 import styles from './index.less'
+
 import type { IPropsOptions } from '@/layouts/type'
 
 const Index = (props: IPropsOptions) => {

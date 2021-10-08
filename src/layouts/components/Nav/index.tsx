@@ -1,7 +1,8 @@
-import Logo from './components/Logo'
 import Items from './components/Items'
+import Logo from './components/Logo'
 import Options from './components/Options'
 import styles from './index.less'
+
 import type { IPropsNav, IPropsOptions } from '../../type'
 
 const Index = (props: IPropsNav) => {

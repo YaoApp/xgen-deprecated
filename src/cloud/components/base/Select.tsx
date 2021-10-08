@@ -1,7 +1,8 @@
-import { useMemo, useEffect } from 'react'
-import { request } from 'umi'
 import { useRequest } from 'ahooks'
-import { Select, Form } from 'antd'
+import { Form, Select } from 'antd'
+import { useMemo } from 'react'
+import { request } from 'umi'
+
 import type { SelectProps } from 'antd'
 
 const { Item } = Form

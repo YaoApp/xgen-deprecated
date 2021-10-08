@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react'
+import { lazy, Suspense } from 'react'
 
 type RendersType = 'List' | 'Form' | 'Kanban'
 type ComponentsType = 'base' | 'form'

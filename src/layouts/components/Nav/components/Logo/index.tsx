@@ -1,4 +1,5 @@
 import config from 'R/config'
+
 import styles from './index.less'
 
 const Index = () => {

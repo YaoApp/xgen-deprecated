@@ -1,10 +1,13 @@
+import { Tooltip } from 'antd'
+import clsx from 'clsx'
 import { useCallback } from 'react'
 import { connect, useParams } from 'umi'
-import { Tooltip } from 'antd'
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import clsx from 'clsx'
+
 import { Icon } from '@/components'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+
 import styles from './index.less'
+
 import type { IModelApp, Dispatch } from 'umi'
 
 interface IProps {

@@ -1,5 +1,7 @@
 import { connect } from 'umi'
+
 import styles from './index.less'
+
 import type { IModelApp } from 'umi'
 
 const Index = (props: any) => {

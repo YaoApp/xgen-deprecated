@@ -1,7 +1,8 @@
-import { useParams, history } from 'umi'
 import { Popover } from 'antd'
-import { Icon } from '@/components'
 import moment from 'moment'
+import { history, useParams } from 'umi'
+
+import { Icon } from '@/components'
 
 export const useColumns = (setting: any) => {
 	if (!setting.filters) return []

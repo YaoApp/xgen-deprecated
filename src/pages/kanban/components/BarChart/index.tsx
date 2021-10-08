@@ -1,7 +1,9 @@
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts'
-import { Card } from '@/components'
-import styles from './index.less'
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+
 import { data_bar } from '@/_data_/kanban'
+import { Card } from '@/components'
+
+import styles from './index.less'
 
 const Index = () => {
 	return (

@@ -1,7 +1,8 @@
 import { message } from 'antd'
 import modelExtend from 'dva-model-extend'
+
+import { find, getSetting, save } from '@/services/app'
 import pageModel from '@/utils/model'
-import { getSetting, find, save } from '@/services/app'
 
 export default modelExtend(pageModel, {
 	state: {

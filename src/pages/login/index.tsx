@@ -1,8 +1,11 @@
-import { connect } from 'umi'
-import { Form, Input, Button, message } from 'antd'
+import { Button, Form, Input, message } from 'antd'
 import clsx from 'clsx'
+import { connect } from 'umi'
+
 import { Icon } from '@/components'
+
 import styles from './index.less'
+
 import type { ConnectRC, Loading, IModelLogin, Dispatch } from 'umi'
 
 const { Item, useForm } = Form

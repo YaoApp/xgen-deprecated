@@ -1,8 +1,11 @@
-import { history } from 'umi'
 import modelExtend from 'dva-model-extend'
 import store from 'store'
+import { history } from 'umi'
+
 import pageModel from '@/utils/model'
-import { getCaptcha, login, inspect } from './service'
+
+import { getCaptcha, inspect, login } from './service'
+
 import type { IModelApp } from 'umi'
 
 export interface IModelLogin {

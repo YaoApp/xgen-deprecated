@@ -1,10 +1,12 @@
-import { Row, Col } from 'antd'
+import { Col, Row } from 'antd'
+
+import { data_indicator } from '@/_data_/kanban'
 import { Page } from '@/components'
-import NumberChart from './components/NumberChart'
+
 import BarChart from './components/BarChart'
+import NumberChart from './components/NumberChart'
 import PieChart from './components/PieChart'
 import styles from './index.less'
-import { data_indicator } from '@/_data_/kanban'
 
 const Index = () => {
 	const props_NumberChart_1 = {

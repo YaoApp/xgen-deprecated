@@ -1,4 +1,5 @@
 import { request } from 'umi'
+
 import type { IModelLogin } from 'umi'
 
 export const getCaptcha = () => {

@@ -1,4 +1,5 @@
 import store from 'store'
+
 import type { Model } from '@/typings/dva'
 import type { IMenu } from '@/typings/menu'
 
