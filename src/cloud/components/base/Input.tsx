@@ -12,7 +12,7 @@ const Index = (props: InputProps & { name: string; label?: string; rules?: Array
 		name: props.name.replace(':', ''),
 		noStyle: !props.label,
 		...rules
-	}
+      }
 
 	return (
 		<Item {...props_item}>

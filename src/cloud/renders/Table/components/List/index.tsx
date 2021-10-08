@@ -5,7 +5,7 @@ import { useColumns } from './hooks'
 import styles from './index.less'
 
 const Index = ({ setting, table, pagination }: any) => {
-	const columns = useColumns(setting)
+      const columns = useColumns(setting)
 
 	return (
 		<div className={styles._local}>

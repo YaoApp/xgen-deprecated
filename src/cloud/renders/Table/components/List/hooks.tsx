@@ -18,6 +18,8 @@ export const useColumns = (setting: any) => {
 			title: item.name
 		}
 
+		if (item.width) _item['width'] = item.width
+
 		_item.dataIndex = _columns[_item.title].view.props.value.replace(':', '')
 
 		if (_item.title.indexOf('时间') !== -1) {

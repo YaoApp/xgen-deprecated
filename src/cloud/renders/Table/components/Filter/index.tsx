@@ -58,7 +58,8 @@ const Index = ({ setting }: any) => {
 								type: item.input.type,
 								props: {
 									...item.input.props,
-									name: item.bind
+									name: item.bind,
+									label: item.label
 								}
 							}}
 						></Dynamic>
