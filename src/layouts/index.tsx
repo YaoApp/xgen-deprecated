@@ -28,15 +28,6 @@ const Index = (props: IProps) => {
 		return null
 	}
 
-	useEffect(() => {
-		dispatch({
-			type: 'app/updateState',
-			payload: {
-				visible_menu: !!menu[current_nav]?.children
-			} as IModelApp
-		})
-	}, [menu, current_nav])
-
 	const props_nav: IPropsNav = {
 		user,
 		menu,

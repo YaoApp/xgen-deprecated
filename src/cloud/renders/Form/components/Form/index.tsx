@@ -38,6 +38,13 @@ const Index = ({ setting = {}, data = {} }: any) => {
 		})
 	}
 
+	const onDel = () => {
+		dispatch({
+			type: `${history.location.pathname}/del`,
+			payload: { name: params.name, id: params.id }
+		})
+	}
+
 	return (
 		<Form
 			className={styles._local}
@@ -46,7 +53,7 @@ const Index = ({ setting = {}, data = {} }: any) => {
 			onFinish={onFinish}
 		>
 			<div className='form_title_wrap w_100 border_box flex justify_between align_center'>
-				<span className='title'>创建报告</span>
+				<span className='title'>{params.id === '0' ? '创建' : '编辑'}</span>
 				<Affix offsetTop={11} style={{ zIndex: 101 }} onChange={(v) => setStick(v)}>
 					<div
 						className={clsx([
@@ -134,7 +141,7 @@ const Index = ({ setting = {}, data = {} }: any) => {
 											content: '删除之后数据不可恢复，请谨慎操作！',
 											centered: true,
 											onOk() {
-												console.log('ok')
+												onDel()
 											}
 										})
 									}

@@ -2,7 +2,7 @@ import { message } from 'antd'
 import modelExtend from 'dva-model-extend'
 import { history } from 'umi'
 
-import { find, getSetting, save } from '@/services/app'
+import { del, find, getSetting, save } from '@/services/app'
 import pageModel from '@/utils/model'
 
 export default modelExtend(pageModel, {
@@ -28,16 +28,23 @@ export default modelExtend(pageModel, {
 				payload: { data }
 			})
 		},
-		*save({ payload: { name, data } }, { call, put }) {
+		*save({ payload: { name, data } }, { call }) {
 			const res = yield call(save, { name, data })
 
-			if (res && res.error) {
-				message.error('操作失败')
-			} else {
-				message.success('操作成功')
+			if (res && res.code !== 200) return
 
-				history.goBack()
-			}
+			message.success('操作成功')
+
+			history.goBack()
+		},
+		*del({ payload: { name, id } }, { call }) {
+			const res = yield call(del, { name, id })
+
+			if (res && res.code !== 200) return
+
+			message.success('删除成功')
+
+			history.goBack()
 		}
 	}
 })

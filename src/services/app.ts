@@ -18,3 +18,7 @@ export const save = ({ name, data }: { name: string; data: any }) => {
 		data
 	})
 }
+
+export const del = ({ name, id }: { name: string; id: string }) => {
+	return request(`/api/xiang/table/${name}/delete/${id}`, { method: 'POST' })
+}

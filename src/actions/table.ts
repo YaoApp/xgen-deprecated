@@ -47,11 +47,9 @@ export default modelExtend(pageModel, {
 		*save({ payload: { name, data } }, { call }) {
 			const res = yield call(save, { name, data })
 
-			if (res && res.error) {
-				message.error('操作失败')
-			} else {
-				message.success('操作成功')
-			}
+			if (res && res.code !== 200) return
+
+			message.success('操作成功')
 		}
 	}
 })

@@ -65,18 +65,13 @@ export const request: RequestConfig = {
 
 					history.push('/login')
 				}
-			} catch (_) {
-				console.log(666)
-			}
+			} catch (_) {}
 
 			return response
 		}
 	],
 	async errorHandler(error) {
-            const res: any = await error?.response.clone().json()
-            
-            console.log(888);
-            
+		const res: any = await error?.response.clone().json()
 
 		if (res && res.status === 401) return history.push('/login')
 		if (res && res.message) message.error(res.message)
