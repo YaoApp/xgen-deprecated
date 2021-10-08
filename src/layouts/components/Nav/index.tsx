@@ -8,14 +8,14 @@ import type { IPropsNav, IPropsOptions } from '../../type'
 const Index = (props: IPropsNav) => {
 	const { user, menu, current_nav, setCurrentNav } = props
 
-	const props_items: Omit<IPropsNav,'user'> = {
+	const props_items: Omit<IPropsNav, 'user'> = {
 		menu,
 		current_nav,
 		setCurrentNav
 	}
 
-      const props_options: IPropsOptions = {
-            user,
+	const props_options: IPropsOptions = {
+		user,
 		setCurrentNav
 	}
 

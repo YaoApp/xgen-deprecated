@@ -23,7 +23,6 @@ const links = getLinks()
 
 export default defineConfig({
 	theme,
-	title: config.name,
 	antd: {},
 	mock: {},
 	hash: true,
@@ -31,7 +30,6 @@ export default defineConfig({
 	webpack5: {},
 	fastRefresh: {},
 	locale: { default: 'zh-CN', antd: true },
-	favicon: '/favicon.ico',
 	cssModulesTypescriptLoader: {},
 	dva: { immer: true, hmr: true, lazyLoad: true },
 	nodeModulesTransform: { type: 'none' },

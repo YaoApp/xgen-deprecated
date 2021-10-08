@@ -19,7 +19,3 @@ export const login = (data: {
 		data
 	})
 }
-
-export const inspect = () => {
-	return request(`/api/xiang/inspect`)
-}

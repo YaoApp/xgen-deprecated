@@ -1,7 +1,7 @@
 import config from 'R/config'
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 import store from 'store'
-import { connect, history, useHistory } from 'umi'
+import { connect, Helmet, history, useHistory } from 'umi'
 
 import { install } from '@/utils/pwa'
 
@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'production' && config.pwa) install()
 
 const Index = (props: IProps) => {
 	const { dispatch, children, app_data } = props
-	const { user, menu, current_nav, current_menu, visible_menu } = app_data
+	const { app_info, user, menu, current_nav, current_menu, visible_menu } = app_data
 	const {
 		location: { pathname }
 	} = useHistory()
@@ -76,6 +76,10 @@ const Index = (props: IProps) => {
 
 	return (
 		<Fragment>
+			<Helmet>
+				<title>{app_info.name || ''}</title>
+				<link rel='shortcut icon' type='image/x-icon' href={app_info.favicon} />
+			</Helmet>
 			<Nav {...props_nav}></Nav>
 			<Menu {...props_menu}></Menu>
 			<Container {...props_container}>{children}</Container>

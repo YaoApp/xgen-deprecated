@@ -1,3 +1,4 @@
+import { useTitle } from 'ahooks'
 import { Button, Form, Input, message } from 'antd'
 import clsx from 'clsx'
 import { connect } from 'umi'
@@ -6,25 +7,29 @@ import { Icon } from '@/components'
 
 import styles from './index.less'
 
-import type { ConnectRC, Loading, IModelLogin, Dispatch } from 'umi'
+import type { ConnectRC, Loading, Dispatch, IModelApp, IModelLogin } from 'umi'
 
 const { Item, useForm } = Form
 
 interface IProps {
 	loading: boolean
+	app_data: IModelApp
 	page_data: IModelLogin
 	dispatch: Dispatch
 }
 
 const Index: ConnectRC<IProps> = (props) => {
-	const { loading, page_data, dispatch } = props
-	const { app_info, captcha } = page_data
+	const { loading, app_data, page_data, dispatch } = props
+	const { app_info } = app_data
+	const { captcha } = page_data
 	const [form] = useForm()
 	const { getFieldValue } = form
 
+	useTitle(app_info.name)
+
 	const onFinish = (v: any) => {
-            const is_email = v.mobile.indexOf('@') !== -1
-            
+		const is_email = v.mobile.indexOf('@') !== -1
+
 		if (is_email) {
 			if (
 				!/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(
@@ -60,7 +65,12 @@ const Index: ConnectRC<IProps> = (props) => {
 			<div className='login_wrap'>
 				<div className='login h_100 flex flex_column justify_center'>
 					<div className='logo_wrap w_100 flex justify_center'>
-						<img className='logo' src='/logo.png' alt='logo' />
+						<span
+							className='logo'
+							style={{
+								backgroundImage: `url(data:image/png;base64,${app_info.icons.png})`
+							}}
+						/>
 					</div>
 					<div className='title_wrap w_100 border_box flex flex_column'>
 						<span className='title'>登录系统</span>
@@ -185,8 +195,17 @@ const Index: ConnectRC<IProps> = (props) => {
 	)
 }
 
-const getInitialProps = ({ loading, login }: { loading: Loading; login: IModelLogin }) => ({
+const getInitialProps = ({
+	loading,
+	app,
+	login
+}: {
+	loading: Loading
+	app: IModelApp
+	login: IModelLogin
+}) => ({
 	loading: !!loading.effects[`login/getSetting`],
+	app_data: app,
 	page_data: login
 })
 

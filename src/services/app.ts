@@ -1,5 +1,9 @@
 import { request } from 'umi'
 
+export const inspect = () => {
+	return request(`/api/xiang/inspect`)
+}
+
 export const getSetting = ({ name }: { name: string }) => {
 	return request(`/api/xiang/table/${name}/setting`)
 }

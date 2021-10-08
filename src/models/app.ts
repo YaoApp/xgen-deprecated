@@ -1,9 +1,23 @@
 import store from 'store'
 
+import { inspect } from '@/services/app'
+
 import type { Model } from '@/typings/dva'
 import type { IMenu } from '@/typings/menu'
 
 export interface IModelApp {
+	app_info: {
+		name: string
+		short: string
+		version: string
+            description: string
+            favicon:string
+		icons: {
+			icns: string
+			ico: string
+			png: string
+		}
+	}
 	user: any
 	menu: Array<IMenu>
 	current_nav: number
@@ -15,6 +29,7 @@ export default {
 	namespace: 'app',
 
 	state: {
+		app_info: store.get('app_info') || {},
 		user: store.get('user') || [],
 		menu: store.get('menu') || [],
 		current_nav: store.get('current_nav') || 0,
@@ -23,10 +38,23 @@ export default {
 	} as IModelApp,
 
 	subscriptions: {
-		setup({}) {}
+		setup({ dispatch }) {
+			dispatch({ type: 'inspect' })
+		}
 	},
 
-	effects: {},
+	effects: {
+		*inspect({}, { call, put }) {
+			const app_info = yield call(inspect)
+
+			yield put({
+				type: 'updateState',
+				payload: { app_info } as IModelApp
+			})
+
+			store.set('app_info', app_info)
+		}
+	},
 
 	reducers: {
 		updateState(state, { payload }: any) {
