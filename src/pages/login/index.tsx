@@ -23,7 +23,8 @@ const Index: ConnectRC<IProps> = (props) => {
 	const { getFieldValue } = form
 
 	const onFinish = (v: any) => {
-		const is_email = v.mobile.indexOf('@') !== -1
+            const is_email = v.mobile.indexOf('@') !== -1
+            
 		if (is_email) {
 			if (
 				!/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(

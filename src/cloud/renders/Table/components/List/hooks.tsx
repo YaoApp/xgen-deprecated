@@ -63,7 +63,7 @@ export const useColumns = (setting: any) => {
 								className='table_option_item flex align_center cursor_point'
 								onClick={() =>
 									history.push({
-										pathname: `/form/${params.name}?id=${item.id}`
+										pathname: `/form/${params.name}/${item.id}`
 									})
 								}
 							>

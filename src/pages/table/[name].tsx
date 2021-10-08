@@ -3,18 +3,16 @@ import { connect, history, useParams } from 'umi'
 
 import Dynamic from '@/cloud/core'
 
-import type { ConnectRC, IModelList } from 'umi'
-
-const namespace = history.location.pathname
+import type { ConnectRC, IModelTable } from 'umi'
 
 interface IProps {
 	loading: boolean
-	page_data: IModelList
+	page_data: IModelTable
 }
 
 const Index: ConnectRC<IProps> = (props) => {
 	const { history, page_data, dispatch } = props
-	const { setting, list, pagination } = page_data
+	const { setting, table, pagination } = page_data
 
 	const params = useParams<{ name: string }>()
 
@@ -34,15 +32,23 @@ const Index: ConnectRC<IProps> = (props) => {
 	}, [params.name, history.location])
 
 	return (
-		<Dynamic category='renders' type='List' props={{ setting, list, pagination }}></Dynamic>
+		<Dynamic
+			category='renders'
+			type='Table'
+			props={{ setting, table, pagination }}
+		></Dynamic>
 	)
 }
 
-const getInitialProps = (model: any) => ({
-	loading:
-		model.loading.effects[`${namespace}/getSetting`] ||
-		model.loading.effects[`${namespace}/search`],
-	page_data: model[namespace]
-})
+const getInitialProps = (model: any) => {
+	const namespace = history.location.pathname
+
+	return {
+		loading:
+			model.loading.effects[`${namespace}/getSetting`] ||
+			model.loading.effects[`${namespace}/search`],
+		page_data: model[namespace]
+	}
+}
 
 export default window.$app.memo(connect(getInitialProps)(Index))

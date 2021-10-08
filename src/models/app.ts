@@ -38,9 +38,9 @@ export default {
 	}
 } as Model
 
-export interface IModelList {
+export interface IModelTable {
 	setting: any
-	list: Array<any>
+	table: Array<any>
 	pagination: {
 		current: number
 		pageSize: number

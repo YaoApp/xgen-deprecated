@@ -2,7 +2,7 @@ import { message } from 'antd'
 import { findIndex } from 'lodash-es'
 import { getDvaApp, history } from 'umi'
 
-import { form, list } from '@/actions'
+import { form, table } from '@/actions'
 
 import type { RequestConfig } from 'umi'
 import type { Model } from '@/typings/dva'
@@ -21,9 +21,9 @@ export function onRouteChange({ matchedRoutes }: any) {
 	if (exist !== -1) return
 
 	switch (match.path) {
-		case '/list/:name':
+		case '/table/:name':
 			app.model({
-				...list,
+				...table,
 				namespace: match.url
 			})
 			break
@@ -65,13 +65,18 @@ export const request: RequestConfig = {
 
 					history.push('/login')
 				}
-			} catch (_) {}
+			} catch (_) {
+				console.log(666)
+			}
 
 			return response
 		}
 	],
 	async errorHandler(error) {
-		const res: any = await error?.response.clone().json()
+            const res: any = await error?.response.clone().json()
+            
+            console.log(888);
+            
 
 		if (res && res.status === 401) return history.push('/login')
 		if (res && res.message) message.error(res.message)

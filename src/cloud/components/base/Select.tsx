@@ -10,6 +10,7 @@ const { Option } = Select
 
 interface IProps extends SelectProps<any> {
 	name: string
+	bind?: string
 	label?: string
 	remote: {
 		api: string

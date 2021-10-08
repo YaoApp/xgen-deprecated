@@ -4,5 +4,6 @@ export default {
 	description: '象传应用生成引擎',
 	logo: '/logo.png',
 	copyright: '© 象传科技',
-	index_page: '/'
+	index_page: '/',
+	pwa: false
 }

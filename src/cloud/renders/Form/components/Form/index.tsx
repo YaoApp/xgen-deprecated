@@ -17,18 +17,24 @@ const { confirm } = Modal
 const Index = ({ setting = {}, data = {} }: any) => {
 	const params = useParams<{ name: string; id: string }>()
 	const [form] = useForm()
+	const { setFieldsValue } = form
 	const [stick, setStick] = useState<boolean | undefined>(false)
 	const fieldset = useFieldset(setting)
 	const dispatch = getDvaApp()._store.dispatch
 
 	useEffect(() => {
 		if (params.id === '0') return
-	}, [params.id])
+		if (!Object.keys(data).length) return
+
+		setFieldsValue(data)
+	}, [params.id, data])
 
 	const onFinish = (v: any) => {
+		const data = params.id === '0' ? v : { ...v, id: params.id }
+
 		dispatch({
 			type: `${history.location.pathname}/save`,
-			payload: { name: params.name, data: v }
+			payload: { name: params.name, data }
 		})
 	}
 
@@ -105,7 +111,7 @@ const Index = ({ setting = {}, data = {} }: any) => {
 						</Row>
 					</div>
 				))}
-				{setting.edit.actions.delete.type && (
+				{params.id !== '0' && setting.edit.actions.delete.type && (
 					<div className='actions_wrap danger w_100 border_box flex flex_column'>
 						<div className='form_item_title_wrap flex flex_column'>
 							<span className='section_title'>危险操作</span>

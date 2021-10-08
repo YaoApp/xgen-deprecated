@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react'
 
-type RendersType = 'List' | 'Form' | 'Kanban'
+type RendersType = 'Table' | 'Form' | 'Kanban'
 type ComponentsType = 'base' | 'form'
 
 interface IProps {

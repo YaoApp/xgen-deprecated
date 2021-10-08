@@ -2,10 +2,12 @@
 
 import { resolve } from 'path'
 import { defineConfig } from 'umi'
-import OfflinePlugin from '@lcdp/offline-plugin'
 import WebpackPwaManifest from 'webpack-pwa-manifest'
-import theme from './src/theme'
+
+import OfflinePlugin from '@lcdp/offline-plugin'
+
 import config from './config'
+import theme from './src/theme'
 
 const env: 'development' | 'production' = process.env.NODE_ENV
 
@@ -61,8 +63,12 @@ export default defineConfig({
 				}
 			})
 
-			cfg.plugin('offline-plugin').use(OfflinePlugin, [webpack_plugin_offline])
-			cfg.plugin('webpack-pwa-manifest').use(WebpackPwaManifest, [webpack_plugin_pwa])
+			if (config.pwa) {
+				cfg.plugin('offline-plugin').use(OfflinePlugin, [webpack_plugin_offline])
+				cfg.plugin('webpack-pwa-manifest').use(WebpackPwaManifest, [
+					webpack_plugin_pwa
+				])
+			}
 		}
 	},
 	proxy: {

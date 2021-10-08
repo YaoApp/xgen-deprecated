@@ -13,7 +13,7 @@ export const find = ({ name, id }: { name: string; id: string }) => {
 }
 
 export const save = ({ name, data }: { name: string; data: any }) => {
-	return request(`/api/xiang/table/${name}/save${data.id ? `/${data.id}` : ''}`, {
+	return request(`/api/xiang/table/${name}/save`, {
 		method: 'POST',
 		data
 	})

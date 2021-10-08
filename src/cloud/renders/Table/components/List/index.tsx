@@ -4,13 +4,13 @@ import { history } from 'umi'
 import { useColumns } from './hooks'
 import styles from './index.less'
 
-const Index = ({ setting, list, pagination }: any) => {
+const Index = ({ setting, table, pagination }: any) => {
 	const columns = useColumns(setting)
 
 	return (
 		<div className={styles._local}>
 			<Table
-				dataSource={list}
+				dataSource={table}
 				columns={columns}
 				sticky={{ offsetHeader: 52 }}
 				rowKey={(item) => item.id}

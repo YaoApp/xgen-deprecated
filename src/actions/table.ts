@@ -5,19 +5,19 @@ import qs from 'query-string'
 import { getSetting, save, search } from '@/services/app'
 import pageModel from '@/utils/model'
 
-import type { IModelList } from 'umi'
+import type { IModelTable } from 'umi'
 
 export default modelExtend(pageModel, {
 	state: {
 		setting: {},
-		list: [],
+		table: [],
 		pagination: {
 			current: 1,
 			pageSize: 10,
 			total: 0,
 			showSizeChanger: true
 		}
-	} as IModelList,
+	} as IModelTable,
 
 	effects: {
 		*getSetting({ payload = {} }, { call, put }) {
@@ -25,7 +25,7 @@ export default modelExtend(pageModel, {
 
 			yield put({
 				type: 'updateState',
-				payload: { setting } as IModelList
+				payload: { setting } as IModelTable
 			})
 		},
 		*search({ payload: { name, query } }, { call, put }) {
@@ -34,7 +34,7 @@ export default modelExtend(pageModel, {
 			yield put({
 				type: 'updateState',
 				payload: {
-					list: data.data,
+					table: data.data,
 					pagination: {
 						current: Number(data.page) || 1,
 						pageSize: Number(data.pagesize) || 10,
@@ -49,6 +49,8 @@ export default modelExtend(pageModel, {
 
 			if (res && res.error) {
 				message.error('操作失败')
+			} else {
+				message.success('操作成功')
 			}
 		}
 	}

@@ -1,3 +1,4 @@
+import config from 'R/config'
 import { Fragment, useEffect } from 'react'
 import store from 'store'
 import { connect, history, useHistory } from 'umi'
@@ -8,10 +9,10 @@ import Container from './components/Container'
 import Menu from './components/Menu'
 import Nav from './components/Nav'
 
-import type { IModelApp, Loading } from 'umi'
+import type { IModelApp } from 'umi'
 import type { IProps, IPropsNav, IPropsMenu, IPropsContainer } from './type'
 
-if (process.env.NODE_ENV === 'production') install()
+if (process.env.NODE_ENV === 'production' && config.pwa) install()
 
 const Index = (props: IProps) => {
 	const { dispatch, children, app_data } = props

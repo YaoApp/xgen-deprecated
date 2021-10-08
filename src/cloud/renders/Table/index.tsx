@@ -1,15 +1,15 @@
 import { Page } from '@/components'
 
 import Filter from './components/Filter'
-import Table from './components/Table'
+import List from './components/List'
 
-const Index = ({ setting = {}, list, pagination }: any) => {
+const Index = ({ setting = {}, table, pagination }: any) => {
 	if (!setting.decription) return null
 
 	return (
 		<Page title={setting.decription}>
 			<Filter setting={setting}></Filter>
-			<Table {...{ setting, list, pagination }}></Table>
+			<List {...{ setting, table, pagination }}></List>
 		</Page>
 	)
 }
