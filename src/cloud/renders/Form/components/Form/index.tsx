@@ -102,7 +102,8 @@ const Index = ({ setting = {}, data = {} }: any) => {
 											props: {
 												...it.edit.props,
 												name: it.edit.props.value,
-												label: it.label
+												label: it.label,
+												rules: it.rules
 											}
 										}}
 									></Dynamic>

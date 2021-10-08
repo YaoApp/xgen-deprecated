@@ -3,7 +3,7 @@ import { Form, Select } from 'antd'
 import { useMemo } from 'react'
 import { request } from 'umi'
 
-import type { SelectProps } from 'antd'
+import type { SelectProps, FormItemProps } from 'antd'
 
 const { Item } = Form
 const { Option } = Select
@@ -12,6 +12,7 @@ interface IProps extends SelectProps<any> {
 	name: string
 	bind?: string
 	label?: string
+	rules: Array<any>
 	remote: {
 		api: string
 		query: {
@@ -46,9 +47,18 @@ const Index = (props: IProps) => {
 		return _props
 	}, [props])
 
+	const rules = props.rules ? { rules: props.rules } : {}
+
+	const props_item: FormItemProps = {
+		label: props.label,
+		name: props.name.replace(':', ''),
+		noStyle: !props.label,
+		...rules
+	}
+
 	return (
-		<Item label={props.label} name={props.name.replace(':', '')} noStyle={!props.label}>
-			<Select {...real_props} placeholder={props.placeholder || `请输入${props.label}`}>
+		<Item {...props_item}>
+			<Select {...real_props} placeholder={props.placeholder || `请选择${props.label}`}>
 				{(data || []).map(
 					(item: { id: number; name: string; label?: string; value?: any }) => (
 						<Option
