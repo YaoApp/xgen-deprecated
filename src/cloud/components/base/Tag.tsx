@@ -5,7 +5,6 @@ import type { TagProps } from 'antd'
 
 const Index = (props: TagProps & { value: string; options: Array<any> }) => {
 	const item = find(props.options, (it: any) => it.value === props.value)
-	console.log(item.color)
 
 	return (
 		<Tag {...props} color={item.color}>

@@ -59,7 +59,7 @@ const Index = (props: IPropsOptions) => {
 			<Tooltip title='系统设置' placement='right'>
 				<NavLink
 					className='nav_item w_100 flex justify_center align_center clickable'
-					to='/setting'
+					to='/table/menu'
 					onClick={() => setCurrentNav(-1)}
 				>
 					<Icon name='icon-settings' size={20}></Icon>

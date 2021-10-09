@@ -11,7 +11,7 @@ import styles from './index.less'
 
 const { useForm } = Form
 
-const Index = ({ setting }: any) => {
+const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => {
 	const params = useParams<{ name: string }>()
 	const [form] = useForm()
 	const { getFieldsValue, setFieldsValue, resetFields } = form
@@ -96,19 +96,38 @@ const Index = ({ setting }: any) => {
 				</Col> */}
 				<Col flex='auto'>
 					<div className='flex justify_end'>
-						<Button
-							className='btn_normal flex justify_center align_center mr_16'
-							icon={
-								<Icon
-									className='transition_normal'
-									name='icon-align-right'
-									size={15}
-								></Icon>
-							}
-							onClick={() => {}}
-						>
-							批量设置
-						</Button>
+						{batch ? (
+							<Button
+								className='btn_confirm flex justify_center align_center mr_16'
+								type='primary'
+								icon={
+									<Icon
+										className='transition_normal'
+										name='icon-check-circle'
+										size={15}
+									></Icon>
+								}
+								disabled={!selected.length}
+								onClick={() => setVisibleModal(true)}
+							>
+								确认
+							</Button>
+						) : (
+							<Button
+								className='btn_normal flex justify_center align_center mr_16'
+								type='default'
+								icon={
+									<Icon
+										className='transition_normal'
+										name='icon-align-right'
+										size={15}
+									></Icon>
+								}
+								onClick={() => setBatch(true)}
+							>
+								批量设置
+							</Button>
+						)}
 						<Button
 							className='btn_add flex justify_center align_center'
 							type='primary'

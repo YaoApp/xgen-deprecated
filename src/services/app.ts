@@ -26,3 +26,24 @@ export const save = ({ name, data }: { name: string; data: any }) => {
 export const del = ({ name, id }: { name: string; id: string }) => {
 	return request(`/api/xiang/table/${name}/delete/${id}`, { method: 'POST' })
 }
+
+export const batchDel = ({ name, ids }: { name: string; ids: Array<string> }) => {
+	return request(`/api/xiang/table/${name}/delete/in?primary=id&ids=${ids.join(',')}`, {
+		method: 'POST'
+	})
+}
+
+export const batchUpdate = ({
+	name,
+	ids,
+	data
+}: {
+	name: string
+	ids: Array<string>
+	data: any
+}) => {
+	return request(`/api/xiang/table/${name}/update/in?primary=id&ids=${ids.join(',')}`, {
+		method: 'POST',
+		data
+	})
+}

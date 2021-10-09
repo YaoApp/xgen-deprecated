@@ -20,9 +20,18 @@
 		}
 
 		.btn_normal {
-			&:hover {
+			&:hover,
+			&:focus {
 				i {
 					color: var(--color_main) !important;
+				}
+			}
+		}
+
+		.btn_confirm {
+			&:disabled {
+				i {
+					color: rgba(162, 165, 185, 0.4) !important;
 				}
 			}
 		}
