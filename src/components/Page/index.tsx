@@ -60,7 +60,7 @@ const Index = (props: IProps) => {
 							{title}
 						</span>
 					) : (
-						<span className='page_title'>{menu[current_nav].name}</span>
+						<span className='page_title'>{menu[current_nav]?.name}</span>
 					)}
 				</div>
 				<div className='options_wrap flex align_center'>
