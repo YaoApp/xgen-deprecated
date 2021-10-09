@@ -1,6 +1,6 @@
 import { Button, Form, Input, message } from 'antd'
 import clsx from 'clsx'
-import { connect } from 'umi'
+import { connect, Helmet } from 'umi'
 
 import { Icon } from '@/components'
 
@@ -56,6 +56,14 @@ const Index: ConnectRC<IProps> = (props) => {
 
 	return (
 		<div className={styles._local}>
+			<Helmet>
+				<title>{app_info.name || ''}</title>
+				<link
+					rel='shortcut icon'
+					type='image/x-icon'
+					href={app_info.icons.favicon}
+				/>
+			</Helmet>
 			<div className='bg_wrap flex justify_center align_center'>
 				<img className='bg' src={require('@/images/bg_login.svg')} alt='bg_login' />
 			</div>

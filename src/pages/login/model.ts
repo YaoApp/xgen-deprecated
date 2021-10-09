@@ -29,7 +29,7 @@ export default modelExtend(pageModel, {
 			history.listen((location) => {
 				if (location.pathname !== '/login') return
 
-				// dispatch({ type: 'getCaptcha' })
+				dispatch({ type: 'getCaptcha' })
 			})
 		}
 	},

@@ -21,6 +21,7 @@ const Index = (props: IProps) => {
 		location: { pathname }
 	} = useHistory()
 
+	if (pathname === '/login') return children
 	if (!menu || !menu.length) {
 		history.push('/login')
 
@@ -83,15 +84,9 @@ const Index = (props: IProps) => {
 					href={app_info.icons.favicon}
 				/>
 			</Helmet>
-			{pathname === '/login' ? (
-				children
-			) : (
-				<Fragment>
-					<Nav {...props_nav}></Nav>
-					<Menu {...props_menu}></Menu>
-					<Container {...props_container}>{children}</Container>
-				</Fragment>
-			)}
+			<Nav {...props_nav}></Nav>
+			<Menu {...props_menu}></Menu>
+			<Container {...props_container}>{children}</Container>
 		</Fragment>
 	)
 }
