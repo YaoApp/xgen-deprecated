@@ -3,15 +3,15 @@ import { connect, history, useParams } from 'umi'
 
 import Dynamic from '@/cloud/core'
 
-import type { ConnectRC } from 'umi'
+import type { ConnectRC, IModelForm } from 'umi'
 
 interface IProps {
 	loading: boolean
-	page_data: any
+	page_data: IModelForm
 }
 
 const Index: ConnectRC<IProps> = (props) => {
-	const { history, page_data = {}, dispatch } = props
+	const { history, page_data = { setting: {}, data: {} }, dispatch } = props
 	const { setting, data } = page_data
 
 	const params = useParams<{ name: string; id: string }>()

@@ -1,4 +1,3 @@
-import { useTitle } from 'ahooks'
 import { Button, Form, Input, message } from 'antd'
 import clsx from 'clsx'
 import { connect } from 'umi'
@@ -24,8 +23,6 @@ const Index: ConnectRC<IProps> = (props) => {
 	const { captcha } = page_data
 	const [form] = useForm()
 	const { getFieldValue } = form
-
-	useTitle(app_info.name)
 
 	const onFinish = (v: any) => {
 		const is_email = v.mobile.indexOf('@') !== -1
@@ -99,7 +96,7 @@ const Index: ConnectRC<IProps> = (props) => {
 											maxLength={30}
 											prefix={
 												<Icon
-													name='phone_iphone-outline'
+													name='person_outline-outline'
 													size={21}
 												></Icon>
 											}

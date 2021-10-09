@@ -10,9 +10,9 @@ export interface IModelApp {
 		name: string
 		short: string
 		version: string
-            description: string
-            favicon:string
+		description: string
 		icons: {
+			favicon: string
 			icns: string
 			ico: string
 			png: string

@@ -11,7 +11,8 @@ interface IProps {
 }
 
 const Index: ConnectRC<IProps> = (props) => {
-	const { history, page_data, dispatch } = props
+	const { history, page_data = { setting: {}, table: [], pagination: {} }, dispatch } = props
+
 	const { setting, table, pagination } = page_data
 
 	const params = useParams<{ name: string }>()
