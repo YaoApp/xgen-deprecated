@@ -76,6 +76,6 @@ export const request: RequestConfig = {
 		if (res && res.status === 401) return history.push('/login')
 		if (res && res.message) message.error(res.message)
 
-		return res
+		return false
 	}
 }

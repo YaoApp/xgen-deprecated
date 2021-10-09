@@ -163,8 +163,10 @@
 		}
 	}
 
-	.ant-input {
-		background-color: var(--color_bg);
+	.ant-input,
+	.ant-select-selector {
+		border: 1px solid fade(white, 10%) !important;
+		background-color: transparent !important;
 		box-shadow: none !important;
 	}
 
@@ -217,4 +219,42 @@
 
 .ant-breadcrumb {
 	color: var(--color_text);
+}
+
+.td_popover {
+	.ant-form-item {
+		margin-bottom: 0;
+	}
+
+	.ant-form-item-label {
+		display: none;
+	}
+}
+
+.edit_text {
+	cursor: pointer;
+      
+	&:hover {
+		.icon_edit {
+			display: inline-block;
+		}
+	}
+
+	.icon_edit {
+		top: 3px;
+		left: -15px;
+		z-index: 1;
+		display: none;
+		color: var(--color_main) !important;
+	}
+}
+
+.ant-message {
+	top: initial;
+	bottom: 8px;
+
+	.ant-message-notice {
+		padding: 8px 16px;
+		text-align: right;
+	}
 }

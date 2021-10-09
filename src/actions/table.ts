@@ -1,6 +1,7 @@
 import { message } from 'antd'
 import modelExtend from 'dva-model-extend'
 import qs from 'query-string'
+import { history } from 'umi'
 
 import { getSetting, save, search } from '@/services/app'
 import pageModel from '@/utils/model'
@@ -44,12 +45,17 @@ export default modelExtend(pageModel, {
 				}
 			})
 		},
-		*save({ payload: { name, data } }, { call }) {
+		*save({ payload: { name, data } }, { call, put }) {
 			const res = yield call(save, { name, data })
 
-			if (res && res.code !== 200) return
+			if (res === false) return
 
 			message.success('操作成功')
+
+			yield put({
+				type: 'search',
+				payload: { name, query: history.location.query }
+			})
 		}
 	}
 })

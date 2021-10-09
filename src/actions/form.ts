@@ -31,7 +31,7 @@ export default modelExtend(pageModel, {
 		*save({ payload: { name, data } }, { call }) {
 			const res = yield call(save, { name, data })
 
-			if (res && res.code !== 200) return
+			if (res===false) return
 
 			message.success('操作成功')
 
@@ -40,7 +40,7 @@ export default modelExtend(pageModel, {
 		*del({ payload: { name, id } }, { call }) {
 			const res = yield call(del, { name, id })
 
-			if (res && res.code !== 200) return
+			if (res===false) return
 
 			message.success('删除成功')
 

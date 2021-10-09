@@ -12,6 +12,7 @@ interface IProps extends SelectProps<any> {
 	name: string
 	bind?: string
 	label?: string
+	string?: '1' | '0' | undefined
 	rules: Array<any>
 	remote: {
 		api: string
@@ -63,7 +64,11 @@ const Index = (props: IProps) => {
 					(item: { id: number; name: string; label?: string; value?: any }) => (
 						<Option
 							key={item.id || item.value}
-							value={String(item.id || item.value)}
+							value={
+								props.string === '1'
+									? String(item.id || item.value)
+									: item.id || item.value
+							}
 						>
 							{item.name || item.label}
 						</Option>

@@ -59,7 +59,8 @@ const Index = ({ setting }: any) => {
 								props: {
 									...item.input.props,
 									name: item.bind,
-									label: item.label
+									label: item.label,
+									string: '1'
 								}
 							}}
 						></Dynamic>
@@ -96,7 +97,20 @@ const Index = ({ setting }: any) => {
 				<Col flex='auto'>
 					<div className='flex justify_end'>
 						<Button
-							className='btn_add w_100 flex justify_center align_center'
+							className='btn_normal flex justify_center align_center mr_16'
+							icon={
+								<Icon
+									className='transition_normal'
+									name='icon-align-right'
+									size={15}
+								></Icon>
+							}
+							onClick={() => {}}
+						>
+							批量设置
+						</Button>
+						<Button
+							className='btn_add flex justify_center align_center'
 							type='primary'
 							icon={<Icon name='icon-plus' size={15}></Icon>}
 							onClick={() => {
