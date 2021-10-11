@@ -23,7 +23,7 @@ const getText = (dataIndex: string, dataItem: any, v: any, item: any, _columns: 
 		text = v ? moment(v).format(_columns[item.title].view.props['datetime-format']) : '-'
 	}
 
-	return Array.isArray(text) ? text.join(',') : text || '-'
+	return Array.isArray(text) ? text.join(',') : text !== undefined || null ? text : '-'
 }
 
 export const useColumns = (setting: any) => {
@@ -54,6 +54,12 @@ export const useColumns = (setting: any) => {
 		if (item.edit && Object.keys(item.edit).length) {
 			item.render = (v: any, dataItem: any) => {
 				const key = _columns[item.title].edit.props.value.replace(':', '')
+				const value =
+					item.edit.type === 'select'
+						? dataItem[key]
+							? dataItem[key]
+							: []
+						: dataItem[key]
 
 				return (
 					<Popover
@@ -65,7 +71,9 @@ export const useColumns = (setting: any) => {
 							<Form
 								className='flex'
 								name={`form_table_td_${item.dataIndex}_${index}`}
-								initialValues={{ [key]: dataItem[key] }}
+								initialValues={{
+									[key]: value
+								}}
 								onFinish={(v) => onFinish(v, dataItem.id)}
 							>
 								<Dynamic
@@ -90,7 +98,7 @@ export const useColumns = (setting: any) => {
 							</Form>
 						}
 					>
-						<div className='edit_text relative'>
+						<div className='edit_text'>
 							{item.view.type ? (
 								<Dynamic
 									category='components'
@@ -111,13 +119,14 @@ export const useColumns = (setting: any) => {
 									}}
 								></Dynamic>
 							) : (
-								getText(item.dataIndex, dataItem, v, item, _columns)
+								getText(
+									item.dataIndex,
+									dataItem,
+									v,
+									item,
+									_columns
+								) || '-'
 							)}
-							<Icon
-								className='icon_edit absolute'
-								name='edit_note-outline'
-								size={15}
-							></Icon>
 						</div>
 					</Popover>
 				)

@@ -1,4 +1,4 @@
-import { Button, Col, Form, Row } from 'antd'
+import { Button, Col, Dropdown, Form, Menu, Row } from 'antd'
 import clsx from 'clsx'
 import { useEffect } from 'react'
 import { getDvaApp, history, useParams } from 'umi'
@@ -97,21 +97,29 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 				<Col flex='auto'>
 					<div className='flex justify_end'>
 						{batch ? (
-							<Button
-								className='btn_confirm flex justify_center align_center mr_16'
-								type='primary'
-								icon={
-									<Icon
-										className='transition_normal'
-										name='icon-check-circle'
-										size={15}
-									></Icon>
-								}
-								disabled={!selected.length}
-								onClick={() => setVisibleModal(true)}
-							>
-								确认
-							</Button>
+							<div className='flex'>
+								<Button
+									className='btn_confirm flex justify_center align_center mr_16'
+									type='primary'
+									icon={
+										<Icon
+											className='transition_normal'
+											name='icon-check-circle'
+											size={15}
+										></Icon>
+									}
+									disabled={!selected.length}
+									onClick={() => setVisibleModal(true)}
+								>
+									选择并操作
+								</Button>
+								<Button
+									className='btn_confirm flex justify_center align_center mr_16'
+									onClick={() => setBatch(false)}
+								>
+									取消选择
+								</Button>
+							</div>
 						) : (
 							<Button
 								className='btn_normal flex justify_center align_center mr_16'
@@ -125,13 +133,12 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 								}
 								onClick={() => setBatch(true)}
 							>
-								批量设置
+								批量管理
 							</Button>
 						)}
-						<Button
+						<Dropdown.Button
 							className='btn_add flex justify_center align_center'
 							type='primary'
-							icon={<Icon name='icon-plus' size={15}></Icon>}
 							onClick={() => {
 								getDvaApp()._store.dispatch({
 									type: 'app/updateState',
@@ -142,9 +149,17 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 									pathname: `/form/${params.name}/0`
 								})
 							}}
+							overlay={
+								<Menu>
+									<Menu.Item key='1'>1st item</Menu.Item>
+									<Menu.Item key='2'>2nd item</Menu.Item>
+									<Menu.Item key='3'>3rd item</Menu.Item>
+								</Menu>
+							}
+							trigger={['click']}
 						>
 							{setting.list.actions.create.props.label}
-						</Button>
+						</Dropdown.Button>
 					</div>
 				</Col>
 			</Row>

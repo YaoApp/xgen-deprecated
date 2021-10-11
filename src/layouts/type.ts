@@ -8,6 +8,7 @@ export interface IProps {
 }
 
 export interface IPropsNav {
+	app_info: IModelApp['app_info']
 	user: IModelApp['user']
 	menu: Array<IMenu>
 	current_nav: IModelApp['current_nav']
@@ -15,6 +16,7 @@ export interface IPropsNav {
 }
 
 export interface IPropsOptions {
+	app_info: IModelApp['app_info']
 	user: IModelApp['user']
 	setCurrentNav: (current: IModelApp['current_nav']) => void
 }

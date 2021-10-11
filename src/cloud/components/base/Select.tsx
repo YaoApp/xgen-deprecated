@@ -59,7 +59,11 @@ const Index = (props: IProps) => {
 
 	return (
 		<Item {...props_item}>
-			<Select {...real_props} placeholder={props.placeholder || `请选择${props.label}`}>
+			<Select
+				{...real_props}
+				placeholder={props.placeholder || `请选择${props.label}`}
+				allowClear
+			>
 				{(data || []).map(
 					(item: { id: number; name: string; label?: string; value?: any }) => (
 						<Option

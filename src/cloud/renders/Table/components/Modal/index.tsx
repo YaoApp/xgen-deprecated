@@ -13,8 +13,6 @@ interface IProps extends ModalProps {
 const Index = (props: IProps) => {
 	const { setting, setVisibleModal, onBatchDelete } = props
 
-	console.log(setting)
-
 	const Footer = (
 		<div className='flex w_100 justify_between'>
 			<div className='left_options'>

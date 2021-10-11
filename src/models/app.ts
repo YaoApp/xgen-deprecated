@@ -17,6 +17,10 @@ export interface IModelApp {
 			ico: string
 			png: string
 		}
+		option: {
+			nav_user: string
+			nav_menu: string
+		}
 	}
 	user: any
 	menu: Array<IMenu>

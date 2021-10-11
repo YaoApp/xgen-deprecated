@@ -9,11 +9,14 @@ import styles from './index.less'
 import type { IPropsOptions } from '@/layouts/type'
 
 const Index = (props: IPropsOptions) => {
-	const { user, setCurrentNav } = props
+	const { app_info, user, setCurrentNav } = props
 
 	const User = (
 		<div className='user_wrap flex flex_column'>
-			<div className='info_wrap w_100 border_box flex align_center'>
+			<div
+				className='info_wrap w_100 border_box flex align_center'
+				onClick={() => history.push(`/form/${app_info.option.nav_user}/${user.id}`)}
+			>
 				<Avatar
 					className='cursor_point'
 					size={50}
@@ -50,7 +53,7 @@ const Index = (props: IPropsOptions) => {
 			<Tooltip title='账号管理' placement='right'>
 				<NavLink
 					className='nav_item w_100 flex justify_center align_center clickable'
-					to='/user'
+					to={`/table/${app_info.option.nav_user}`}
 					onClick={() => setCurrentNav(-1)}
 				>
 					<Icon name='icon-user' size={20}></Icon>
@@ -59,7 +62,7 @@ const Index = (props: IPropsOptions) => {
 			<Tooltip title='系统设置' placement='right'>
 				<NavLink
 					className='nav_item w_100 flex justify_center align_center clickable'
-					to='/table/menu'
+					to={`/table/${app_info.option.nav_menu}`}
 					onClick={() => setCurrentNav(-1)}
 				>
 					<Icon name='icon-settings' size={20}></Icon>

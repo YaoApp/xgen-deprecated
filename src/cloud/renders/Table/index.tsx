@@ -17,7 +17,7 @@ const Index = ({ setting = {}, table, pagination }: any) => {
 	const { name } = useParams<{ name: string }>()
 	const dispatch: Dispatch = getDvaApp()._store.dispatch
 
-	if (!setting.decription) return null
+	if (!setting.name) return null
 
 	const props_filter = {
 		setting,
@@ -51,7 +51,7 @@ const Index = ({ setting = {}, table, pagination }: any) => {
 	}
 
 	return (
-		<Page title={setting.decription}>
+		<Page title={setting.name}>
 			<Filter {...props_filter}></Filter>
 			<List {...props_list}></List>
 			<Modal {...props_modal}></Modal>

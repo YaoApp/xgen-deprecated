@@ -4,10 +4,10 @@ import Breadcrumb from './components/Breadcrumb'
 import Form from './components/Form'
 
 const Index = ({ setting = {}, data = {} }: any) => {
-      if (!setting.decription) return null
-      
+	if (!setting.name) return null
+
 	return (
-		<Page title={setting.decription}>
+		<Page title={setting.name}>
 			<Breadcrumb></Breadcrumb>
 			<Form {...{ setting, data }}></Form>
 		</Page>

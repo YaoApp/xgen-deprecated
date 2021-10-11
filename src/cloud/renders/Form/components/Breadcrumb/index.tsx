@@ -21,7 +21,7 @@ const Index = (props: { app: IModelApp; dispatch: Dispatch }) => {
 				<Breadcrumb className={clsx(['bread transition_normal', stick && 'stick'])}>
 					<Item>
 						<Link
-							to={menu[current_nav].path}
+							to={menu[current_nav]?.path}
 							onClick={() => {
 								dispatch({
 									type: 'app/updateState',
@@ -31,12 +31,12 @@ const Index = (props: { app: IModelApp; dispatch: Dispatch }) => {
 								})
 							}}
 						>
-							{menu[current_nav].name}
+							{menu[current_nav]?.name}
 						</Link>
 					</Item>
 					<Item>
 						{params.id === '0' ? '添加' : '编辑'}
-						{menu[current_nav].name}
+						{menu[current_nav]?.name}
 					</Item>
 				</Breadcrumb>
 			</Affix>

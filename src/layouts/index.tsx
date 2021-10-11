@@ -29,6 +29,7 @@ const Index = (props: IProps) => {
 	}
 
 	const props_nav: IPropsNav = {
+		app_info,
 		user,
 		menu,
 		current_nav,
