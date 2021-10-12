@@ -35,6 +35,7 @@ export default defineConfig({
 	nodeModulesTransform: { type: 'none' },
 	alias: { R: resolve(__dirname, './') },
 	dynamicImport: { loading: '@/components/Loader/index' },
+	nprogress: { runtime: { XMLHttpRequest: false, fetch: false } },
 	links,
 	chainWebpack(cfg) {
 		cfg.resolve.alias.set('moment$', resolve(__dirname, 'node_modules/moment/moment.js'))

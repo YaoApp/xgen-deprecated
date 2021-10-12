@@ -24,12 +24,11 @@ export default modelExtend(pageModel, {
 
 	subscriptions: {
 		setup({ history, dispatch }) {
-			dispatch({ type: 'app/inspect' })
-
 			history.listen((location) => {
 				if (location.pathname !== '/login') return
 
 				dispatch({ type: 'getCaptcha' })
+				dispatch({ type: 'app/updateState', payload: { visible_menu: false } })
 			})
 		}
 	},

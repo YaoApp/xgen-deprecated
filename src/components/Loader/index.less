@@ -14,14 +14,23 @@
 	bottom: 0;
 	left: 320px;
 	z-index: 100000;
-	display: flex;
+	display: none;
 	align-items: center;
 	justify-content: center;
 	width: ~'calc(100% - 320px)';
 	background-color: transparent;
 	background-color: var(--color_bg);
 	text-align: center;
-	transition: all ease 0.3s;
+	opacity: 0;
+	transition: all ease 0.9s;
+
+	&.visible {
+		display: flex;
+	}
+
+	&.show {
+		opacity: 1;
+	}
 
 	&.fold {
 		left: 80px;

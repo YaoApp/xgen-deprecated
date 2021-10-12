@@ -37,3 +37,18 @@ input:-internal-autofill-selected {
 
 	-webkit-text-fill-color: #ffffff !important;
 }
+
+#nprogress {
+	position: relative;
+	z-index: 9999999;
+
+	.bar {
+		border-radius: 2px;
+		background-color: var(--color_main);
+	}
+
+	.spinner-icon {
+		border-top-color: var(--color_main);
+		border-left-color: var(--color_main);
+	}
+}

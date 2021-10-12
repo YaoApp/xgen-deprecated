@@ -1,22 +1,37 @@
 import config from 'R/config'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import store from 'store'
-import { connect, Helmet, history } from 'umi'
+import { connect, Helmet, history, NProgress } from 'umi'
 
+import { Loader } from '@/components'
 import { install } from '@/utils/pwa'
 
 import Container from './components/Container'
 import Menu from './components/Menu'
 import Nav from './components/Nav'
 
-import type { IModelApp } from 'umi'
+import type { Loading, IModelApp } from 'umi'
 import type { IProps, IPropsNav, IPropsMenu, IPropsContainer } from './type'
 
 if (process.env.NODE_ENV === 'production' && config.pwa) install()
 
 const Index = (props: IProps) => {
-	const { dispatch, children, app_data } = props
+	const { dispatch, children, loading, app_data } = props
 	const { app_info, user, menu, current_nav, current_menu, visible_menu } = app_data
+	const [path, setPath] = useState('')
+	const global_loading = loading.global
+
+	useEffect(() => {
+		if (path === history.location.pathname) return
+
+		NProgress.start()
+
+		if (global_loading) return
+
+		NProgress.done()
+
+		setPath(history.location.pathname)
+	}, [path, history.location.pathname, global_loading])
 
 	if (history.location.pathname === '/login') return children
 	if (!menu || !menu.length) {
@@ -82,6 +97,7 @@ const Index = (props: IProps) => {
 					href={app_info.icons.favicon}
 				/>
 			</Helmet>
+			<Loader></Loader>
 			<Nav {...props_nav}></Nav>
 			<Menu {...props_menu}></Menu>
 			<Container {...props_container}>{children}</Container>
@@ -89,7 +105,8 @@ const Index = (props: IProps) => {
 	)
 }
 
-const getInitialProps = ({ app }: { app: IModelApp }) => ({
+const getInitialProps = ({ loading, app }: { loading: Loading; app: IModelApp }) => ({
+	loading,
 	app_data: app
 })
 

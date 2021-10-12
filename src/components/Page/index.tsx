@@ -25,7 +25,7 @@ interface IProps {
 
 const Index = (props: IProps) => {
 	const { children, className, title, options = [], app, dispatch } = props
-	const { menu, current_nav, current_menu, visible_menu } = app
+	const { menu, current_nav, visible_menu } = app
 
 	const params = useParams<{ id: string }>()
 

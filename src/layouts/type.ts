@@ -1,8 +1,9 @@
-import type { IModelApp, Dispatch } from 'umi'
+import type { Loading, Dispatch, IModelApp } from 'umi'
 import type { IMenu } from '@/typings/menu'
 
 export interface IProps {
 	children: JSX.Element
+	loading: Loading
 	app_data: IModelApp
 	dispatch: Dispatch
 }
