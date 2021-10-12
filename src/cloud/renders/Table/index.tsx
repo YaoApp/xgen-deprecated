@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { getDvaApp, useHistory, useParams } from 'umi'
+import { getDvaApp, history, useParams } from 'umi'
 
 import { Page } from '@/components'
 
@@ -13,7 +13,6 @@ const Index = ({ setting = {}, table, pagination }: any) => {
 	const [batch, setBatch] = useState(false)
 	const [selected, setSelected] = useState([])
 	const [visible_modal, setVisibleModal] = useState(false)
-	const { location } = useHistory()
 	const { name } = useParams<{ name: string }>()
 	const dispatch: Dispatch = getDvaApp()._store.dispatch
 
@@ -41,7 +40,7 @@ const Index = ({ setting = {}, table, pagination }: any) => {
 		setVisibleModal,
 		onBatchDelete() {
 			dispatch({
-				type: `${location.pathname}/batchDel`,
+				type: `${history.location.pathname}/batchDel`,
 				payload: {
 					name,
 					ids: selected

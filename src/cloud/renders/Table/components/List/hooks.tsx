@@ -27,7 +27,7 @@ const getText = (dataIndex: string, dataItem: any, v: any, item: any, _columns: 
 }
 
 export const useColumns = (setting: any) => {
-	if (!setting.filters) return []
+	if (!setting.columns) return []
 
 	const params = useParams<{ name: string }>()
 

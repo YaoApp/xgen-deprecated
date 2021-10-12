@@ -6,3 +6,9 @@ import type { Memo } from '@/typings/app'
 export const memo: Memo = (el) => {
 	return react_memo(el, (prev, next) => Equal(prev, next))
 }
+
+export const nextTick = async () => {
+	return new Promise((resolve) => {
+		setTimeout(() => resolve(true), 0)
+	})
+}

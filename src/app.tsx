@@ -1,5 +1,6 @@
 import { message } from 'antd'
 import { findIndex } from 'lodash-es'
+import pathToRegexp from 'path-to-regexp'
 import { getDvaApp, history } from 'umi'
 
 import { form, table } from '@/actions'
@@ -7,27 +8,39 @@ import { form, table } from '@/actions'
 import type { RequestConfig } from 'umi'
 import type { Model } from '@/typings/dva'
 
+/** 注销其他动态页面的model，防止出现重复执行 */
+const unmodel = (reg: RegExp, app: any) => {
+	for (const item of app._models) {
+		if (reg.exec(item.namespace)) app.unmodel(item.namespace)
+	}
+}
+
 /** 动态页面的model注入 */
 export function onRouteChange({ matchedRoutes }: any) {
 	if (!matchedRoutes.length) return
 
 	const match = matchedRoutes[matchedRoutes.length - 1].match
 
-	if (!Object.keys(match.params).length) return
-
 	const app = getDvaApp()
 	const exist = findIndex(app._models, (item: Model) => item.namespace === match.url)
+
+	history.location.state = { match: match.path, params: match.params }
 
 	if (exist !== -1) return
 
 	switch (match.path) {
 		case '/table/:name':
+			unmodel(pathToRegexp('/table/:name'), app)
+
 			app.model({
 				...table,
 				namespace: match.url
 			})
+
 			break
 		case '/form/:name/:id':
+			unmodel(pathToRegexp('/form/:name/:id'), app)
+
 			app.model({
 				...form,
 				namespace: match.url

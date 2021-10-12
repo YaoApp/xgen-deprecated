@@ -20,8 +20,44 @@ export default modelExtend(pageModel, {
 		}
 	} as IModelTable,
 
+	subscriptions: {
+		setup({ history: _history, dispatch }) {
+			const unlisten = _history.listen(async (location) => {
+				await window.$app.nextTick()
+
+				const state: any = location.state
+
+				if (!state) return
+				if (!state.params) return
+				if (state.match !== '/table/:name') return
+
+				const name = state.params.name
+
+				dispatch({
+					type: 'search',
+					payload: {
+						name,
+						query: location.query
+					}
+				})
+
+				dispatch({
+					type: 'getSetting',
+					payload: { name }
+				})
+			})
+
+			return unlisten
+		}
+	},
+
 	effects: {
-		*getSetting({ payload = {} }, { call, put }) {
+		*getSetting({ payload = {} }, { call, put, select }) {
+			const namespace = history.location.pathname
+			const models = yield select((models: any) => models)
+
+			if ('name' in models[namespace].setting) return
+
 			const setting = yield call(getSetting, payload)
 
 			yield put({

@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { connect, history, useParams } from 'umi'
+import { connect, history } from 'umi'
 
 import Dynamic from '@/cloud/core'
 
@@ -11,26 +10,8 @@ interface IProps {
 }
 
 const Index: ConnectRC<IProps> = (props) => {
-	const { history, page_data = { setting: {}, data: {} }, dispatch } = props
+	const { page_data = { setting: {}, data: {} }, dispatch } = props
 	const { setting, data } = page_data
-
-	const params = useParams<{ name: string; id: string }>()
-
-	useEffect(() => {
-		setTimeout(() => {
-			dispatch({
-				type: `${history.location.pathname}/getSetting`,
-				payload: { name: params.name }
-			})
-
-			if (params.id === '0') return
-
-			dispatch({
-				type: `${history.location.pathname}/find`,
-				payload: params
-			})
-		}, 0)
-	}, [params, history.location.pathname])
 
 	return <Dynamic category='renders' type='Form' props={{ setting, data }}></Dynamic>
 }

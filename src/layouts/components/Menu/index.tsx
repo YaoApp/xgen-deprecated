@@ -2,7 +2,7 @@ import { useBoolean, useDebounceEffect } from 'ahooks'
 import { Input } from 'antd'
 import clsx from 'clsx'
 import { useCallback, useEffect, useState } from 'react'
-import { Link, useHistory } from 'umi'
+import { history, Link } from 'umi'
 
 import { Icon } from '@/components'
 import { fuzzyQuery } from '@/utils/helpers/filters'
@@ -14,7 +14,6 @@ import type { IPropsMenu } from '../../type'
 
 const Index = (props: IPropsMenu) => {
 	const { visible, blocks, title, items, setCurrentMenu, setVisibleMenu } = props
-	const history = useHistory()
 	const [visible_input, { toggle }] = useBoolean(false)
 	const [current_items, setCurrentItems] = useState<IPropsMenu['items']>([])
 	const [input, setInput] = useState('')

@@ -17,20 +17,11 @@ const Index: ConnectRC<IProps> = (props) => {
 
 	const params = useParams<{ name: string }>()
 
-	useEffect(() => {
-		dispatch({
-			type: `${history.location.pathname}/getSetting`,
-			payload: { name: params.name }
-		})
-	}, [params.name, history.location.pathname])
+	// useEffect(() => {
+	// 	setTimeout(() => {
 
-	useEffect(() => {
-		dispatch({
-			type: `${history.location.pathname}/search`,
-			// @ts-ignore
-			payload: { name: params.name, query: history.location.query }
-		})
-	}, [params.name, history.location])
+	// 	}, 300)
+	// }, [params.name, history.location.pathname])
 
 	return (
 		<Dynamic

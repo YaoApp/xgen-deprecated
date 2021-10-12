@@ -1,7 +1,7 @@
 import config from 'R/config'
 import { Fragment } from 'react'
 import store from 'store'
-import { connect, Helmet, history, useHistory } from 'umi'
+import { connect, Helmet, history } from 'umi'
 
 import { install } from '@/utils/pwa'
 
@@ -17,11 +17,8 @@ if (process.env.NODE_ENV === 'production' && config.pwa) install()
 const Index = (props: IProps) => {
 	const { dispatch, children, app_data } = props
 	const { app_info, user, menu, current_nav, current_menu, visible_menu } = app_data
-	const {
-		location: { pathname }
-	} = useHistory()
 
-	if (pathname === '/login') return children
+	if (history.location.pathname === '/login') return children
 	if (!menu || !menu.length) {
 		history.push('/login')
 
