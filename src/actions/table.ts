@@ -1,6 +1,6 @@
 import { message } from 'antd'
 import modelExtend from 'dva-model-extend'
-import qs from 'query-string'
+import pathToRegexp from 'path-to-regexp'
 import { history } from 'umi'
 
 import { batchDel, batchUpdate, getSetting, save, search } from '@/services/app'
@@ -17,7 +17,10 @@ export default modelExtend(pageModel, {
 			pageSize: 10,
 			total: 0,
 			showSizeChanger: true
-		}
+		},
+		batch: false,
+		selected: [],
+		visible_modal: false
 	} as IModelTable,
 
 	subscriptions: {
@@ -25,19 +28,19 @@ export default modelExtend(pageModel, {
 			const unlisten = _history.listen(async (location) => {
 				await window.$app.nextTick()
 
-				const state: any = location.state
+				const reg = pathToRegexp('/table/:name')
+				const params_arr = reg.exec(location.pathname)
 
-				if (!state) return
-				if (!state.params) return
-				if (state.match !== '/table/:name') return
+				if (!params_arr) return
+				if (params_arr.length !== 2) return
 
-				const name = state.params.name
+				const name = params_arr[1]
 
 				dispatch({
 					type: 'search',
 					payload: {
 						name,
-						query: location.query
+						query: location.search
 					}
 				})
 
@@ -66,7 +69,7 @@ export default modelExtend(pageModel, {
 			})
 		},
 		*search({ payload: { name, query } }, { call, put }) {
-			const data = yield call(search, { name, query: qs.stringify(query) })
+			const data = yield call(search, { name, query })
 
 			yield put({
 				type: 'updateState',
@@ -90,7 +93,7 @@ export default modelExtend(pageModel, {
 
 			yield put({
 				type: 'search',
-				payload: { name, query: history.location.query }
+				payload: { name, query: history.location.search }
 			})
 		},
 		*batchDel({ payload: { name, ids } }, { call, put }) {
@@ -102,7 +105,7 @@ export default modelExtend(pageModel, {
 
 			yield put({
 				type: 'search',
-				payload: { name, query: history.location.query }
+				payload: { name, query: history.location.search }
 			})
 		},
 		*batchUpdate({ payload: { name, ids, data } }, { call, put }) {
@@ -113,8 +116,13 @@ export default modelExtend(pageModel, {
 			message.success('操作成功')
 
 			yield put({
+				type: 'updateState',
+				payload: { visible_modal: false } as IModelTable
+			})
+
+			yield put({
 				type: 'search',
-				payload: { name, query: history.location.query }
+				payload: { name, query: history.location.search }
 			})
 		}
 	}

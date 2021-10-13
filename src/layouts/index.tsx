@@ -1,5 +1,5 @@
 import config from 'R/config'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect } from 'react'
 import store from 'store'
 import { connect, Helmet, history, NProgress } from 'umi'
 
@@ -15,10 +15,11 @@ import type { IProps, IPropsNav, IPropsMenu, IPropsContainer } from './type'
 
 if (process.env.NODE_ENV === 'production' && config.pwa) install()
 
+let path: any
+
 const Index = (props: IProps) => {
 	const { dispatch, children, loading, app_data } = props
 	const { app_info, user, menu, current_nav, current_menu, visible_menu } = app_data
-	const [path, setPath] = useState('')
 	const global_loading = loading.global
 
 	useEffect(() => {
@@ -30,7 +31,7 @@ const Index = (props: IProps) => {
 
 		NProgress.done()
 
-		setPath(history.location.pathname)
+		path = history.location.pathname
 	}, [path, history.location.pathname, global_loading])
 
 	if (history.location.pathname === '/login') return children
@@ -94,7 +95,7 @@ const Index = (props: IProps) => {
 				<link
 					rel='shortcut icon'
 					type='image/x-icon'
-					href={app_info.icons.favicon}
+					href={app_info.icons?.favicon}
 				/>
 			</Helmet>
 			<Loader></Loader>

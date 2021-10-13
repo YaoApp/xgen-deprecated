@@ -79,6 +79,9 @@ export interface IModelTable {
 		total: number
 		showSizeChanger: boolean
 	}
+	batch: boolean
+	selected: Array<number>
+	visible_modal: boolean
 }
 
 export interface IModelForm {

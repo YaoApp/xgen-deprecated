@@ -1,5 +1,6 @@
-import { Button, Form, Popover } from 'antd'
+import { Button, Form, Popover, Tooltip } from 'antd'
 import moment from 'moment'
+import { useMemo } from 'react'
 import { getDvaApp, history, useParams } from 'umi'
 
 import Dynamic from '@/cloud/core'
@@ -27,154 +28,147 @@ const getText = (dataIndex: string, dataItem: any, v: any, item: any, _columns: 
 }
 
 export const useColumns = (setting: any) => {
-	if (!setting.columns) return []
-
 	const params = useParams<{ name: string }>()
 
-	const _columns = setting.columns
-	const _layouts = setting.list.layout.columns
+	const columns = useMemo(() => {
+		if (!setting.columns) return []
 
-	const onFinish = (v: any, id: number) => {
-		getDvaApp()._store.dispatch({
-			type: `${history.location.pathname}/save`,
-			payload: { name: params.name, data: { id, ...v } }
-		})
-	}
+		const _columns = setting.columns
+		const _layouts = setting.list.layout.columns
 
-	const columns = _layouts.reduce((total: Array<any>, it: any, index: number) => {
-		const item = {
-			..._columns[it.name],
-			title: it.name
+		const onFinish = (v: any, id: number) => {
+			getDvaApp()._store.dispatch({
+				type: `${history.location.pathname}/save`,
+				payload: { name: params.name, data: { id, ...v } }
+			})
 		}
 
-		if (it.width) item['width'] = it.width
+		const columns = _layouts.reduce((total: Array<any>, it: any, index: number) => {
+			const item = {
+				..._columns[it.name],
+				title: it.name
+			}
 
-		item.dataIndex = _columns[item.title].view.props.value.replace(':', '')
+			if (it.width) item['width'] = it.width
 
-		if (item.edit && Object.keys(item.edit).length) {
-			item.render = (v: any, dataItem: any) => {
-				const key = _columns[item.title].edit.props.value.replace(':', '')
-				const value =
-					item.edit.type === 'select'
-						? dataItem[key]
+			item.dataIndex = _columns[item.title].view.props.value.replace(':', '')
+
+			if (item.edit && Object.keys(item.edit).length) {
+				item.render = (v: any, dataItem: any) => {
+					const text = getText(item.dataIndex, dataItem, v, item, _columns)
+					const key = _columns[item.title].edit.props.value.replace(':', '')
+					const value =
+						item.edit.type === 'select'
 							? dataItem[key]
-							: []
-						: dataItem[key]
+								? dataItem[key]
+								: []
+							: dataItem[key]
 
-				return (
+					return (
+						<Popover
+							overlayClassName='td_popover'
+							placement='top'
+							trigger='click'
+							destroyTooltipOnHide={{ keepParent: false }}
+							content={
+								<Form
+									className='flex'
+									name={`form_table_td_${item.dataIndex}_${index}`}
+									initialValues={{
+										[key]: value
+									}}
+									onFinish={(v) => onFinish(v, dataItem.id)}
+								>
+									<Dynamic
+										category='components'
+										type='form'
+										props={{
+											type: item.edit.type,
+											props: {
+												...item.edit.props,
+												label: item.label,
+												name: key,
+												style: { width: 240 }
+											}
+										}}
+									></Dynamic>
+									<Button
+										className='ml_12'
+										type='primary'
+										htmlType='submit'
+										icon={<CheckOutlined></CheckOutlined>}
+									></Button>
+								</Form>
+							}
+						>
+							<div className='edit_text line_clamp_2'>
+								{item.view.type ? (
+									<Dynamic
+										category='components'
+										type='base'
+										name={item.view.type.replace(
+											/^\S/,
+											(s: string) => s.toUpperCase()
+										)}
+										props={{
+											...item.view.props,
+											value: text
+										}}
+									></Dynamic>
+								) : (
+									text || '-'
+								)}
+							</div>
+						</Popover>
+					)
+				}
+			} else {
+				item.render = (v: any, dataItem: any) =>
+					getText(item.dataIndex, dataItem, v, item, _columns)
+			}
+
+			total.push(item)
+
+			return total
+		}, [])
+
+		columns.push({
+			title: '操作',
+			key: 'operation',
+			width: '60px',
+			render: (_: any, item: any) => (
+				<div className='flex justify_end'>
 					<Popover
-						overlayClassName='td_popover'
-						placement='top'
+						overlayClassName='options_popover'
+						placement='bottomRight'
 						trigger='click'
 						destroyTooltipOnHide={{ keepParent: false }}
 						content={
-							<Form
-								className='flex'
-								name={`form_table_td_${item.dataIndex}_${index}`}
-								initialValues={{
-									[key]: value
-								}}
-								onFinish={(v) => onFinish(v, dataItem.id)}
-							>
-								<Dynamic
-									category='components'
-									type='form'
-									props={{
-										type: item.edit.type,
-										props: {
-											...item.edit.props,
-											label: item.label,
-											name: key,
-											style: { width: 240 }
-										}
-									}}
-								></Dynamic>
-								<Button
-									className='ml_12'
-									type='primary'
-									htmlType='submit'
-									icon={<CheckOutlined></CheckOutlined>}
-								></Button>
-							</Form>
+							<div className='table_option_items flex flex_column'>
+								<div
+									className='table_option_item flex align_center cursor_point'
+									onClick={() =>
+										history.push({
+											pathname: `/form/${params.name}/${item.id}`
+										})
+									}
+								>
+									<Icon name='icon-eye' size={13}></Icon>
+									<span className='text'>查看</span>
+								</div>
+							</div>
 						}
 					>
-						<div className='edit_text'>
-							{item.view.type ? (
-								<Dynamic
-									category='components'
-									type='base'
-									name={item.view.type.replace(
-										/^\S/,
-										(s: string) => s.toUpperCase()
-									)}
-									props={{
-										...item.view.props,
-										value: getText(
-											item.dataIndex,
-											dataItem,
-											v,
-											item,
-											_columns
-										)
-									}}
-								></Dynamic>
-							) : (
-								getText(
-									item.dataIndex,
-									dataItem,
-									v,
-									item,
-									_columns
-								) || '-'
-							)}
-						</div>
+						<a className='option_icon_wrap flex justify_center align_center clickable'>
+							<Icon name='icon-more-vertical' size={18}></Icon>
+						</a>
 					</Popover>
-				)
-			}
-		} else {
-			item.render = (v: any, dataItem: any) =>
-				getText(item.dataIndex, dataItem, v, item, _columns)
-		}
+				</div>
+			)
+		})
 
-		total.push(item)
-
-		return total
-	}, [])
-
-	columns.push({
-		title: '操作',
-		key: 'operation',
-		width: '60px',
-		render: (_: any, item: any) => (
-			<div className='flex justify_end'>
-				<Popover
-					overlayClassName='options_popover'
-					placement='bottomRight'
-					trigger='click'
-					destroyTooltipOnHide={{ keepParent: false }}
-					content={
-						<div className='table_option_items flex flex_column'>
-							<div
-								className='table_option_item flex align_center cursor_point'
-								onClick={() =>
-									history.push({
-										pathname: `/form/${params.name}/${item.id}`
-									})
-								}
-							>
-								<Icon name='icon-eye' size={13}></Icon>
-								<span className='text'>查看</span>
-							</div>
-						</div>
-					}
-				>
-					<a className='option_icon_wrap flex justify_center align_center clickable'>
-						<Icon name='icon-more-vertical' size={18}></Icon>
-					</a>
-				</Popover>
-			</div>
-		)
-	})
+		return columns
+	}, [setting])
 
 	return columns
 }

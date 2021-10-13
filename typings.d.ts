@@ -23,5 +23,6 @@ interface Window {
 			el: (props: T) => JSX.Element | null
 		) => React.MemoExoticComponent<(props: T) => JSX.Element | null>
 		nextTick: () => Promise<unknown>
+		sleep: (time: number) => Promise<unknown>
 	}
 }

@@ -9,18 +9,13 @@ interface IProps {
 }
 
 const Index: ConnectRC<IProps> = (props) => {
-	const { page_data = { setting: {}, data: {} } } = props
-	const { setting, data } = page_data
+	const { page_data } = props
 
-	return <Dynamic category='renders' type='Form' props={{ setting, data }}></Dynamic>
+	return <Dynamic category='renders' type='Form' props={page_data}></Dynamic>
 }
 
-const getInitialProps = (model: any) => {
-	const namespace = history.location.pathname
-
-	return {
-		page_data: model[namespace]
-	}
-}
+const getInitialProps = (model: any) => ({
+	page_data: model[history.location.pathname]
+})
 
 export default window.$app.memo(connect(getInitialProps)(Index))

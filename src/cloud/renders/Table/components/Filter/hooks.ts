@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 export const useVisibleMore = () => {
 	const [visible_more, setVisibleMore] = useState(false)
@@ -27,19 +27,21 @@ export const useVisibleMore = () => {
 }
 
 export const useFilters = (setting: any) => {
-	if (!setting.filters) return []
+	const filters = useMemo(() => {
+		if (!setting.filters) return []
 
-	const _filters = setting.filters
-	const _layouts = setting.list.layout.filters
+		const _filters = setting.filters
+		const _layouts = setting.list.layout.filters
 
-	const filters = _layouts.reduce((total: Array<any>, item: any) => {
-		total.push({
-			..._filters[item.name],
-			span: item.width
-		})
+		return _layouts.reduce((total: Array<any>, item: any) => {
+			total.push({
+				..._filters[item.name],
+				span: item.width
+			})
 
-		return total
-	}, [])
+			return total
+		}, [])
+	}, [setting])
 
 	return filters
 }

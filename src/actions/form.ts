@@ -1,5 +1,6 @@
 import { message } from 'antd'
 import modelExtend from 'dva-model-extend'
+import pathToRegexp from 'path-to-regexp'
 import { history } from 'umi'
 
 import { del, find, getSetting, save } from '@/services/app'
@@ -16,19 +17,19 @@ export default modelExtend(pageModel, {
 			const unlisten = _history.listen(async (location) => {
 				await window.$app.nextTick()
 
-				const state: any = location.state
+				const reg = pathToRegexp('/form/:name/:id')
+				const params_arr = reg.exec(location.pathname)
 
-				if (!state) return
-				if (!state.params) return
-				if (state.match !== '/form/:name/:id') return
+				if (!params_arr) return
+				if (params_arr.length !== 3) return
 
-				const name = state.params.name
-				const id = state.params.id
+				const name = params_arr[1]
+				const id = params_arr[2]
 
 				if (id !== '0') {
 					dispatch({
 						type: 'find',
-						payload: state.params
+						payload: { name, id }
 					})
 				}
 

@@ -24,8 +24,6 @@ export function onRouteChange({ matchedRoutes }: any) {
 	const app = getDvaApp()
 	const exist = findIndex(app._models, (item: Model) => item.namespace === match.url)
 
-	history.location.state = { match: match.path, params: match.params }
-
 	if (exist !== -1) return
 
 	switch (match.path) {

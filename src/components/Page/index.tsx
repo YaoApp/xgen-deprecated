@@ -19,13 +19,12 @@ interface IProps {
 		icon: string
 		action: string
 	}>
-	app: IModelApp
+	visible_menu: IModelApp['visible_menu']
 	dispatch: Dispatch
 }
 
 const Index = (props: IProps) => {
-	const { children, className, title, options = [], app, dispatch } = props
-	const { menu, current_nav, visible_menu } = app
+	const { children, className, title, options = [], visible_menu, dispatch } = props
 
 	const params = useParams<{ id: string }>()
 
@@ -60,24 +59,29 @@ const Index = (props: IProps) => {
 							{title}
 						</span>
 					) : (
-						<span className='page_title'>{menu[current_nav]?.name}</span>
+						<span className='page_title'>{title}</span>
 					)}
 				</div>
 				<div className='options_wrap flex align_center'>
-					{options.map((item, index) => (
-						<Tooltip title={item.title} placement='bottom' key={index}>
-							<a
-								className='option_item cursor_point flex justify_center align_center transition_normal clickable'
-								onClick={() => onAction(item.action)}
+					{!!options.length &&
+						options.map((item, index) => (
+							<Tooltip
+								title={item.title}
+								placement='bottom'
+								key={index}
 							>
-								<Icon
-									className='icon_option'
-									name={item.icon}
-									size={18}
-								></Icon>
-							</a>
-						</Tooltip>
-					))}
+								<a
+									className='option_item cursor_point flex justify_center align_center transition_normal clickable'
+									onClick={() => onAction(item.action)}
+								>
+									<Icon
+										className='icon_option'
+										name={item.icon}
+										size={18}
+									></Icon>
+								</a>
+							</Tooltip>
+						))}
 				</div>
 			</header>
 			<div className='page_wrap'>{children}</div>
@@ -86,7 +90,7 @@ const Index = (props: IProps) => {
 }
 
 const getInitialProps = ({ app }: { app: IModelApp }) => ({
-	app
+	visible_menu: app.visible_menu
 })
 
 export default window.$app.memo(connect(getInitialProps)(Index))

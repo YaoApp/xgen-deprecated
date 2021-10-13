@@ -53,13 +53,20 @@ export default modelExtend(pageModel, {
 
 			yield put({
 				type: 'app/updateState',
-				payload: { user: res.user, menu: res.menus, current_nav: 0 } as IModelApp
+				payload: {
+					user: res.user,
+					menu: res.menus,
+					current_nav: 0,
+					visible_menu: true
+				} as IModelApp
 			})
 
 			sessionStorage.setItem('token', res.token)
 			store.set('user', res.user)
 			store.set('menu', res.menus)
 			store.set('current_nav', 0)
+
+			yield window.$app.sleep(600)
 
 			history.push('/kanban')
 		}

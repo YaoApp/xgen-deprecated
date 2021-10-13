@@ -46,6 +46,16 @@ const Index = ({ setting = {}, table, pagination }: any) => {
 					ids: selected
 				}
 			})
+		},
+		onBatchUpdate(data: any) {
+			dispatch({
+				type: `${history.location.pathname}/batchUpdate`,
+				payload: {
+					name,
+					ids: selected,
+					data
+				}
+			})
 		}
 	}
 

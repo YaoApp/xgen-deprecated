@@ -9,7 +9,7 @@ export const getSetting = ({ name }: { name: string }) => {
 }
 
 export const search = ({ name, query }: { name: string; query: any }) => {
-	return request(`/api/xiang/table/${name}/search${`?${query}` || ''}`)
+	return request(`/api/xiang/table/${name}/search${query ? `?${query}` : ''}`)
 }
 
 export const find = ({ name, id }: { name: string; id: string }) => {

@@ -61,7 +61,7 @@ const Index: ConnectRC<IProps> = (props) => {
 				<link
 					rel='shortcut icon'
 					type='image/x-icon'
-					href={app_info.icons.favicon}
+					href={app_info.icons?.favicon}
 				/>
 			</Helmet>
 			<div className='bg_wrap flex justify_center align_center'>
@@ -73,7 +73,7 @@ const Index: ConnectRC<IProps> = (props) => {
 						<span
 							className='logo'
 							style={{
-								backgroundImage: `url(data:image/png;base64,${app_info.icons.png})`
+								backgroundImage: `url(data:image/png;base64,${app_info.icons?.png})`
 							}}
 						/>
 					</div>
@@ -209,7 +209,7 @@ const getInitialProps = ({
 	app: IModelApp
 	login: IModelLogin
 }) => ({
-	loading: !!loading.effects[`login/getSetting`],
+	loading: !!loading.effects[`login/login`],
 	app_data: app,
 	page_data: login
 })

@@ -15,7 +15,11 @@ const Index = (props: IPropsOptions) => {
 		<div className='user_wrap flex flex_column'>
 			<div
 				className='info_wrap w_100 border_box flex align_center'
-				onClick={() => history.push(`/form/${app_info.option.nav_user}/${user.id}`)}
+				onClick={() =>
+					history.push(
+						`/form/${app_info?.option?.nav_user || 'xiang.user'}/${user.id}`
+					)
+				}
 			>
 				<Avatar
 					className='cursor_point'
@@ -53,7 +57,7 @@ const Index = (props: IPropsOptions) => {
 			<Tooltip title='账号管理' placement='right'>
 				<NavLink
 					className='nav_item w_100 flex justify_center align_center clickable'
-					to={`/table/${app_info.option.nav_user}`}
+					to={`/table/${app_info?.option?.nav_user || 'xiang.user'}`}
 					onClick={() => setCurrentNav(-1)}
 				>
 					<Icon name='icon-user' size={20}></Icon>
@@ -62,7 +66,7 @@ const Index = (props: IPropsOptions) => {
 			<Tooltip title='系统设置' placement='right'>
 				<NavLink
 					className='nav_item w_100 flex justify_center align_center clickable'
-					to={`/table/${app_info.option.nav_menu}`}
+					to={`/table/${app_info?.option?.nav_menu || 'xiang.menu'}`}
 					onClick={() => setCurrentNav(-1)}
 				>
 					<Icon name='icon-settings' size={20}></Icon>

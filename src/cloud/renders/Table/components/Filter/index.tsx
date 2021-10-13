@@ -121,20 +121,22 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 								</Button>
 							</div>
 						) : (
-							<Button
-								className='btn_normal flex justify_center align_center mr_16'
-								type='default'
-								icon={
-									<Icon
-										className='transition_normal'
-										name='icon-align-right'
-										size={15}
-									></Icon>
-								}
-								onClick={() => setBatch(true)}
-							>
-								批量管理
-							</Button>
+							setting.list?.option?.batch && (
+								<Button
+									className='btn_normal flex justify_center align_center mr_16'
+									type='default'
+									icon={
+										<Icon
+											className='transition_normal'
+											name='icon-align-right'
+											size={15}
+										></Icon>
+									}
+									onClick={() => setBatch(true)}
+								>
+									批量管理
+								</Button>
+							)
 						)}
 						<Dropdown.Button
 							className='btn_add flex justify_center align_center'

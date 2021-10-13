@@ -1,0 +1,80 @@
+.modal_batch {
+	:global {
+		.ant-checkbox-inner {
+			background-color: var(--color_bg);
+		}
+
+		.ant-checkbox-checked {
+			.ant-checkbox-inner {
+				background-color: var(--color_main);
+			}
+		}
+
+		.ant-checkbox-wrapper {
+			margin-right: 8px;
+			margin-bottom: 8px;
+			margin-left: 0;
+
+			.ant-checkbox {
+				+ span {
+					color: fade(@text-color, 60%);
+				}
+
+				&-checked {
+					+ span {
+						color: fade(@text-color, 100%);
+					}
+				}
+			}
+		}
+
+		.ant-form-item {
+			display: flex;
+			flex-direction: column;
+
+			.ant-form-item-label {
+				display: flex;
+
+				label {
+					margin-bottom: 8px;
+					height: auto;
+					color: var(--color_text);
+					font-weight: 700;
+					font-size: 12.6px;
+
+					&::after {
+						display: none;
+					}
+				}
+			}
+
+			.ant-input-number {
+				width: 100%;
+			}
+
+			.ant-form-item-explain {
+				position: absolute;
+				top: -26px;
+				right: 2px;
+				font-size: 13px;
+			}
+		}
+
+		.select_wrap {
+			padding: 8px 12px;
+			padding-bottom: 0;
+			border: 1px solid var(--color_border);
+			border-radius: 6px;
+		}
+
+		.form_batch {
+			margin-top: 36px;
+
+			.ant-form-item-control {
+				box-sizing: border-box;
+				border: 1px solid fade(white, 10%);
+				border-radius: 6px;
+			}
+		}
+	}
+}
