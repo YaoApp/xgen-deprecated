@@ -1,22 +1,14 @@
-import { Checkbox, Form } from 'antd'
+import { Checkbox } from 'antd'
 
-import type { CheckboxProps, FormItemProps } from 'antd'
+import { Item } from '@/components'
 
-const { Item } = Form
+import type { CheckboxProps } from 'antd'
 
-const Index = (props: CheckboxProps & { name: string; label?: string; rules?: Array<any> }) => {
-	const rules = props.rules ? { rules: props.rules } : {}
+const Index = (props: CheckboxProps) => {
 	const { value, ...real_props } = props
 
-	const props_item: FormItemProps = {
-		label: props.label,
-		name: props.name.replace(':', ''),
-		noStyle: !props.label,
-		...rules
-	}
-
 	return (
-		<Item {...props_item} valuePropName='checked'>
+		<Item {...props} valuePropName='checked'>
 			<Checkbox {...real_props}></Checkbox>
 		</Item>
 	)

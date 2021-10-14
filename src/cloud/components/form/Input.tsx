@@ -1,21 +1,16 @@
-import { Form, Input } from 'antd'
+import { Input } from 'antd'
 
-import type { InputProps, FormItemProps } from 'antd'
+import { Item } from '@/components'
 
-const { Item } = Form
+import type { InputProps } from 'antd'
 
-const Index = (props: InputProps & { name: string; label?: string; rules?: Array<any> }) => {
-	const rules = props.rules ? { rules: props.rules } : {}
+interface IProps extends InputProps {
+	label?: string
+}
 
-	const props_item: FormItemProps = {
-		label: props.label,
-		name: props.name.replace(':', ''),
-		noStyle: !props.label,
-		...rules
-	}
-
+const Index = (props: IProps) => {
 	return (
-		<Item {...props_item}>
+		<Item {...(props as any)}>
 			<Input
 				{...props}
 				placeholder={props.placeholder || `请输入${props.label}`}

@@ -1,11 +1,12 @@
 import { useRequest } from 'ahooks'
-import { Form, Select } from 'antd'
+import { Select } from 'antd'
 import { useMemo } from 'react'
 import { request } from 'umi'
 
-import type { SelectProps, FormItemProps } from 'antd'
+import { Item } from '@/components'
 
-const { Item } = Form
+import type { SelectProps } from 'antd'
+
 const { Option } = Select
 
 interface IProps extends SelectProps<any> {
@@ -48,17 +49,8 @@ const Index = (props: IProps) => {
 		return _props
 	}, [props])
 
-	const rules = props.rules ? { rules: props.rules } : {}
-
-	const props_item: FormItemProps = {
-		label: props.label,
-		name: props.name.replace(':', ''),
-		noStyle: !props.label,
-		...rules
-	}
-
 	return (
-		<Item {...props_item}>
+		<Item {...(props as any)}>
 			<Select
 				{...real_props}
 				placeholder={props.placeholder || `请选择${props.label}`}

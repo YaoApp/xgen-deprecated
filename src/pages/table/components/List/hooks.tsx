@@ -67,7 +67,7 @@ export const useColumns = (setting: any) => {
 					return (
 						<Popover
 							overlayClassName='td_popover'
-							placement='top'
+							placement='topLeft'
 							trigger='click'
 							destroyTooltipOnHide={{ keepParent: false }}
 							content={
