@@ -66,10 +66,12 @@ export const useColumns = (setting: any) => {
 
 					return (
 						<Popover
+							id='td_popover'
 							overlayClassName='td_popover'
 							placement='topLeft'
 							trigger='click'
 							destroyTooltipOnHide={{ keepParent: false }}
+							popupVisible
 							content={
 								<Form
 									className='flex'
@@ -77,7 +79,18 @@ export const useColumns = (setting: any) => {
 									initialValues={{
 										[key]: value
 									}}
-									onFinish={(v) => onFinish(v, dataItem.id)}
+									onFinish={(v) => {
+										onFinish(v, dataItem.id)
+
+										const td_popover =
+											document.getElementById(
+												'td_popover'
+											)
+
+										if (!td_popover) return
+
+										td_popover.style.display = 'none'
+									}}
 								>
 									<Dynamic
 										type='form'

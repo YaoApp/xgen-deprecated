@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { connect, history, useParams } from 'umi'
 
 import { Page } from '@/components'
@@ -16,15 +15,23 @@ interface IProps {
 
 const Index: ConnectRC<IProps> = (props) => {
 	const { page_data, dispatch } = props
+	const { name } = useParams<{ name: string }>()
 
 	if (!page_data?.setting?.name) return null
 
-	const { setting, table, pagination } = page_data
+	const namespace = history.location.pathname
+	const { setting, table, pagination, batch, selected, visible_modal } = page_data
 
-	const [batch, setBatch] = useState(false)
-	const [selected, setSelected] = useState([])
-	const [visible_modal, setVisibleModal] = useState(false)
-	const { name } = useParams<{ name: string }>()
+	const setData = (key: keyof IModelTable, v: any) => {
+		dispatch({
+			type: `${namespace}/updateState`,
+			payload: { [key]: v } as IModelTable
+		})
+	}
+
+	const setBatch = (v: IModelTable['batch']) => setData('batch', v)
+	const setSelected = (v: IModelTable['selected']) => setData('selected', v)
+	const setVisibleModal = (v: IModelTable['visible_modal']) => setData('visible_modal', v)
 
 	const props_filter = {
 		setting,
@@ -48,7 +55,7 @@ const Index: ConnectRC<IProps> = (props) => {
 		setVisibleModal,
 		onBatchDelete() {
 			dispatch({
-				type: `${history.location.pathname}/batchDel`,
+				type: `${namespace}/batchDel`,
 				payload: {
 					name,
 					ids: selected
@@ -57,7 +64,7 @@ const Index: ConnectRC<IProps> = (props) => {
 		},
 		onBatchUpdate(data: any) {
 			dispatch({
-				type: `${history.location.pathname}/batchUpdate`,
+				type: `${namespace}/batchUpdate`,
 				payload: {
 					name,
 					ids: selected,

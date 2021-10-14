@@ -39,17 +39,18 @@ export function onRouteChange({ matchedRoutes }: any) {
 	switch (match.path) {
 		case '/table/:name':
 			model(table, match.url, app)
-			unmodel(pathToRegexp('/table/:name'), match.url, app)
 
 			break
 		case '/form/:name/:id':
 			model(form, match.url, app)
-			unmodel(pathToRegexp('/form/:name/:id'), match.url, app)
 
 			break
 		default:
 			break
 	}
+
+	unmodel(pathToRegexp('/table/:name'), match.url, app)
+	unmodel(pathToRegexp('/form/:name/:id'), match.url, app)
 }
 
 /** 全局接口配置 */

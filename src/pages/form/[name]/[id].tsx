@@ -28,7 +28,8 @@ const Index: ConnectRC<IProps> = (props) => {
 
 	const props_form = {
 		setting,
-		data
+		data,
+		dispatch
 	}
 
 	return (

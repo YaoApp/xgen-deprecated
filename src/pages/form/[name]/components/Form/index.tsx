@@ -1,7 +1,7 @@
 import { Affix, Button, Col, Form, Modal, Row } from 'antd'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
-import { getDvaApp, history, useParams } from 'umi'
+import { history, useParams } from 'umi'
 
 import Dynamic from '@/cloud/core'
 import { Icon } from '@/components'
@@ -9,18 +9,23 @@ import { Icon } from '@/components'
 import { useFieldset } from './hooks'
 import styles from './index.less'
 
-import type { IModelApp } from 'umi'
+import type { Dispatch, IModelApp } from 'umi'
 
 const { useForm } = Form
 const { confirm } = Modal
 
-const Index = ({ setting = {}, data = {} }: any) => {
+interface IProps {
+	setting: any
+	data: any
+	dispatch: Dispatch
+}
+
+const Index = ({ setting = {}, data = {}, dispatch }: IProps) => {
 	const params = useParams<{ name: string; id: string }>()
 	const [form] = useForm()
-	const { setFieldsValue } = form
+	const { setFieldsValue, getFieldsValue } = form
 	const [stick, setStick] = useState<boolean | undefined>(false)
 	const fieldset = useFieldset(setting)
-	const dispatch = getDvaApp()._store.dispatch
 
 	useEffect(() => {
 		if (params.id === '0') return
@@ -30,12 +35,14 @@ const Index = ({ setting = {}, data = {} }: any) => {
 	}, [params.id, data])
 
 	const onFinish = (v: any) => {
-		const data = params.id === '0' ? v : { ...v, id: params.id }
+		console.log(getFieldsValue())
 
-		dispatch({
-			type: `${history.location.pathname}/save`,
-			payload: { name: params.name, data }
-		})
+		// const data = params.id === '0' ? v : { ...v, id: params.id }
+
+		// dispatch({
+		// 	type: `${history.location.pathname}/save`,
+		// 	payload: { name: params.name, data }
+		// })
 	}
 
 	const onDel = () => {
@@ -81,7 +88,8 @@ const Index = ({ setting = {}, data = {} }: any) => {
 						<Button
 							className='btn_action btn_confirm'
 							type='primary'
-							htmlType='submit'
+							// htmlType='submit'
+							onClick={onFinish}
 						>
 							保存
 						</Button>

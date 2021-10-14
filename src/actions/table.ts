@@ -117,7 +117,7 @@ export default modelExtend(pageModel, {
 
 			yield put({
 				type: 'updateState',
-				payload: { visible_modal: false } as IModelTable
+				payload: { batch: false, visible_modal: false } as IModelTable
 			})
 
 			yield put({

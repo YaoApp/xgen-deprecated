@@ -270,3 +270,45 @@
 		text-align: right;
 	}
 }
+
+.ant-upload-picture-card-wrapper {
+	padding: 15px;
+	padding-right: 7px;
+	padding-bottom: 7px;
+	border-radius: 6px;
+	background-color: var(--color_bg_nav);
+
+	.ant-upload-list-picture-card-container {
+		width: 91.4px;
+		height: 91.4px;
+	}
+}
+
+.form_item_upload_wrap {
+	.ant-upload-list-picture .ant-upload-list-item,
+	.ant-upload-list-picture-card .ant-upload-list-item {
+		overflow: hidden;
+		padding: 0;
+		border-color: var(--color_border);
+	}
+
+	.ant-upload {
+		&.ant-upload-select-picture-card {
+			width: 91.4px;
+			height: 91.4px;
+		}
+	}
+
+	.ant-upload-list-picture-card .ant-upload-list-item-thumbnail {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.ant-upload-list-picture-card .ant-upload-list-item-thumbnail,
+	.ant-upload-list-picture-card .ant-upload-list-item-thumbnail img {
+		opacity: 1;
+
+		object-fit: cover;
+	}
+}
