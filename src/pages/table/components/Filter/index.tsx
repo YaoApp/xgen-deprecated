@@ -52,16 +52,13 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 				{filters.map((item: any, index: number) => (
 					<Col span={item.span} key={index}>
 						<Dynamic
-							category='components'
 							type='form'
+							name={item.input.type}
 							props={{
-								type: item.input.type,
-								props: {
-									...item.input.props,
-									name: item.bind,
-									label: item.label,
-									string: '1'
-								}
+								...item.input.props,
+								name: item.bind,
+								label: item.label,
+								string: '1'
 							}}
 						></Dynamic>
 					</Col>

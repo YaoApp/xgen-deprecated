@@ -96,15 +96,12 @@ const Index = (props: IProps) => {
 							item.checked && (
 								<Col span={item.span} key={index}>
 									<Dynamic
-										category='components'
 										type='form'
+										name={item.edit.type}
 										props={{
-											type: item.edit.type,
-											props: {
-												...item.edit.props,
-												name: item.edit.props.value,
-												label: item.label
-											}
+											...item.edit.props,
+											name: item.edit.props.value,
+											label: item.label
 										}}
 									></Dynamic>
 								</Col>

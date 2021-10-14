@@ -1,5 +1,6 @@
+import { useUpdateEffect } from 'ahooks'
 import config from 'R/config'
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 import store from 'store'
 import { connect, Helmet, history, NProgress } from 'umi'
 
@@ -22,7 +23,7 @@ const Index = (props: IProps) => {
 	const { app_info, user, menu, current_nav, current_menu, visible_menu } = app_data
 	const global_loading = loading.global
 
-	useEffect(() => {
+	useUpdateEffect(() => {
 		if (path === history.location.pathname) return
 
 		NProgress.start()

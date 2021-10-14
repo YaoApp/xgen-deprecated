@@ -1,17 +1,17 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useCallback } from 'react'
 
-type RendersType = 'Table' | 'Form' | 'Kanban'
-type ComponentsType = 'base' | 'form'
+type ComponentsType = 'base' | 'form' | 'chart' | 'group'
 
 interface IProps {
-	category: 'renders' | 'components'
-	type: RendersType | ComponentsType
-	name?: string
+	type: ComponentsType
+	name: string
 	props: { [key: string]: any }
 }
 
-const Index = ({ category, type, name, props }: IProps) => {
-	const Component = lazy(() => import(`@/cloud/${category}/${type}${name ? '/' + name : ''}`))
+const Index = ({ type, name, props }: IProps) => {
+	const getName = useCallback((name: string) => name.replace(/^\S/, (s) => s.toUpperCase()), [])
+
+	const Component = lazy(() => import(`@/cloud/components/${type}/${getName(name)}`))
 
 	return (
 		<Suspense fallback={''}>

@@ -102,16 +102,13 @@ const Index = ({ setting = {}, data = {} }: any) => {
 							{item.columns.map((it: any, idx: number) => (
 								<Col span={it.span} key={idx}>
 									<Dynamic
-										category='components'
 										type='form'
+										name={it.edit.type}
 										props={{
-											type: it.edit.type,
-											props: {
-												...it.edit.props,
-												name: it.edit.props.value,
-												label: it.label,
-												rules: it.rules
-											}
+											...it.edit.props,
+											name: it.edit.props.value,
+											label: it.label,
+											rules: it.rules
 										}}
 									></Dynamic>
 								</Col>

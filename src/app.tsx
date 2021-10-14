@@ -8,10 +8,20 @@ import { form, table } from '@/actions'
 import type { RequestConfig } from 'umi'
 import type { Model } from '@/typings/dva'
 
+// 根据匹配到的url动态注册model
+const model = (model: Model, url: string, app: any) => {
+	app.model({
+		...model,
+		namespace: url
+	})
+
+	app.start()
+}
+
 /** 注销其他动态页面的model，防止出现重复执行 */
-const unmodel = (reg: RegExp, app: any) => {
+const unmodel = (reg: RegExp, url: string, app: any) => {
 	for (const item of app._models) {
-		if (reg.exec(item.namespace)) app.unmodel(item.namespace)
+		if (reg.exec(item.namespace) && item.namespace !== url) app.unmodel(item.namespace)
 	}
 }
 
@@ -28,27 +38,18 @@ export function onRouteChange({ matchedRoutes }: any) {
 
 	switch (match.path) {
 		case '/table/:name':
-			unmodel(pathToRegexp('/table/:name'), app)
-
-			app.model({
-				...table,
-				namespace: match.url
-			})
+			model(table, match.url, app)
+			unmodel(pathToRegexp('/table/:name'), match.url, app)
 
 			break
 		case '/form/:name/:id':
-			unmodel(pathToRegexp('/form/:name/:id'), app)
+			model(form, match.url, app)
+			unmodel(pathToRegexp('/form/:name/:id'), match.url, app)
 
-			app.model({
-				...form,
-				namespace: match.url
-			})
 			break
 		default:
 			break
 	}
-
-	app.start()
 }
 
 /** 全局接口配置 */

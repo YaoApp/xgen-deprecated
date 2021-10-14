@@ -1,4 +1,4 @@
-import { Button, Form, Popover, Tooltip } from 'antd'
+import { Button, Form, Popover } from 'antd'
 import moment from 'moment'
 import { useMemo } from 'react'
 import { getDvaApp, history, useParams } from 'umi'
@@ -80,16 +80,13 @@ export const useColumns = (setting: any) => {
 									onFinish={(v) => onFinish(v, dataItem.id)}
 								>
 									<Dynamic
-										category='components'
 										type='form'
+										name={item.edit.type}
 										props={{
-											type: item.edit.type,
-											props: {
-												...item.edit.props,
-												label: item.label,
-												name: key,
-												style: { width: 240 }
-											}
+											...item.edit.props,
+											label: item.label,
+											name: key,
+											style: { width: 240 }
 										}}
 									></Dynamic>
 									<Button
@@ -104,12 +101,8 @@ export const useColumns = (setting: any) => {
 							<div className='edit_text line_clamp_2'>
 								{item.view.type ? (
 									<Dynamic
-										category='components'
 										type='base'
-										name={item.view.type.replace(
-											/^\S/,
-											(s: string) => s.toUpperCase()
-										)}
+										name={item.view.type}
 										props={{
 											...item.view.props,
 											value: text

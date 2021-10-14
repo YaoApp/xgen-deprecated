@@ -1,6 +1,9 @@
 import { connect, history } from 'umi'
 
-import Dynamic from '@/cloud/core'
+import { Page } from '@/components'
+
+import Breadcrumb from './components/Breadcrumb'
+import Form from './components/Form'
 
 import type { ConnectRC, IModelForm } from 'umi'
 
@@ -11,7 +14,16 @@ interface IProps {
 const Index: ConnectRC<IProps> = (props) => {
 	const { page_data } = props
 
-	return <Dynamic category='renders' type='Form' props={page_data}></Dynamic>
+	if (!page_data?.setting?.name) return null
+
+	const { setting, data } = page_data
+
+	return (
+		<Page title={setting.name}>
+			<Breadcrumb></Breadcrumb>
+			<Form {...{ setting, data }}></Form>
+		</Page>
+	)
 }
 
 const getInitialProps = (model: any) => ({

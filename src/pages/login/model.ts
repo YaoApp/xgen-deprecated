@@ -51,6 +51,10 @@ export default modelExtend(pageModel, {
 				return
 			}
 
+			if (!store.get('app.info')) {
+				yield put({ type: 'app/inspect' })
+			}
+
 			yield put({
 				type: 'app/updateState',
 				payload: {
