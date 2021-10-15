@@ -1,0 +1,37 @@
+._local {
+	display: flex;
+	width: 100%;
+
+	:global {
+		.ant-image {
+			display: flex !important;
+			margin-right: 8px;
+
+			&.ant-image-error {
+				height: 15px !important;
+
+				.ant-image-img {
+					width: auto;
+					height: 15px !important;
+					border: none;
+				}
+			}
+
+			.ant-image-img {
+				box-sizing: border-box;
+				border: 1px solid var(--color_border);
+				border-radius: 6px;
+
+				object-fit: cover;
+			}
+
+			.ant-image-mask {
+				border-radius: 6px;
+			}
+
+			.ant-image-error {
+				display: flex;
+			}
+		}
+	}
+}

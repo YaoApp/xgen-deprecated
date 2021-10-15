@@ -23,7 +23,7 @@ interface IProps {
 const Index = ({ setting = {}, data = {}, dispatch }: IProps) => {
 	const params = useParams<{ name: string; id: string }>()
 	const [form] = useForm()
-	const { setFieldsValue, getFieldsValue } = form
+	const { setFieldsValue } = form
 	const [stick, setStick] = useState<boolean | undefined>(false)
 	const fieldset = useFieldset(setting)
 
@@ -35,14 +35,12 @@ const Index = ({ setting = {}, data = {}, dispatch }: IProps) => {
 	}, [params.id, data])
 
 	const onFinish = (v: any) => {
-		console.log(getFieldsValue())
+		const data = params.id === '0' ? v : { ...v, id: params.id }
 
-		// const data = params.id === '0' ? v : { ...v, id: params.id }
-
-		// dispatch({
-		// 	type: `${history.location.pathname}/save`,
-		// 	payload: { name: params.name, data }
-		// })
+		dispatch({
+			type: `${history.location.pathname}/save`,
+			payload: { name: params.name, data }
+		})
 	}
 
 	const onDel = () => {
@@ -88,8 +86,7 @@ const Index = ({ setting = {}, data = {}, dispatch }: IProps) => {
 						<Button
 							className='btn_action btn_confirm'
 							type='primary'
-							// htmlType='submit'
-							onClick={onFinish}
+							htmlType='submit'
 						>
 							保存
 						</Button>

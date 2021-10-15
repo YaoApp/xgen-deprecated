@@ -1,7 +1,6 @@
-import { useUpdateEffect } from 'ahooks'
 import { message } from 'antd'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { connect, history } from 'umi'
 
 import styles from './index.less'
@@ -20,7 +19,7 @@ const Index = (props: IProps) => {
 	const [visible, setVisible] = useState<boolean>(true)
 	let close_loading: any
 
-	useUpdateEffect(() => {
+	useEffect(() => {
 		if (path === history.location.pathname) {
 			if (loading) close_loading = message.loading('loading', 0)
 			if (!loading && close_loading) close_loading()

@@ -1,4 +1,5 @@
 import { Button, Form, Popover } from 'antd'
+import clsx from 'clsx'
 import moment from 'moment'
 import { useMemo } from 'react'
 import { getDvaApp, history, useParams } from 'umi'
@@ -22,6 +23,10 @@ const getText = (dataIndex: string, dataItem: any, v: any, item: any, _columns: 
 
 	if (item.title.indexOf('时间') !== -1) {
 		text = v ? moment(v).format(_columns[item.title].view.props['datetime-format']) : '-'
+	}
+
+	if (item.view.type === 'image') {
+		return text
 	}
 
 	return Array.isArray(text) ? text.join(',') : text !== undefined || null ? text : '-'
@@ -67,11 +72,13 @@ export const useColumns = (setting: any) => {
 					return (
 						<Popover
 							id='td_popover'
-							overlayClassName='td_popover'
-							placement='topLeft'
+							overlayClassName={clsx([
+								'td_popover',
+								item.edit.type === 'upload' ? 'upload' : ''
+							])}
+							placement={item.edit.type === 'upload' ? 'bottom' : 'top'}
 							trigger='click'
 							destroyTooltipOnHide={{ keepParent: false }}
-							popupVisible
 							content={
 								<Form
 									className='flex'
@@ -129,8 +136,11 @@ export const useColumns = (setting: any) => {
 					)
 				}
 			} else {
-				item.render = (v: any, dataItem: any) =>
-					getText(item.dataIndex, dataItem, v, item, _columns)
+				item.render = (v: any, dataItem: any) => (
+					<div className='line_clamp_2'>
+						{getText(item.dataIndex, dataItem, v, item, _columns)}
+					</div>
+				)
 			}
 
 			total.push(item)
