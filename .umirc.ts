@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { resolve } from 'path'
 import { defineConfig } from 'umi'
 import WebpackPwaManifest from 'webpack-pwa-manifest'
@@ -9,12 +7,12 @@ import OfflinePlugin from '@lcdp/offline-plugin'
 import config from './config'
 import theme from './src/theme'
 
-const env: 'development' | 'production' = process.env.NODE_ENV
+const env = process.env.NODE_ENV as 'development' | 'production'
 
 const getLinks = () => {
 	const arr = [{ rel: 'stylesheet', href: '/icon/md_icon.css' }]
 
-	if (env === 'production') arr.push({ rel: 'manifest', href: '/manifest.json' })
+	if (env === 'production' && config.pwa) arr.push({ rel: 'manifest', href: '/manifest.json' })
 
 	return arr
 }
@@ -52,7 +50,7 @@ export default defineConfig({
 						cacheGroups: {
 							vendor: {
 								name: 'vendors',
-								test({ resource }) {
+								test({ resource }: any) {
 									return /[\\/]node_modules[\\/]/.test(resource)
 								},
 								priority: 10

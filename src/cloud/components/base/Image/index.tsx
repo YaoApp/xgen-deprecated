@@ -20,12 +20,12 @@ const Index = (props: IProps) => {
 
 	return (
 		<div className={styles._local}>
-			{Array.isArray(value) ? (
+			{Array.isArray(value) && value.length ? (
 				value.map((item: string, index: number) => (
 					<Image {...props_image} src={getImageSrc(item)} key={index}></Image>
 				))
 			) : (
-				<Image {...props_image} src={getImageSrc(value)}></Image>
+				<Image {...props_image} src={getImageSrc(String(value))}></Image>
 			)}
 		</div>
 	)

@@ -291,6 +291,26 @@
 }
 
 .form_item_upload_wrap {
+	&.text {
+		display: flex;
+		flex-direction: column;
+		padding: 15px;
+		border-radius: 6px;
+		background-color: var(--color_bg_nav);
+
+		.ant-upload-list-text-container {
+			.ant-upload-list-item {
+				margin: 0;
+				height: 36px;
+
+				.ant-upload-list-item-info {
+					padding: 0 9px;
+					border-radius: 6px;
+				}
+			}
+		}
+	}
+
 	.ant-upload-list-picture .ant-upload-list-item,
 	.ant-upload-list-picture-card .ant-upload-list-item {
 		overflow: hidden;

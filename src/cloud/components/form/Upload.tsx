@@ -1,4 +1,5 @@
 import { Upload } from 'antd'
+import clsx from 'clsx'
 import { useEffect, useMemo, useState } from 'react'
 
 import { Item } from '@/components'
@@ -9,7 +10,20 @@ import type { UploadProps } from 'antd'
 
 interface IProps extends UploadProps {
 	value: Array<string>
-	filetype: 'image'
+	filetype: 'image' | 'file'
+}
+
+const map_filetype = {
+	image: {
+		listType: 'picture-card',
+		className: '',
+		desc: '上传图片'
+	},
+	file: {
+		listType: 'text',
+		className: 'text',
+		desc: '上传文件'
+	}
 }
 
 const handlefileList = (fileList: Array<any>) => {
@@ -40,8 +54,6 @@ const CustomUpload = window.$app.memo((props: IProps) => {
 		setList(list)
 	}, [props.value])
 
-	console.log(list)
-
 	const visible_btn = useMemo(() => {
 		if (!props.maxCount) return true
 
@@ -63,8 +75,8 @@ const CustomUpload = window.$app.memo((props: IProps) => {
 	const props_upload: UploadProps = {
 		...props,
 		name: 'file',
-		listType: 'picture-card',
-		className: 'form_item_upload_wrap',
+		listType: map_filetype[props.filetype].listType as any,
+		className: clsx(['form_item_upload_wrap', map_filetype[props.filetype].className]),
 		action: '/api/xiang/storage/upload',
 		headers: { authorization: `Bearer ${sessionStorage.getItem('token')}` || '' },
 		fileList: list,
@@ -74,7 +86,17 @@ const CustomUpload = window.$app.memo((props: IProps) => {
 
 	return (
 		<Upload {...props_upload}>
-			{visible_btn && <CloudUploadOutlined style={{ fontSize: 24 }} />}
+			{visible_btn && (
+				<div
+					className={clsx([
+						'flex align_center cursor_point',
+						list.length ? 'mb_12' : ''
+					])}
+				>
+					<CloudUploadOutlined style={{ fontSize: 24 }} />
+					<span className='ml_12'>{map_filetype[props.filetype].desc}</span>
+				</div>
+			)}
 		</Upload>
 	)
 })
