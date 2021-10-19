@@ -51,6 +51,7 @@ export const useColumns = (setting: any) => {
 		const columns = _layouts.reduce((total: Array<any>, it: any, index: number) => {
 			const item = {
 				..._columns[it.name],
+				...it,
 				title: it.name
 			}
 
@@ -145,9 +146,12 @@ export const useColumns = (setting: any) => {
 			}
 
 			if (item.view.components) {
-				item.render = (_: any, dataItem: any) => {
-					const elements: any = {}
+				item.dataIndex = it.name
 
+				// 注意：这里在render外部声明该对象是为了保存内存地址引用，用于区别props是否发生了变更，否则props的内存地址将会不停变化
+				const elements: any = {}
+
+				item.render = (_: any, dataItem: any) => {
 					for (const key in item.view.components) {
 						const config = _columns[item.view.components[key]]
 						const value = dataItem[config.view.props.value.replace(':', '')]
