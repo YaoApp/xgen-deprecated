@@ -21,7 +21,7 @@ const getText = (dataIndex: string, dataItem: any, v: any, item: any, _columns: 
 		}, dataItem)
 	}
 
-	if (item.title.indexOf('时间') !== -1) {
+	if (item.title && item.title.indexOf('时间') !== -1) {
 		text = v ? moment(v).format(_columns[item.title].view.props['datetime-format']) : '-'
 	}
 
@@ -56,14 +56,15 @@ export const useColumns = (setting: any) => {
 
 			if (it.width) item['width'] = it.width
 
-			item.dataIndex = _columns[item.title].view.props.value.replace(':', '')
+			const getRender = (cfg: any, dataItem: any, value?: any) => {
+				const dataIndex = _columns[cfg.label].view.props.value.replace(':', '')
+				const v = value
 
-			if (item.edit && Object.keys(item.edit).length) {
-				item.render = (v: any, dataItem: any) => {
-					const text = getText(item.dataIndex, dataItem, v, item, _columns)
-					const key = _columns[item.title].edit.props.value.replace(':', '')
+				if (cfg.edit && Object.keys(cfg.edit).length) {
+					const text = getText(dataIndex, dataItem, v, cfg, _columns)
+					const key = _columns[cfg.label].edit.props.value.replace(':', '')
 					const value =
-						item.edit.type === 'select'
+						cfg.edit.type === 'select'
 							? dataItem[key]
 								? dataItem[key]
 								: []
@@ -74,15 +75,15 @@ export const useColumns = (setting: any) => {
 							id='td_popover'
 							overlayClassName={clsx([
 								'td_popover',
-								item.edit.type === 'upload' ? 'upload' : ''
+								cfg.edit.type === 'upload' ? 'upload' : ''
 							])}
-							placement={item.edit.type === 'upload' ? 'bottom' : 'top'}
+							placement={cfg.edit.type === 'upload' ? 'bottom' : 'top'}
 							trigger='click'
 							destroyTooltipOnHide={{ keepParent: false }}
 							content={
 								<Form
 									className='flex'
-									name={`form_table_td_${item.dataIndex}_${index}`}
+									name={`form_table_td_${dataIndex}_${index}`}
 									initialValues={{
 										[key]: value
 									}}
@@ -101,10 +102,10 @@ export const useColumns = (setting: any) => {
 								>
 									<Dynamic
 										type='form'
-										name={item.edit.type}
+										name={cfg.edit.type}
 										props={{
-											...item.edit.props,
-											label: item.label,
+											...cfg.edit.props,
+											label: cfg.label,
 											name: key,
 											style: { width: 240 }
 										}}
@@ -119,12 +120,12 @@ export const useColumns = (setting: any) => {
 							}
 						>
 							<div className='edit_text line_clamp_2'>
-								{item.view.type ? (
+								{cfg.view.type ? (
 									<Dynamic
 										type='base'
-										name={item.view.type}
+										name={cfg.view.type}
 										props={{
-											...item.view.props,
+											...cfg.view.props,
 											value: text
 										}}
 									></Dynamic>
@@ -134,13 +135,40 @@ export const useColumns = (setting: any) => {
 							</div>
 						</Popover>
 					)
+				} else {
+					return (
+						<div className='line_clamp_2'>
+							{getText(dataIndex, dataItem, v, cfg, _columns)}
+						</div>
+					)
+				}
+			}
+
+			if (item.view.components) {
+				item.render = (_: any, dataItem: any) => {
+					const elements: any = {}
+
+					for (const key in item.view.components) {
+						const config = _columns[item.view.components[key]]
+						const value = dataItem[config.view.props.value.replace(':', '')]
+
+						elements[key] = getRender(config, dataItem, value)
+					}
+
+					return (
+						<Dynamic
+							type='group'
+							name={item.view.type}
+							props={elements}
+						></Dynamic>
+					)
 				}
 			} else {
-				item.render = (v: any, dataItem: any) => (
-					<div className='line_clamp_2'>
-						{getText(item.dataIndex, dataItem, v, item, _columns)}
-					</div>
-				)
+				item.dataIndex = _columns[item.label].view.props.value.replace(':', '')
+
+				item.render = (value: any, dataItem: any) => {
+					return getRender(item, dataItem, value)
+				}
 			}
 
 			total.push(item)
