@@ -3,14 +3,14 @@ import clsx from 'clsx'
 import { useEffect, useMemo, useState } from 'react'
 
 import { Item } from '@/components'
-import { getImageSrc } from '@/utils/helpers/filters'
-import { CloudUploadOutlined } from '@ant-design/icons'
+import { getFileSrc } from '@/utils/helpers/filters'
+import { CloudUploadOutlined, DeleteOutlined } from '@ant-design/icons'
 
 import type { UploadProps } from 'antd'
 
 interface IProps extends UploadProps {
 	value: Array<string>
-	filetype: 'image' | 'file'
+	filetype: 'image' | 'file' | 'video'
 }
 
 const map_filetype = {
@@ -23,6 +23,11 @@ const map_filetype = {
 		listType: 'text',
 		className: 'text',
 		desc: '上传文件'
+	},
+	video: {
+		listType: 'picture-card',
+		className: 'video',
+		desc: '上传视频'
 	}
 }
 
@@ -41,12 +46,18 @@ const CustomUpload = window.$app.memo((props: IProps) => {
 	useEffect(() => {
 		if (!props.value) return
 
-		const list = props.value.reduce((total: Array<any>, item: string) => {
-			total.push({
+		const list = props.value.reduce((total: Array<any>, item: any) => {
+			const real_item: any = {
 				uid: item,
-				response: item,
-				thumbUrl: getImageSrc(item)
-			})
+				name: item,
+				response: item
+			}
+
+			if (/(webp|svg|png|gif|jpg|jpeg|jfif|bmp|dpg|ico)$/i.test(item)) {
+				real_item['thumbUrl'] = getFileSrc(item)
+			}
+
+			total.push(real_item)
 
 			return total
 		}, [])
@@ -84,17 +95,40 @@ const CustomUpload = window.$app.memo((props: IProps) => {
 		onChange
 	}
 
+	if (props.filetype === 'video') {
+		const itemRender: UploadProps['itemRender'] = (_, file, fileList, { remove }) => {
+			return (
+				<div className='upload_video_wrap flex relative'>
+					<div
+						className='icon_delete absolute justify_center align_center transition_normal'
+						onClick={remove}
+					>
+						<DeleteOutlined className='icon'></DeleteOutlined>
+					</div>
+					<video
+						className='video'
+						src={getFileSrc(file.response)}
+						controls
+					></video>
+				</div>
+			)
+		}
+
+		props_upload['itemRender'] = itemRender
+	}
+
 	return (
 		<Upload {...props_upload}>
 			{visible_btn && (
 				<div
 					className={clsx([
-						'flex align_center cursor_point',
-						list.length ? 'mb_12' : ''
+						'btn_upload_wrap flex align_center cursor_point',
+						props.filetype,
+						list.length ? 'has_data' : ''
 					])}
 				>
 					<CloudUploadOutlined style={{ fontSize: 24 }} />
-					<span className='ml_12'>{map_filetype[props.filetype].desc}</span>
+					<span className='desc'>{map_filetype[props.filetype].desc}</span>
 				</div>
 			)}
 		</Upload>

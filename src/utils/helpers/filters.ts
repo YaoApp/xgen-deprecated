@@ -10,6 +10,6 @@ export const fuzzyQuery = (list: Array<any>, word: string, key: string) => {
 	return arr
 }
 
-export const getImageSrc = (name: string) => {
+export const getFileSrc = (name: string) => {
 	return `/api/xiang/storage/url?name=${name}&token=${sessionStorage.getItem('token') || ''}`
 }

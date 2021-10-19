@@ -1,6 +1,6 @@
 import { Image } from 'antd'
 
-import { getImageSrc } from '@/utils/helpers/filters'
+import { getFileSrc } from '@/utils/helpers/filters'
 
 import styles from './index.less'
 
@@ -22,10 +22,10 @@ const Index = (props: IProps) => {
 		<div className={styles._local}>
 			{Array.isArray(value) && value.length ? (
 				value.map((item: string, index: number) => (
-					<Image {...props_image} src={getImageSrc(item)} key={index}></Image>
+					<Image {...props_image} src={getFileSrc(item)} key={index}></Image>
 				))
 			) : (
-				<Image {...props_image} src={getImageSrc(String(value))}></Image>
+				<Image {...props_image} src={getFileSrc(String(value))}></Image>
 			)}
 		</div>
 	)
