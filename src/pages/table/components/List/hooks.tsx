@@ -144,8 +144,6 @@ export const useColumns = (setting: any) => {
 			}
 
 			if (item.view.components) {
-				item.dataIndex = it.title
-
 				const deps = Object.keys(item.view.components).reduce(
 					(total: Array<string>, i) => {
 						total.push(
@@ -158,6 +156,8 @@ export const useColumns = (setting: any) => {
 					},
 					[]
 				)
+
+				item.dataIndex = deps
 
 				item.render = (_: any, dataItem: any) => {
 					const elements: any = {}

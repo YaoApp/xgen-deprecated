@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import { connect, Helmet } from 'umi'
 
 import { Icon } from '@/components'
+import bg_login from '@/images/bg_login.svg'
 
 import styles from './index.less'
 
@@ -65,7 +66,7 @@ const Index: ConnectRC<IProps> = (props) => {
 				/>
 			</Helmet>
 			<div className='bg_wrap flex justify_center align_center'>
-				<img className='bg' src={require('@/images/bg_login.svg')} alt='bg_login' />
+				<img className='bg' src={bg_login} alt='bg_login' />
 			</div>
 			<div className='login_wrap'>
 				<div className='login h_100 flex flex_column justify_center'>
