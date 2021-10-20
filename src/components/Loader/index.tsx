@@ -16,7 +16,7 @@ let path: any
 
 const Index = (props: IProps) => {
 	const { loading, visible_menu } = props
-	const [visible, setVisible] = useState<boolean>(true)
+	const [visible, setVisible] = useState<boolean>(false)
 	let close_loading: any
 
 	useEffect(() => {

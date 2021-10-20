@@ -23,6 +23,7 @@ export default defineConfig({
 	theme,
 	antd: {},
 	mock: {},
+	mfsu: {},
 	hash: true,
 	cssnano: {},
 	webpack5: {},

@@ -10,6 +10,14 @@ export const fuzzyQuery = (list: Array<any>, word: string, key: string) => {
 	return arr
 }
 
+export const getDeepValue = (indexs: Array<string>, item: any) => {
+	return indexs.reduce((total: any, it: any) => {
+		total = total[it]
+
+		return total
+	}, item)
+}
+
 export const getFileSrc = (name: string) => {
 	return `/api/xiang/storage/url?name=${name}&token=${sessionStorage.getItem('token') || ''}`
 }

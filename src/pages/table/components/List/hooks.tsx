@@ -1,11 +1,13 @@
 import { Button, Form, Popover } from 'antd'
 import clsx from 'clsx'
+import Equal from 'fast-deep-equal'
 import moment from 'moment'
 import { useMemo } from 'react'
 import { getDvaApp, history, useParams } from 'umi'
 
 import Dynamic from '@/cloud/core'
 import { Icon } from '@/components'
+import { getDeepValue } from '@/utils/helpers/filters'
 import { CheckOutlined } from '@ant-design/icons'
 
 const getText = (dataIndex: string, dataItem: any, v: any, item: any, _columns: any) => {
@@ -14,11 +16,7 @@ const getText = (dataIndex: string, dataItem: any, v: any, item: any, _columns: 
 	if (dataIndex.indexOf('.') !== -1) {
 		const indexs = dataIndex.split('.')
 
-		text = indexs.reduce((total: any, it: any) => {
-			total = total[it]
-
-			return total
-		}, dataItem)
+		text = getDeepValue(indexs, dataItem)
 	}
 
 	if (item.title && item.title.indexOf('时间') !== -1) {
@@ -146,12 +144,24 @@ export const useColumns = (setting: any) => {
 			}
 
 			if (item.view.components) {
-				item.dataIndex = it.name
+				item.dataIndex = it.title
 
-				// 注意：这里在render外部声明该对象是为了保存内存地址引用，用于区别props是否发生了变更，否则props的内存地址将会不停变化
-				const elements: any = {}
+				const deps = Object.keys(item.view.components).reduce(
+					(total: Array<string>, i) => {
+						total.push(
+							_columns[
+								item.view.components[i]
+							].view.props.value.replace(':', '')
+						)
+
+						return total
+					},
+					[]
+				)
 
 				item.render = (_: any, dataItem: any) => {
+					const elements: any = {}
+
 					for (const key in item.view.components) {
 						const config = _columns[item.view.components[key]]
 						const value = dataItem[config.view.props.value.replace(':', '')]
@@ -166,6 +176,26 @@ export const useColumns = (setting: any) => {
 							props={elements}
 						></Dynamic>
 					)
+				}
+
+				// 针对复合组件，提取依赖字段，手动管理是否更新
+				item.shouldCellUpdate = (new_val: any, old_val: any) => {
+					let update = false
+
+					deps.map((i) => {
+						if (i.indexOf('.') !== -1) {
+							const indexs = i.split('.')
+
+							const _new = getDeepValue(indexs, new_val)
+							const _old = getDeepValue(indexs, old_val)
+
+							if (!Equal(_new, _old)) update = true
+						} else {
+							if (!Equal(new_val[i], old_val[i])) update = true
+						}
+					})
+
+					return update
 				}
 			} else {
 				item.dataIndex = _columns[item.label].view.props.value.replace(':', '')
