@@ -10,9 +10,10 @@ import theme from './src/theme'
 const env = process.env.NODE_ENV as 'development' | 'production'
 
 const getLinks = () => {
-	const arr = [{ rel: 'stylesheet', href: '/icon/md_icon.css' }]
+	const arr = [{ rel: 'stylesheet', href: `${config.base}icon/md_icon.css` }]
 
-	if (env === 'production' && config.pwa) arr.push({ rel: 'manifest', href: '/manifest.json' })
+	if (env === 'production' && config.pwa)
+		arr.push({ rel: 'manifest', href: `${config.base}manifest.json` })
 
 	return arr
 }
@@ -28,6 +29,8 @@ export default defineConfig({
 	cssnano: {},
 	webpack5: {},
 	fastRefresh: {},
+	base: config.base,
+	publicPath: config.base,
 	locale: { default: 'zh-CN', antd: true },
 	cssModulesTypescriptLoader: {},
 	dva: { immer: true, hmr: true, lazyLoad: true },
