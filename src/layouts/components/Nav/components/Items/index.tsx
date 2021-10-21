@@ -8,7 +8,12 @@ import styles from './index.less'
 
 import type { IPropsNav } from '@/layouts/type'
 
-const Index = ({ menu, current_nav, setCurrentNav }: Omit<IPropsNav, 'app_info' | 'user'>) => {
+const Index = ({
+	menu,
+	current_nav,
+	setVisibleMenu,
+	setCurrentNav
+}: Omit<IPropsNav, 'app_info' | 'user'>) => {
 	return (
 		<div className={styles._local}>
 			{menu.map((item, index) => (
@@ -19,7 +24,10 @@ const Index = ({ menu, current_nav, setCurrentNav }: Omit<IPropsNav, 'app_info' 
 							current_nav === index ? 'active' : ''
 						])}
 						to={item.path}
-						onClick={() => setCurrentNav(index)}
+						onClick={() => {
+							setVisibleMenu(!!item.visible_menu)
+							setCurrentNav(index)
+						}}
 					>
 						<Icon name={item.icon} size={20}></Icon>
 					</Link>

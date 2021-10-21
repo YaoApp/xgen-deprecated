@@ -88,3 +88,8 @@ export interface IModelForm {
 	setting: any
 	data: any
 }
+
+export interface IModelChart {
+	setting: any
+	data: any
+}

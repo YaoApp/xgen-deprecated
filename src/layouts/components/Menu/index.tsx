@@ -35,8 +35,8 @@ const Index = (props: IPropsMenu) => {
 	)
 
 	const onMenuItem = useCallback((item: IMenuItem, index: number) => {
-		setCurrentMenu(index)
 		setVisibleMenu(!!item.visible_menu)
+		setCurrentMenu(index)
 	}, [])
 
 	return (

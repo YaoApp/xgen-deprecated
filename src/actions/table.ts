@@ -3,7 +3,8 @@ import modelExtend from 'dva-model-extend'
 import pathToRegexp from 'path-to-regexp'
 import { history } from 'umi'
 
-import { batchDel, batchUpdate, getSetting, save, search } from '@/services/app'
+import { getSetting } from '@/services/app'
+import { batchDel, batchUpdate, save, search } from '@/services/table'
 import pageModel from '@/utils/model'
 
 import type { IModelTable } from 'umi'
@@ -46,7 +47,7 @@ export default modelExtend(pageModel, {
 
 				dispatch({
 					type: 'getSetting',
-					payload: { name }
+					payload: { type: 'table', name }
 				})
 			})
 

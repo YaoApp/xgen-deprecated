@@ -13,6 +13,7 @@ export interface IPropsNav {
 	user: IModelApp['user']
 	menu: Array<IMenu>
 	current_nav: IModelApp['current_nav']
+	setVisibleMenu: (v: IModelApp['visible_menu']) => void
 	setCurrentNav: (current: IModelApp['current_nav']) => void
 }
 
@@ -28,8 +29,8 @@ export interface IPropsMenu {
 	title: IMenu['name']
 	items: Array<any>
 	current_menu: IModelApp['current_menu']
-	setCurrentMenu: (current: IModelApp['current_menu']) => void
 	setVisibleMenu: (v: IModelApp['visible_menu']) => void
+	setCurrentMenu: (current: IModelApp['current_menu']) => void
 }
 
 export interface IPropsContainer {

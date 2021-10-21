@@ -3,10 +3,9 @@ export interface IMenu {
 	name: string
 	icon: string
 	path: string
+	visible_menu?: boolean
 	blocks?: boolean
 	children?: Array<IMenuItem>
 }
 
-export interface IMenuItem extends Omit<IMenu, 'children' | 'blocks'> {
-	visible_menu?: boolean
-}
+export interface IMenuItem extends Omit<IMenu, 'children' | 'blocks'> {}

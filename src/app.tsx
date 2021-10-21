@@ -3,7 +3,7 @@ import { findIndex } from 'lodash-es'
 import pathToRegexp from 'path-to-regexp'
 import { getDvaApp, history } from 'umi'
 
-import { form, table } from '@/actions'
+import { chart, form, table } from '@/actions'
 
 import type { RequestConfig } from 'umi'
 import type { Model } from '@/typings/dva'
@@ -45,12 +45,17 @@ export function onRouteChange({ matchedRoutes }: any) {
 			model(form, match.url, app)
 
 			break
+		case '/chart/:name':
+			model(chart, match.url, app)
+
+			break
 		default:
 			break
 	}
 
 	unmodel(pathToRegexp('/table/:name'), match.url, app)
 	unmodel(pathToRegexp('/form/:name/:id'), match.url, app)
+	unmodel(pathToRegexp('/chart/:name'), match.url, app)
 }
 
 /** 全局接口配置 */

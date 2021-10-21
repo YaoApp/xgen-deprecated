@@ -43,7 +43,7 @@ const Index = () => {
 
 	return (
 		<Page className={styles._local} title='数据看板'>
-			<Row gutter={20} style={{ marginBottom: 20 }}>
+			<Row gutter={20} wrap>
 				<Col span={6}>
 					<NumberChart {...props_NumberChart_1}></NumberChart>
 				</Col>
@@ -56,8 +56,6 @@ const Index = () => {
 				<Col span={6}>
 					<NumberChart {...props_NumberChart_4}></NumberChart>
 				</Col>
-			</Row>
-			<Row gutter={20} style={{ marginBottom: 20 }}>
 				<Col span={12}>
 					<BarChart></BarChart>
 				</Col>

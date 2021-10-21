@@ -1,0 +1,36 @@
+._local {
+	width: 100%;
+
+	:global {
+		.ant-table-thead {
+			tr {
+				th {
+					padding: 0px 0;
+					background-color: transparent;
+
+					&:first-child,
+					&:last-child {
+						padding: 0px 12px;
+					}
+				}
+			}
+		}
+
+		.ant-table {
+			.ant-table-tbody {
+				tr {
+					td {
+						padding: 6px 0;
+						height: auto;
+						border: none;
+
+						&:first-child,
+						&:last-child {
+							padding: 6px 12px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
