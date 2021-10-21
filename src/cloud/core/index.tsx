@@ -14,7 +14,7 @@ const Index = ({ type, name, props }: IProps) => {
 	const Component = lazy(() => import(`@/cloud/components/${type}/${getName(name)}`))
 
 	return (
-		<Suspense fallback={''}>
+		<Suspense fallback={null}>
 			<Component {...props} />
 		</Suspense>
 	)

@@ -5,6 +5,7 @@ export default {
 	logo: '/logo.png',
 	copyright: '© 象传科技',
 	index_page: '/',
+	base: '/xiang/',
 	pwa: false,
-	base: '/xiang/'
+	oss: false
 }

@@ -18,11 +18,13 @@ declare module 'dva-model-extend' {
 }
 
 interface Window {
+	OSS: any
 	$app: {
 		memo: <T>(
 			el: (props: T) => JSX.Element | null
 		) => React.MemoExoticComponent<(props: T) => JSX.Element | null>
 		nextTick: () => Promise<unknown>
 		sleep: (time: number) => Promise<unknown>
+		oss: any
 	}
 }

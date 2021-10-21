@@ -47,3 +47,7 @@ export const batchUpdate = ({
 		data
 	})
 }
+
+export const getOSSToken = () => {
+	return request(`/api/xiang/storage/token?name=oss`)
+}

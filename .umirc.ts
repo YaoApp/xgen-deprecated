@@ -18,10 +18,21 @@ const getLinks = () => {
 	return arr
 }
 
+const getScripts = () => {
+	const arr = []
+
+	if (config.oss) arr.push('https://gosspublic.alicdn.com/aliyun-oss-sdk-6.16.0.min.js')
+
+	return arr
+}
+
 const links = getLinks()
+const scripts = getScripts()
 
 export default defineConfig({
 	theme,
+	links,
+	scripts,
 	antd: {},
 	mock: {},
 	hash: true,
@@ -37,8 +48,7 @@ export default defineConfig({
 	alias: { R: resolve(__dirname, './') },
 	dynamicImport: { loading: '@/components/Loader/index' },
 	nprogress: { runtime: { XMLHttpRequest: false, fetch: false } },
-	links,
-	chainWebpack(cfg) {
+	chainWebpack(cfg: any) {
 		cfg.resolve.alias.set('moment$', resolve(__dirname, 'node_modules/moment/moment.js'))
 		cfg.module.rule('mjs-rule').test(/.m?js/).resolve.set('fullySpecified', false)
 
