@@ -7,13 +7,15 @@ interface IProps {
 	className?: string
 	title?: string
 	options?: React.ReactNode
+	scrollMask?: boolean
 }
 
 const Index = (props: IProps) => {
-	const { children, className, title, options } = props
+	const { children, className, title, options, scrollMask } = props
 
 	return (
 		<div className={clsx([styles._local, className])}>
+			{scrollMask && <div className='mask w_100 absolute left_0'></div>}
 			{title && (
 				<div className='card_title_wrap w_100 border_box flex justify_between align_center'>
 					<span className='card_title'>{title}</span>

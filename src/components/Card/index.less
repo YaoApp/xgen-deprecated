@@ -1,5 +1,7 @@
 ._local {
+	position: relative;
 	display: flex;
+	overflow: hidden;
 	flex-direction: column;
 	box-sizing: border-box;
 	margin-bottom: 20px;
@@ -10,6 +12,13 @@
 	background-color: var(--color_bg_menu);
 
 	:global {
+		.mask {
+			bottom: 24px;
+			z-index: 10;
+			height: 100px;
+			background: linear-gradient(to top, var(--color_bg_menu), transparent);
+		}
+
 		.card_title_wrap {
 			margin-bottom: 20px;
 			height: 24px;

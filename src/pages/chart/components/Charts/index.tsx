@@ -60,6 +60,7 @@ const Index = ({ setting, data }: any) => {
 				<Col span={item.span} key={index}>
 					<Card
 						title={item.name}
+						scrollMask={item.type === 'table' || item.table}
 						options={
 							item.charts ? (
 								<TypeSelect
@@ -80,6 +81,18 @@ const Index = ({ setting, data }: any) => {
 								...getChartProps(item.charts, item.props, index)
 							}}
 						></Dynamic>
+						{item.table && (
+							<Dynamic
+								type='chart'
+								name='table'
+								props={{
+									name: item.name,
+									data: item.data,
+									forChart: true,
+									...item.table_props
+								}}
+							></Dynamic>
+						)}
 					</Card>
 				</Col>
 			))}
