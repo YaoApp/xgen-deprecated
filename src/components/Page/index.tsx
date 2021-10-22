@@ -1,3 +1,4 @@
+import { useTitle } from 'ahooks'
 import { Tooltip } from 'antd'
 import clsx from 'clsx'
 import { useCallback } from 'react'
@@ -20,13 +21,16 @@ interface IProps {
 		action: string
 	}>
 	visible_menu: IModelApp['visible_menu']
+	app_info: IModelApp['app_info']
 	dispatch: Dispatch
 }
 
 const Index = (props: IProps) => {
-	const { children, className, title, options = [], visible_menu, dispatch } = props
+	const { children, className, title, options = [], visible_menu, app_info, dispatch } = props
 
 	const params = useParams<{ id: string }>()
+
+	useTitle(app_info.name + ' - ' + title)
 
 	const toggleMenu = useCallback(() => {
 		dispatch({
@@ -90,7 +94,8 @@ const Index = (props: IProps) => {
 }
 
 const getInitialProps = ({ app }: { app: IModelApp }) => ({
-	visible_menu: app.visible_menu
+	visible_menu: app.visible_menu,
+	app_info: app.app_info
 })
 
 export default window.$app.memo(connect(getInitialProps)(Index))

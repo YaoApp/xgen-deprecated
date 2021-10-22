@@ -91,7 +91,7 @@ export const request: RequestConfig = {
 	async errorHandler(error) {
 		const res: any = await error?.response.clone().json()
 
-		if (res && res.status === 401) return history.push('/login')
+		if (res && (res.status === 401 || res.status === 403)) return history.push('/login')
 		if (res && res.message) message.error(res.message)
 
 		return false

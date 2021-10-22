@@ -3,7 +3,7 @@ interface IProps {
 }
 
 const Index = ({ value }: IProps) => {
-	return <span>{value}</span>
+	return <span>{value || '-'}</span>
 }
 
 export default window.$app.memo(Index)

@@ -92,7 +92,6 @@ const Index = (props: IProps) => {
 	return (
 		<Fragment>
 			<Helmet>
-				<title>{app_info.name || ''}</title>
 				<link
 					rel='shortcut icon'
 					type='image/x-icon'

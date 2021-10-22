@@ -40,6 +40,7 @@ export default defineConfig({
 	webpack5: {},
 	fastRefresh: {},
 	base: config.base,
+	title: config.name,
 	publicPath: config.base,
 	locale: { default: 'zh-CN', antd: true },
 	cssModulesTypescriptLoader: {},

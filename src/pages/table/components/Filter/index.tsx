@@ -5,6 +5,7 @@ import { getDvaApp, history, useParams } from 'umi'
 
 import Dynamic from '@/cloud/core'
 import { Icon } from '@/components'
+import { PlusOutlined } from '@ant-design/icons'
 
 import { useFilters, useVisibleMore } from './hooks'
 import styles from './index.less'
@@ -38,6 +39,17 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 	const onReset = () => {
 		resetFields()
 		onFinish(getFieldsValue())
+	}
+
+	const add = () => {
+		getDvaApp()._store.dispatch({
+			type: 'app/updateState',
+			payload: { visible_menu: false }
+		})
+
+		history.push({
+			pathname: `/form/${params.name}/0`
+		})
 	}
 
 	return (
@@ -135,19 +147,10 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 								</Button>
 							)
 						)}
-						<Dropdown.Button
+						{/* <Dropdown.Button
 							className='btn_add flex justify_center align_center'
 							type='primary'
-							onClick={() => {
-								getDvaApp()._store.dispatch({
-									type: 'app/updateState',
-									payload: { visible_menu: false }
-								})
-
-								history.push({
-									pathname: `/form/${params.name}/0`
-								})
-							}}
+							onClick={add}
 							overlay={
 								<Menu>
 									<Menu.Item key='1'>1st item</Menu.Item>
@@ -158,7 +161,15 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 							trigger={['click']}
 						>
 							{setting.list.actions.create.props.label}
-						</Dropdown.Button>
+                                    </Dropdown.Button> */}
+						<Button
+							className='btn_add flex justify_center align_center'
+							type='primary'
+							onClick={add}
+							icon={<PlusOutlined></PlusOutlined>}
+						>
+							{setting.list.actions.create.props.label}
+						</Button>
 					</div>
 				</Col>
 			</Row>
