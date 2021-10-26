@@ -1,9 +1,8 @@
-import { connect, history } from 'umi'
+import { connect } from 'umi'
 
 import { Page } from '@/components'
 
 import Charts from './components/Charts'
-import Filter from './components/Filter'
 
 import type { ConnectRC, IModelChart } from 'umi'
 
@@ -18,10 +17,6 @@ const Index: ConnectRC<IProps> = (props) => {
 
 	const { setting, data } = page_data
 
-	const props_filter = {
-		setting
-	}
-
 	const props_charts = {
 		setting,
 		data
@@ -29,14 +24,13 @@ const Index: ConnectRC<IProps> = (props) => {
 
 	return (
 		<Page title={setting.label}>
-			<Filter {...props_filter}></Filter>
 			<Charts {...props_charts}></Charts>
 		</Page>
 	)
 }
 
-const getInitialProps = (model: any) => ({
-	page_data: model[history.location.pathname]
+const getInitialProps = ({ kanban }: any) => ({
+	page_data: kanban
 })
 
 export default window.$app.memo(connect(getInitialProps)(Index))
