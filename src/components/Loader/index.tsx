@@ -19,13 +19,13 @@ const Index = (props: IProps) => {
 	const [visible, setVisible] = useState<boolean>(false)
 	let close_loading: any
 
-	useEffect(() => {
+	useUpdateEffect(() => {
 		if (store.get('path') === history.location.pathname) return
 
 		if (loading) {
-			setVisible(loading)
+			setVisible(true)
 		} else {
-			const timer = setTimeout(() => setVisible(loading), 900)
+			const timer = setTimeout(() => setVisible(false), 300)
 
 			return () => clearTimeout(timer)
 		}
