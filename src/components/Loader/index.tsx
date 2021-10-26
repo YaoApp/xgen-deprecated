@@ -1,6 +1,8 @@
+import { useUpdateEffect } from 'ahooks'
 import { message } from 'antd'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
+import store from 'store'
 import { connect, history } from 'umi'
 
 import styles from './index.less'
@@ -12,33 +14,39 @@ interface IProps {
 	visible_menu: boolean
 }
 
-let path: any
-
 const Index = (props: IProps) => {
 	const { loading, visible_menu } = props
 	const [visible, setVisible] = useState<boolean>(false)
 	let close_loading: any
 
 	useEffect(() => {
-		if (path === history.location.pathname) {
+		if (store.get('path') === history.location.pathname) return
+
+		if (loading) {
+			setVisible(loading)
+		} else {
+			const timer = setTimeout(() => setVisible(loading), 900)
+
+			return () => clearTimeout(timer)
+		}
+	}, [loading])
+
+	useUpdateEffect(() => {
+		if (store.get('path') === history.location.pathname) {
 			if (loading) close_loading = message.loading('loading', 0)
 			if (!loading && close_loading) close_loading()
 
 			return () => {
 				if (close_loading) close_loading()
 			}
-		}
-
-		if (loading) {
-			setVisible(loading)
 		} else {
-			path = history.location.pathname
-
-			const timer = setTimeout(() => setVisible(loading), 900)
+			const timer = setTimeout(() => {
+				store.set('path', history.location.pathname)
+			}, 300)
 
 			return () => clearTimeout(timer)
 		}
-	}, [loading, path, history.location.pathname])
+	}, [loading, history.location.pathname])
 
 	return (
 		<div

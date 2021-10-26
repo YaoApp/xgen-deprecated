@@ -11,6 +11,10 @@ const Index = ({ setting, table, pagination, batch, setSelected }: any) => {
 		setSelected(v)
 	}
 
+	const total = setting.list?.actions?.pagination?.props?.showTotal
+		? { showTotal: (total: number) => `共查询到${total}条记录` }
+		: {}
+
 	return (
 		<div className={styles._local}>
 			<Table
@@ -22,7 +26,7 @@ const Index = ({ setting, table, pagination, batch, setSelected }: any) => {
 					setting.list?.actions?.pagination
 						? {
 								...pagination,
-								showTotal: (total) => `共查询到${total}条记录`
+								...total
 						  }
 						: false
 				}
