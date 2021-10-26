@@ -1,13 +1,13 @@
 import { message } from 'antd'
-import { findIndex } from 'lodash-es'
+import { find, findIndex } from 'lodash-es'
 import pathToRegexp from 'path-to-regexp'
 import { getDvaApp, history } from 'umi'
 
 import { chart, form, table } from '@/actions'
+import { IMenu } from '@/typings/menu'
 
-import type { RequestConfig } from 'umi'
+import type { RequestConfig, Dispatch, IModelApp } from 'umi'
 import type { Model } from '@/typings/dva'
-
 // 根据匹配到的url动态注册model
 const model = (model: Model, url: string, app: any) => {
 	app.model({
@@ -33,6 +33,30 @@ export function onRouteChange({ matchedRoutes }: any) {
 
 	const app = getDvaApp()
 	const exist = findIndex(app._models, (item: Model) => item.namespace === match.url)
+
+	const dispatch: Dispatch = app._store.dispatch
+	const menu: Array<IMenu> = app._store.getState().app?.menu || []
+
+	const hit_menu_item = (arr: Array<IMenu>) => {
+		for (const item of arr) {
+			if (item.path === match.url) {
+				return item
+			} else {
+				if (item.children && item.children.length) {
+					find(item.children, (it) => it.path === match.url)
+				}
+			}
+		}
+	}
+
+	const menu_item = hit_menu_item(menu)
+
+	dispatch({
+		type: 'app/updateState',
+		payload: {
+			visible_menu: menu_item?.visible_menu || false
+		} as IModelApp
+	})
 
 	if (exist !== -1) return
 

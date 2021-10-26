@@ -5,7 +5,5 @@ export interface IMenu {
 	path: string
 	visible_menu?: boolean
 	blocks?: boolean
-	children?: Array<IMenuItem>
+	children?: Array<IMenu>
 }
-
-export interface IMenuItem extends Omit<IMenu, 'children' | 'blocks'> {}

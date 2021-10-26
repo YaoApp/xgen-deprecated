@@ -9,7 +9,7 @@ import { fuzzyQuery } from '@/utils/helpers/filters'
 
 import styles from './index.less'
 
-import type { IMenuItem } from '@/typings/menu'
+import type { IMenu } from '@/typings/menu'
 import type { IPropsMenu } from '../../type'
 
 const Index = (props: IPropsMenu) => {
@@ -34,7 +34,7 @@ const Index = (props: IPropsMenu) => {
 		{ wait: 300 }
 	)
 
-	const onMenuItem = useCallback((item: IMenuItem, index: number) => {
+	const onMenuItem = useCallback((item: IMenu, index: number) => {
 		setCurrentMenu(index)
 	}, [])
 
