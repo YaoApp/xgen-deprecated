@@ -59,6 +59,44 @@
 					}
 				}
 			}
+
+			.options_group_wrap {
+				overflow: hidden;
+				margin-right: -15px;
+				height: 36px;
+				border: 1px solid var(--color_border);
+				border-radius: 36px;
+				background-color: var(--color_bg_menu);
+
+				.option_item {
+					margin: 0;
+					border-radius: 0;
+
+					&:last-child {
+						margin-right: 0;
+					}
+
+					&.disabled {
+						opacity: 0.4;
+					}
+
+					&.btn_confirm {
+						padding: 0 12px;
+						width: auto;
+						font-size: 13px;
+						line-height: 1;
+
+						.icon_check,
+						.text {
+							margin-bottom: 2px;
+						}
+					}
+
+					&.btn_close {
+						color: var(--color_text);
+					}
+				}
+			}
 		}
 	}
 }

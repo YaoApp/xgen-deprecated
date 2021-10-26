@@ -15,11 +15,13 @@ interface IProps {
 	children: React.ReactNode
 	className?: string
 	title: string
-	options?: Array<{
-		title: string
-		icon: string
-		action: string
-	}>
+	options?:
+		| Array<{
+				title: string
+				icon: string
+				action: string
+		  }>
+		| JSX.Element
 	visible_menu: IModelApp['visible_menu']
 	app_info: IModelApp['app_info']
 	dispatch: Dispatch
@@ -67,25 +69,27 @@ const Index = (props: IProps) => {
 					)}
 				</div>
 				<div className='options_wrap flex align_center'>
-					{!!options.length &&
-						options.map((item, index) => (
-							<Tooltip
-								title={item.title}
-								placement='bottom'
-								key={index}
-							>
-								<a
-									className='option_item cursor_point flex justify_center align_center transition_normal clickable'
-									onClick={() => onAction(item.action)}
+					{Array.isArray(options)
+						? !!options.length &&
+						  options.map((item, index) => (
+								<Tooltip
+									title={item.title}
+									placement='bottom'
+									key={index}
 								>
-									<Icon
-										className='icon_option'
-										name={item.icon}
-										size={18}
-									></Icon>
-								</a>
-							</Tooltip>
-						))}
+									<a
+										className='option_item cursor_point flex justify_center align_center transition_normal clickable'
+										onClick={() => onAction(item.action)}
+									>
+										<Icon
+											className='icon_option'
+											name={item.icon}
+											size={18}
+										></Icon>
+									</a>
+								</Tooltip>
+						  ))
+						: options}
 				</div>
 			</header>
 			<div className='page_wrap'>{children}</div>

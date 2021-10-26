@@ -19,23 +19,6 @@
 			}
 		}
 
-		.btn_normal {
-			&:hover,
-			&:focus {
-				i {
-					color: var(--color_main) !important;
-				}
-			}
-		}
-
-		.btn_confirm {
-			&:disabled {
-				i {
-					color: rgba(162, 165, 185, 0.4) !important;
-				}
-			}
-		}
-
 		.btn_more {
 			width: 38px;
 		}
@@ -43,8 +26,8 @@
 		.more_wrap {
 			display: none;
 			margin-bottom: 20px;
-			padding: 30px;
-			padding-bottom: 14px;
+			padding: 20px;
+			padding-bottom: 4px;
 			border: 1px solid var(--color_border);
 			border-radius: 6px;
 			background-color: var(--color_bg_menu);
@@ -58,23 +41,17 @@
 				display: flex;
 			}
 
-			.title_wrap {
-				margin-bottom: 16px;
+			.icon_wrap {
+				top: 0px;
+				right: 0px;
+				width: 24px;
+				height: 24px;
+				border-radius: 6px;
+				background-color: var(--color_bg_nav);
 
-				.title {
-					color: var(--color_title);
-					font-weight: 600;
-					font-size: 14px;
-				}
-
-				.icon_wrap {
-					margin-right: -6px;
-					width: 30px;
-					height: 30px;
-					border-radius: 6px;
-
-					&:hover {
-						background-color: var(--color_bg_nav);
+				&:hover {
+					.icon {
+						color: var(--color_main) !important;
 					}
 				}
 			}

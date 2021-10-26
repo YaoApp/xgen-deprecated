@@ -1,4 +1,4 @@
-import { Button, Col, Dropdown, Form, Menu, Row, Tooltip } from 'antd'
+import { Button, Col, Form, Row, Tooltip } from 'antd'
 import clsx from 'clsx'
 import { useEffect } from 'react'
 import { getDvaApp, history, useParams } from 'umi'
@@ -12,7 +12,7 @@ import styles from './index.less'
 
 const { useForm } = Form
 
-const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => {
+const Index = ({ setting }: any) => {
 	const params = useParams<{ name: string }>()
 	const [form] = useForm()
 	const { getFieldsValue, setFieldsValue, resetFields } = form
@@ -94,7 +94,6 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 						重置
 					</Button>
 				</Col>
-
 				<Col flex='auto'>
 					<div className='flex justify_end'>
 						{visible_btn_more && (
@@ -111,63 +110,6 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 								></Button>
 							</Tooltip>
 						)}
-						{batch ? (
-							<div className='flex'>
-								<Button
-									className='btn_confirm flex justify_center align_center mr_16'
-									type='primary'
-									icon={
-										<Icon
-											className='transition_normal'
-											name='icon-check-circle'
-											size={15}
-										></Icon>
-									}
-									disabled={!selected.length}
-									onClick={() => setVisibleModal(true)}
-								>
-									选择并操作
-								</Button>
-								<Button
-									className='btn_confirm flex justify_center align_center mr_16'
-									onClick={() => setBatch(false)}
-								>
-									取消选择
-								</Button>
-							</div>
-						) : (
-							setting.list?.option?.batch && (
-								<Button
-									className='btn_normal flex justify_center align_center mr_16'
-									type='default'
-									icon={
-										<Icon
-											className='transition_normal'
-											name='icon-align-right'
-											size={15}
-										></Icon>
-									}
-									onClick={() => setBatch(true)}
-								>
-									批量管理
-								</Button>
-							)
-						)}
-						{/* <Dropdown.Button
-							className='btn_add flex justify_center align_center'
-							type='primary'
-							onClick={add}
-							overlay={
-								<Menu>
-									<Menu.Item key='1'>1st item</Menu.Item>
-									<Menu.Item key='2'>2nd item</Menu.Item>
-									<Menu.Item key='3'>3rd item</Menu.Item>
-								</Menu>
-							}
-							trigger={['click']}
-						>
-							{setting.list.actions.create.props.label}
-                                    </Dropdown.Button> */}
 						<Button
 							className='btn_add flex justify_center align_center'
 							type='primary'
@@ -182,20 +124,17 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 			{visible_more && (
 				<div
 					className={clsx([
-						'more_wrap w_100 border_box flex_column transition_normal',
+						'more_wrap w_100 border_box flex_column transition_normal relative',
 						opacity_more ? 'opacity' : '',
 						display_more ? 'display' : ''
 					])}
 				>
-					<div className='title_wrap w_100 border_box flex justify_between align_center'>
-						<span className='title'>更多筛选项</span>
-						<a
-							className='icon_wrap flex justify_center align_center transition_normal cursor_point clickable'
-							onClick={() => setVisibleMore(false)}
-						>
-							<Icon name='icon-x' size={20}></Icon>
-						</a>
-					</div>
+					<a
+						className='icon_wrap flex justify_center align_center transition_normal cursor_point clickable absolute'
+						onClick={() => setVisibleMore(false)}
+					>
+						<Icon className='icon' name='icon-x' size={16}></Icon>
+					</a>
 					<Row gutter={16} style={{ marginBottom: 16 }}>
 						{more.map((item: any, index: number) => (
 							<Col span={item.span} key={index}>

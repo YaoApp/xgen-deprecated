@@ -1,6 +1,9 @@
+import { Tooltip } from 'antd'
+import clsx from 'clsx'
 import { connect, history, useParams } from 'umi'
 
 import { Page } from '@/components'
+import { CheckOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons'
 
 import Filter from './components/Filter'
 import List from './components/List'
@@ -34,11 +37,7 @@ const Index: ConnectRC<IProps> = (props) => {
 	const setVisibleModal = (v: IModelTable['visible_modal']) => setData('visible_modal', v)
 
 	const props_filter = {
-		setting,
-		batch,
-		selected,
-		setBatch,
-		setVisibleModal
+		setting
 	}
 
 	const props_list = {
@@ -74,8 +73,45 @@ const Index: ConnectRC<IProps> = (props) => {
 		}
 	}
 
+	const Options = batch ? (
+		<div className='options_group_wrap border_box flex'>
+			<a
+				className={clsx([
+					'option_item btn_confirm flex justify_center align_center transition_normal mr_16',
+					!selected.length ? 'disabled' : ''
+				])}
+				onClick={() => setVisibleModal(true)}
+			>
+				<CheckOutlined className='icon_check' />
+				<span className='text ml_6'>选择并编辑</span>
+			</a>
+			<Tooltip title='取消' placement='bottom'>
+				<a
+					className='option_item btn_close flex justify_center align_center'
+					onClick={() => {
+						setBatch(false)
+						setSelected([])
+					}}
+				>
+					<CloseOutlined />
+				</a>
+			</Tooltip>
+		</div>
+	) : (
+		setting.list?.option?.batch && (
+			<Tooltip title='批量编辑' placement='bottom'>
+				<a
+					className='option_item cursor_point flex justify_center align_center transition_normal clickable'
+					onClick={() => setBatch(true)}
+				>
+					<EditOutlined className='icon_option' style={{ fontSize: 15 }} />
+				</a>
+			</Tooltip>
+		)
+	)
+
 	return (
-		<Page title={setting.name}>
+		<Page title={setting.name} options={Options}>
 			<Filter {...props_filter}></Filter>
 			<List {...props_list}></List>
 			<Modal {...props_modal}></Modal>
