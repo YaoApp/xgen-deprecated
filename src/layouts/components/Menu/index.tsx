@@ -13,7 +13,7 @@ import type { IMenuItem } from '@/typings/menu'
 import type { IPropsMenu } from '../../type'
 
 const Index = (props: IPropsMenu) => {
-	const { visible, blocks, title, items, setCurrentMenu, setVisibleMenu } = props
+	const { visible, blocks, title, items, setCurrentMenu } = props
 	const [visible_input, { toggle }] = useBoolean(false)
 	const [current_items, setCurrentItems] = useState<IPropsMenu['items']>([])
 	const [input, setInput] = useState('')
@@ -35,7 +35,6 @@ const Index = (props: IPropsMenu) => {
 	)
 
 	const onMenuItem = useCallback((item: IMenuItem, index: number) => {
-		setVisibleMenu(!!item.visible_menu)
 		setCurrentMenu(index)
 	}, [])
 

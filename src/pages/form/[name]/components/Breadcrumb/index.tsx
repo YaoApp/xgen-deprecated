@@ -16,7 +16,7 @@ interface IProps {
 }
 
 const Index = (props: IProps) => {
-	const { setting, params, dispatch } = props
+	const { setting, params } = props
 	const [stick, setStick] = useState<boolean | undefined>(false)
 
 	return (
@@ -24,17 +24,7 @@ const Index = (props: IProps) => {
 			<Affix offsetTop={0} onChange={(v) => setStick(v)}>
 				<Breadcrumb className={clsx(['bread transition_normal', stick && 'stick'])}>
 					<Item>
-						<Link
-							to={`/table/${params.name}`}
-							onClick={() => {
-								dispatch({
-									type: 'app/updateState',
-									payload: { visible_menu: true } as IModelApp
-								})
-							}}
-						>
-							{setting.name}
-						</Link>
+						<Link to={`/table/${params.name}`}>{setting.name}</Link>
 					</Item>
 					<Item>
 						{params.id === '0' ? '添加' : '编辑'}

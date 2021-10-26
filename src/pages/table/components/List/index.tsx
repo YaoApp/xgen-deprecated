@@ -18,10 +18,14 @@ const Index = ({ setting, table, pagination, batch, setSelected }: any) => {
 				columns={columns}
 				sticky={{ offsetHeader: 52 }}
 				rowKey={(item) => item.id}
-				pagination={{
-					...pagination,
-					showTotal: (total) => `共查询到${total}条记录`
-				}}
+				pagination={
+					setting.list?.actions?.pagination
+						? {
+								...pagination,
+								showTotal: (total) => `共查询到${total}条记录`
+						  }
+						: false
+				}
 				rowSelection={
 					batch
 						? {

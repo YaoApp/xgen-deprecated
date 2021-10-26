@@ -6,12 +6,11 @@ import styles from './index.less'
 import type { IPropsNav, IPropsOptions } from '../../type'
 
 const Index = (props: IPropsNav) => {
-	const { app_info, user, menu, current_nav, setVisibleMenu, setCurrentNav } = props
+	const { app_info, user, menu, current_nav, setCurrentNav } = props
 
 	const props_items: Omit<IPropsNav, 'app_info' | 'user'> = {
 		menu,
 		current_nav,
-		setVisibleMenu,
 		setCurrentNav
 	}
 

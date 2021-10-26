@@ -72,14 +72,7 @@ const Index = ({ setting = {}, data = {}, dispatch }: IProps) => {
 								stick ? 'stick' : ''
 							])}
 							icon={<Icon name='icon-arrow-left' size={15}></Icon>}
-							onClick={() => {
-								dispatch({
-									type: 'app/updateState',
-									payload: { visible_menu: true } as IModelApp
-								})
-
-								history.goBack()
-							}}
+							onClick={() => history.goBack()}
 						>
 							返回
 						</Button>

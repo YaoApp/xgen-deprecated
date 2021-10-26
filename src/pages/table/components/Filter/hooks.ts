@@ -50,13 +50,14 @@ export const useCalcLayout = (filters: Array<any>, setting: any) => {
 	return useMemo(() => {
 		if (!filters.length) return { base: [], more: [], visible_btn_more: false }
 
+		const setting_cols = setting.list?.actions?.create ? 3 : 0
 		const base: Array<any> = []
 		const more: Array<any> = []
 
 		const filter_cols = filters.reduce((total: number, item: any) => {
 			total += item.span
 
-			if (total > 17) {
+			if (total > 20 - setting_cols) {
 				more.push(item)
 			} else {
 				base.push(item)
@@ -65,6 +66,6 @@ export const useCalcLayout = (filters: Array<any>, setting: any) => {
 			return total
 		}, 0)
 
-		return { base, more, visible_btn_more: filter_cols > 17 }
+		return { base, more, visible_btn_more: filter_cols > 20 - setting_cols }
 	}, [filters, setting])
 }

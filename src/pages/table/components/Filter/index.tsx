@@ -44,11 +44,6 @@ const Index = ({ setting }: any) => {
 	}
 
 	const add = () => {
-		getDvaApp()._store.dispatch({
-			type: 'app/updateState',
-			payload: { visible_menu: false }
-		})
-
 		history.push({
 			pathname: `/form/${params.name}/0`
 		})
@@ -99,7 +94,7 @@ const Index = ({ setting }: any) => {
 						{visible_btn_more && (
 							<Tooltip title='更多筛选项'>
 								<Button
-									className='btn_more no_text w_100 flex justify_center align_center mr_16'
+									className='btn_more no_text w_100 flex justify_center align_center'
 									icon={
 										<Icon
 											name='icon-filter'
@@ -110,14 +105,16 @@ const Index = ({ setting }: any) => {
 								></Button>
 							</Tooltip>
 						)}
-						<Button
-							className='btn_add flex justify_center align_center'
-							type='primary'
-							onClick={add}
-							icon={<PlusOutlined></PlusOutlined>}
-						>
-							{setting.list.actions.create.props.label}
-						</Button>
+						{setting.list?.actions?.create && (
+							<Button
+								className='btn_add flex justify_center align_center ml_16'
+								type='primary'
+								onClick={add}
+								icon={<PlusOutlined></PlusOutlined>}
+							>
+								{setting.list.actions.create.props.label}
+							</Button>
+						)}
 					</div>
 				</Col>
 			</Row>

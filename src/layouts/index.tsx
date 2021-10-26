@@ -41,19 +41,11 @@ const Index = (props: IProps) => {
 		return null
 	}
 
-	const setVisibleMenu = (v: IModelApp['visible_menu']) => {
-		dispatch({
-			type: 'app/updateState',
-			payload: { visible_menu: v } as IModelApp
-		})
-	}
-
 	const props_nav: IPropsNav = {
 		app_info,
 		user,
 		menu,
 		current_nav,
-		setVisibleMenu,
 		setCurrentNav(current: IModelApp['current_nav']) {
 			dispatch({
 				type: 'app/updateState',
@@ -74,7 +66,6 @@ const Index = (props: IProps) => {
 		title: menu[current_nav]?.name,
 		items: menu[current_nav]?.children || [],
 		current_menu,
-		setVisibleMenu,
 		setCurrentMenu(current: IModelApp['current_menu']) {
 			dispatch({
 				type: 'app/updateState',

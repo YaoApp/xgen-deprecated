@@ -60,8 +60,7 @@ export default modelExtend(pageModel, {
 				payload: {
 					user: res.user,
 					menu: res.menus,
-					current_nav: 0,
-					visible_menu: true
+					current_nav: 0
 				} as IModelApp
 			})
 
