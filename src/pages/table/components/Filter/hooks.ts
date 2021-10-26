@@ -45,3 +45,27 @@ export const useFilters = (setting: any) => {
 
 	return filters
 }
+
+export const useCalcLayout = (filters: Array<any>, setting: any) => {
+	return useMemo(() => {
+		if (!filters.length) return { base: [], more: [] }
+
+		const base_cols = setting.list?.option?.batch ? 3 : 0
+		const base: Array<any> = []
+		const more: Array<any> = []
+
+		const filter_cols = filters.reduce((total: number, item: any) => {
+			total += item.span
+
+			if (base_cols + total > 16) {
+				more.push(item)
+			} else {
+				base.push(item)
+			}
+
+			return total
+		}, 0)
+
+		return { base, more, visible_btn_more: base_cols + filter_cols > 16 }
+	}, [filters, setting])
+}

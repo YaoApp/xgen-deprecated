@@ -1,4 +1,4 @@
-import { Button, Col, Dropdown, Form, Menu, Row } from 'antd'
+import { Button, Col, Dropdown, Form, Menu, Row, Tooltip } from 'antd'
 import clsx from 'clsx'
 import { useEffect } from 'react'
 import { getDvaApp, history, useParams } from 'umi'
@@ -7,7 +7,7 @@ import Dynamic from '@/cloud/core'
 import { Icon } from '@/components'
 import { PlusOutlined } from '@ant-design/icons'
 
-import { useFilters, useVisibleMore } from './hooks'
+import { useCalcLayout, useFilters, useVisibleMore } from './hooks'
 import styles from './index.less'
 
 const { useForm } = Form
@@ -16,9 +16,11 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 	const params = useParams<{ name: string }>()
 	const [form] = useForm()
 	const { getFieldsValue, setFieldsValue, resetFields } = form
-	const { display_more, opacity_more, setVisibleMore } = useVisibleMore()
+	const { display_more, opacity_more, visible_more, setVisibleMore } = useVisibleMore()
 	const filters = useFilters(setting)
 	const query = history.location.query
+
+	const { base, more, visible_btn_more } = useCalcLayout(filters, setting)
 
 	useEffect(() => {
 		if (!Object.keys(query as any).length) return resetFields()
@@ -61,7 +63,7 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 			onReset={onReset}
 		>
 			<Row gutter={16} justify='space-between' style={{ marginBottom: 20 }}>
-				{filters.map((item: any, index: number) => (
+				{base.map((item: any, index: number) => (
 					<Col span={item.span} key={index}>
 						<Dynamic
 							type='form'
@@ -92,19 +94,23 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 						重置
 					</Button>
 				</Col>
-				{/* <Col span={1} offset={8}>
-					{false && (
-						<Tooltip title='更多筛选项'>
-							<Button
-								className='no_text w_100 flex justify_center align_center'
-								icon={<Icon name='icon-filter' size={15}></Icon>}
-								onClick={() => setVisibleMore(true)}
-							></Button>
-						</Tooltip>
-					)}
-				</Col> */}
+
 				<Col flex='auto'>
 					<div className='flex justify_end'>
+						{visible_btn_more && (
+							<Tooltip title='更多筛选项'>
+								<Button
+									className='btn_more no_text w_100 flex justify_center align_center mr_16'
+									icon={
+										<Icon
+											name='icon-filter'
+											size={15}
+										></Icon>
+									}
+									onClick={() => setVisibleMore(true)}
+								></Button>
+							</Tooltip>
+						)}
 						{batch ? (
 							<div className='flex'>
 								<Button
@@ -173,24 +179,41 @@ const Index = ({ setting, batch, selected, setBatch, setVisibleModal }: any) => 
 					</div>
 				</Col>
 			</Row>
-			<div
-				className={clsx([
-					'more_wrap w_100 border_box flex_column transition_normal',
-					opacity_more ? 'opacity' : '',
-					display_more ? 'display' : ''
-				])}
-			>
-				<div className='title_wrap w_100 border_box flex justify_between align_center'>
-					<span className='title'>更多筛选项</span>
-					<a
-						className='icon_wrap flex justify_center align_center transition_normal cursor_point clickable'
-						onClick={() => setVisibleMore(false)}
-					>
-						<Icon name='icon-x' size={20}></Icon>
-					</a>
+			{visible_more && (
+				<div
+					className={clsx([
+						'more_wrap w_100 border_box flex_column transition_normal',
+						opacity_more ? 'opacity' : '',
+						display_more ? 'display' : ''
+					])}
+				>
+					<div className='title_wrap w_100 border_box flex justify_between align_center'>
+						<span className='title'>更多筛选项</span>
+						<a
+							className='icon_wrap flex justify_center align_center transition_normal cursor_point clickable'
+							onClick={() => setVisibleMore(false)}
+						>
+							<Icon name='icon-x' size={20}></Icon>
+						</a>
+					</div>
+					<Row gutter={16} style={{ marginBottom: 16 }}>
+						{more.map((item: any, index: number) => (
+							<Col span={item.span} key={index}>
+								<Dynamic
+									type='form'
+									name={item.input.type}
+									props={{
+										...item.input.props,
+										name: item.bind,
+										label: item.label,
+										string: '1'
+									}}
+								></Dynamic>
+							</Col>
+						))}
+					</Row>
 				</div>
-				<Row gutter={16} style={{ marginBottom: 16 }}></Row>
-			</div>
+			)}
 		</Form>
 	)
 }
