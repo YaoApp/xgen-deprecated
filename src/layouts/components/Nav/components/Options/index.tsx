@@ -9,10 +9,17 @@ import styles from './index.less'
 import type { IPropsOptions } from '@/layouts/type'
 
 const Index = (props: IPropsOptions) => {
-	const { app_info, user, setCurrentNav } = props
+	const { app_info, user, setCurrentNav, getUserMenu } = props
 
 	const User = (
-		<div className='user_wrap flex flex_column'>
+		<div className='user_wrap flex flex_column relative'>
+			<Icon
+				className='icon_sync_menu absolute'
+				name='icon-refresh-cw'
+				size={15}
+				color='white'
+				onClick={() => getUserMenu()}
+			></Icon>
 			<div
 				className='info_wrap w_100 border_box flex align_center'
 				onClick={() =>

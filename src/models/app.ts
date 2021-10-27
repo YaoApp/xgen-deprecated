@@ -1,6 +1,7 @@
+import { message } from 'antd'
 import store from 'store'
 
-import { inspect } from '@/services/app'
+import { getUserMenu, inspect } from '@/services/app'
 
 import type { Model } from '@/typings/dva'
 import type { IMenu } from '@/typings/menu'
@@ -57,6 +58,18 @@ export default {
 			})
 
 			store.set('app_info', app_info)
+		},
+		*getUserMenu({}, { call, put }) {
+			const menu = yield call(getUserMenu)
+
+			yield put({
+				type: 'updateState',
+				payload: { menu } as IModelApp
+			})
+
+			store.set('menu', menu)
+
+			message.success('菜单更新成功')
 		}
 	},
 

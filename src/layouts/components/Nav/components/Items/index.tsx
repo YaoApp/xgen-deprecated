@@ -8,7 +8,11 @@ import styles from './index.less'
 
 import type { IPropsNav } from '@/layouts/type'
 
-const Index = ({ menu, current_nav, setCurrentNav }: Omit<IPropsNav, 'app_info' | 'user'>) => {
+const Index = ({
+	menu,
+	current_nav,
+	setCurrentNav
+}: Omit<IPropsNav, 'app_info' | 'user' | 'getUserMenu'>) => {
 	return (
 		<div className={styles._local}>
 			{menu.map((item, index) => (

@@ -38,13 +38,13 @@ export function onRouteChange({ matchedRoutes }: any) {
 	const dispatch: Dispatch = app._store.dispatch
 	const menu: Array<IMenu> = app._store.getState().app?.menu || []
 
-	const hit_menu_item = (arr: Array<IMenu>) => {
+	const hit_menu_item = (arr: Array<IMenu>): IMenu | undefined => {
 		for (const item of arr) {
 			if (item.path === match.url) {
 				return item
 			} else {
 				if (item.children && item.children.length) {
-					hit_menu_item(item.children)
+					return hit_menu_item(item.children)
 				}
 			}
 		}

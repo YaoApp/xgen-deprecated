@@ -15,10 +15,12 @@ interface IProps {
 	size?: number
 	/** 图标颜色，适用所有字体颜色 */
 	color?: string
+	/** 点击事件 */
+	onClick?: () => void
 }
 
 const Index = (props: IProps) => {
-	const { className = '', name = '', size = '24', color = '#a2a5b9' } = props
+	const { className = '', name = '', size = '24', color = '#a2a5b9', onClick } = props
 
 	if (!name) return null
 
@@ -42,11 +44,11 @@ const Index = (props: IProps) => {
 	}, [name])
 
 	if (name.indexOf('icon-') !== -1) {
-		return <i className={clsx([name, className])} style={style}></i>
+		return <i className={clsx([name, className])} style={style} onClick={onClick}></i>
 	}
 
 	return (
-		<i className={clsx(['Icon', md.type, className])} style={style}>
+		<i className={clsx(['Icon', md.type, className])} style={style} onClick={onClick}>
 			{md.name}
 		</i>
 	)
