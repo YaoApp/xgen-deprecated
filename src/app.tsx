@@ -39,15 +39,21 @@ export function onRouteChange({ matchedRoutes }: any) {
 	const menu: Array<IMenu> = app._store.getState().app?.menu || []
 
 	const hit_menu_item = (arr: Array<IMenu>): IMenu | undefined => {
-		for (const item of arr) {
+		let target: any
+
+		arr.map((item) => {
 			if (item.path === match.url) {
-				return item
+				target = item
 			} else {
 				if (item.children && item.children.length) {
-					return hit_menu_item(item.children)
+					const children_target = hit_menu_item(item.children)
+
+					if (children_target) target = children_target
 				}
 			}
-		}
+		})
+
+		return target
 	}
 
 	const menu_item = hit_menu_item(menu)
