@@ -19,7 +19,7 @@ const getText = (dataIndex: string, dataItem: any, v: any, item: any, _columns: 
 		text = getDeepValue(indexs, dataItem)
 	}
 
-	if (item.title && item.title.indexOf('时间') !== -1) {
+	if (item.title && _columns[item.title].view.props['datetime-format']) {
 		text = v ? moment(v).format(_columns[item.title].view.props['datetime-format']) : '-'
 	}
 
