@@ -51,7 +51,7 @@ export default modelExtend(pageModel, {
 				return
 			}
 
-			if (!store.get('app.info')) {
+			if (!store.get('app_info')) {
 				yield put({ type: 'app/inspect' })
 			}
 
@@ -71,7 +71,7 @@ export default modelExtend(pageModel, {
 
 			yield window.$app.sleep(600)
 
-			history.push(store.get('app.info')?.option?.index || '/kanban/kanban')
+			history.push(store.get('app_info')?.option?.index || '/kanban/kanban')
 		}
 	}
 })

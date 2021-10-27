@@ -25,7 +25,7 @@ const Index = (props: IProps) => {
 		if (loading) {
 			setVisible(true)
 		} else {
-			const timer = setTimeout(() => setVisible(false), 300)
+			const timer = setTimeout(() => setVisible(false), 600)
 
 			return () => clearTimeout(timer)
 		}
