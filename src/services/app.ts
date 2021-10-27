@@ -4,7 +4,7 @@ export const inspect = () => {
 	return request(`/api/xiang/inspect`)
 }
 
-export const getSetting = ({ type, name }: { type: 'table' | 'chart'; name: string }) => {
+export const getSetting = ({ type, name }: { type: 'table' | 'chart' | 'page'; name: string }) => {
 	return request(`/api/xiang/${type}/${name}/setting`)
 }
 

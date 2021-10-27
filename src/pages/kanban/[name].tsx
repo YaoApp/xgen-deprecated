@@ -1,4 +1,4 @@
-import { connect } from 'umi'
+import { connect, history } from 'umi'
 
 import { Page } from '@/components'
 
@@ -29,8 +29,8 @@ const Index: ConnectRC<IProps> = (props) => {
 	)
 }
 
-const getInitialProps = ({ kanban }: any) => ({
-	page_data: kanban
+const getInitialProps = (model: any) => ({
+	page_data: model[history.location.pathname]
 })
 
 export default window.$app.memo(connect(getInitialProps)(Index))

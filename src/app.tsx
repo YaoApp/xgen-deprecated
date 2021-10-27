@@ -1,13 +1,14 @@
 import { message } from 'antd'
-import { find, findIndex } from 'lodash-es'
+import { findIndex } from 'lodash-es'
 import pathToRegexp from 'path-to-regexp'
 import { getDvaApp, history } from 'umi'
 
-import { chart, form, table } from '@/actions'
+import { chart, form, kanban, table } from '@/actions'
 import { IMenu } from '@/typings/menu'
 
 import type { RequestConfig, Dispatch, IModelApp } from 'umi'
 import type { Model } from '@/typings/dva'
+
 // 根据匹配到的url动态注册model
 const model = (model: Model, url: string, app: any) => {
 	app.model({
@@ -43,7 +44,7 @@ export function onRouteChange({ matchedRoutes }: any) {
 				return item
 			} else {
 				if (item.children && item.children.length) {
-					find(item.children, (it) => it.path === match.url)
+					hit_menu_item(item.children)
 				}
 			}
 		}
@@ -73,6 +74,10 @@ export function onRouteChange({ matchedRoutes }: any) {
 			model(chart, match.url, app)
 
 			break
+		case '/kanban/:name':
+			model(kanban, match.url, app)
+
+			break
 		default:
 			break
 	}
@@ -80,6 +85,7 @@ export function onRouteChange({ matchedRoutes }: any) {
 	unmodel(pathToRegexp('/table/:name'), match.url, app)
 	unmodel(pathToRegexp('/form/:name/:id'), match.url, app)
 	unmodel(pathToRegexp('/chart/:name'), match.url, app)
+	unmodel(pathToRegexp('/kanban/:name'), match.url, app)
 }
 
 /** 全局接口配置 */
@@ -102,7 +108,7 @@ export const request: RequestConfig = {
 			try {
 				const res = await response.clone().json()
 
-				if (res.code === 401) {
+				if (res.code === 401 || res.status === 403) {
 					message.warning('尚未登录')
 
 					history.push('/login')

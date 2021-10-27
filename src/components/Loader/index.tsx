@@ -1,7 +1,7 @@
 import { useUpdateEffect } from 'ahooks'
 import { message } from 'antd'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import store from 'store'
 import { connect, history } from 'umi'
 
