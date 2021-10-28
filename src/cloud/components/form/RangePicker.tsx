@@ -5,13 +5,11 @@ import { useEffect, useState } from 'react'
 import { Item } from '@/components'
 
 const { RangePicker } = DatePicker
-import type { Moment } from 'moment'
 
+import type { Moment } from 'moment'
 import type { TimeRangePickerProps } from 'antd'
 
-interface IProps extends TimeRangePickerProps {
-	keys: [string, string]
-}
+interface IProps extends TimeRangePickerProps {}
 
 const CustomRangePicker = (props: IProps) => {
 	const [value, setValue] = useState<[Moment, Moment]>()

@@ -19,8 +19,8 @@ const getText = (dataIndex: string, dataItem: any, v: any, item: any, _columns: 
 		text = getDeepValue(indexs, dataItem)
 	}
 
-	if (item.title && _columns[item.title].view.props['datetime-format']) {
-		text = v ? moment(v).format(_columns[item.title].view.props['datetime-format']) : '-'
+	if (item.title && _columns[item.title].view.props['format']) {
+		text = v ? moment(v).format(_columns[item.title].view.props['format']) : '-'
 	}
 
 	if (item.view.type === 'image') {
