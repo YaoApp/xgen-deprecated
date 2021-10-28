@@ -50,6 +50,7 @@ export default (ref: any, props: IProps) => {
 
 			y_data.push({
 				...item,
+				name: '',
 				type: 'value'
 			})
 		})
@@ -71,11 +72,12 @@ export default (ref: any, props: IProps) => {
 				borderRadius: 6
 			},
 			grid: {
-				top: '2%',
+				top: '8%',
 				bottom: '4%',
 				left: '2%',
 				right: '2%',
-				containLabel: true
+				containLabel: true,
+				show: false
 			},
 			[!props.vertical ? 'xAxis' : 'yAxis']: {
 				type: 'category',
