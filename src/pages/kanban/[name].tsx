@@ -38,7 +38,7 @@ const Index: ConnectRC<IProps> = (props) => {
 								onClick: () => {
 									history.push(setting.page.option.screen)
 
-									// setFull()
+									setFull()
 								}
 							}
 					  ]
