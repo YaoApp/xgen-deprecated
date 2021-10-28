@@ -4,6 +4,7 @@ import { connect, history } from 'umi'
 import { Page } from '@/components'
 
 import Charts from './components/Charts'
+import Header from './components/Header'
 
 import type { ConnectRC, IModelChart } from 'umi'
 
@@ -22,6 +23,11 @@ const Index: ConnectRC<IProps> = (props) => {
 
 	const { setting, data } = page_data
 
+	const props_header = {
+		setting,
+		data
+	}
+
 	const props_charts = {
 		setting,
 		data
@@ -29,6 +35,7 @@ const Index: ConnectRC<IProps> = (props) => {
 
 	return (
 		<Page title={setting.label} style={{ height: '100vh' }}>
+			<Header {...props_header}></Header>
 			<Charts {...props_charts}></Charts>
 		</Page>
 	)

@@ -1,0 +1,143 @@
+._local {
+	display: flex;
+	justify-content: center;
+	box-sizing: border-box;
+	width: 100%;
+	height: 60px;
+
+	:global {
+		.index {
+			position: relative;
+			height: 100%;
+			border-bottom: 1px solid var(--color_border);
+			background-color: var(--color_bg_menu);
+
+			.index_item {
+				position: relative;
+				z-index: 10;
+				padding: 0 12px;
+				height: 100%;
+				font-size: 13px;
+
+				.name {
+					margin-right: 4px;
+				}
+
+				.value {
+					color: var(--color_main);
+					font-weight: bold;
+				}
+			}
+
+			.header_line {
+				bottom: 0px;
+				width: 1px;
+				height: 60px * 1.414;
+				background-color: var(--color_border);
+				transform-origin: bottom;
+
+				&.header_left_line {
+					left: 0px;
+					transform: rotate(-30deg);
+				}
+
+				&.header_right_line {
+					right: 0px;
+					transform: rotate(30deg);
+				}
+			}
+
+			.header_mask {
+				bottom: -4px;
+				width: 60px * 1.414px;
+				height: 60px * 1.414px;
+				background-color: var(--color_bg_menu);
+
+				&.header_left_mask {
+					left: -20px;
+					transform: rotate(-30deg);
+					transform-origin: left;
+				}
+
+				&.header_right_mask {
+					right: -20px;
+					transform: rotate(30deg);
+					transform-origin: right;
+				}
+			}
+		}
+
+		.border_wrap {
+			padding: 0 12px;
+			height: 100%;
+			background-color: var(--color_bg);
+			transform: translateY(12px);
+
+			.line {
+				bottom: -3px;
+				width: 1px;
+				height: 12 * 1.414px;
+				background-color: var(--color_border);
+
+				&.left_line {
+					left: 5px;
+					transform: rotate(-45deg);
+				}
+
+				&.right_line {
+					right: 5px;
+					transform: rotate(45deg);
+				}
+			}
+
+			.mask_bg {
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: var(--color_bg_menu);
+				transform: translateY(-12px);
+			}
+
+			.mask {
+				bottom: 0px;
+				width: 12 * 1.414px;
+				height: 12 * 1.414px;
+				background-color: var(--color_bg_menu);
+
+				&.left_mask {
+					left: 5px;
+					transform: rotate(-45deg);
+					transform-origin: left;
+				}
+
+				&.right_mask {
+					right: 5px;
+					transform: rotate(45deg);
+					transform-origin: right;
+				}
+			}
+
+			.title_wrap {
+				position: relative;
+				z-index: 10;
+				padding: 0 8px;
+				height: 100%;
+				border-bottom: 1px solid var(--color_border);
+				background-color: var(--color_bg_menu);
+
+				.title_text {
+					margin-bottom: 4px;
+					color: var(--color_main);
+					font-weight: bold;
+					font-size: 21px;
+				}
+
+				.date {
+					margin-bottom: 10px;
+					font-size: 13px;
+				}
+			}
+		}
+	}
+}

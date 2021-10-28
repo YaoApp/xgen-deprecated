@@ -68,7 +68,7 @@ const Index: ConnectRC<IProps> = (props) => {
 			<div className='bg_wrap flex justify_center align_center'>
 				<img className='bg' src={bg_login} alt='bg_login' />
 			</div>
-			<div className='login_wrap'>
+			<div className='login_wrap relative'>
 				<div className='login h_100 flex flex_column justify_center'>
 					<div className='logo_wrap w_100 flex justify_center'>
 						<span
@@ -195,6 +195,13 @@ const Index: ConnectRC<IProps> = (props) => {
 							)}
 						</Item>
 					</Form>
+					<div className='copyright w_100 absolute flex justify_center'>
+						<span>由</span>
+						<a href='https://www.iqka.com/' target='_blank'>
+							象传智慧
+						</a>
+						<span>提供技术支持</span>
+					</div>
 				</div>
 			</div>
 		</div>
