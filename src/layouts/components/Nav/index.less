@@ -10,6 +10,11 @@
 	height: 100vh;
 	background-color: var(--color_bg_nav);
 	color: white;
+	transition: transform ease 0.3s;
+
+	&.invisible {
+		transform: translate3d(-80px, 0, 0);
+	}
 
 	:global {
 		.nav_item {

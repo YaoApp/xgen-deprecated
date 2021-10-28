@@ -8,13 +8,14 @@ interface IProps {
 	title?: string
 	options?: React.ReactNode
 	scrollMask?: boolean
+	height?: string | number
 }
 
 const Index = (props: IProps) => {
-	const { children, className, title, options, scrollMask } = props
+	const { children, className, title, options, scrollMask, height } = props
 
 	return (
-		<div className={clsx([styles._local, className])}>
+		<div className={clsx([styles._local, className])} style={{ height }}>
 			{scrollMask && <div className='mask w_100 absolute left_0'></div>}
 			{title && (
 				<div className='card_title_wrap w_100 border_box flex justify_between align_center'>
@@ -22,7 +23,9 @@ const Index = (props: IProps) => {
 					<div className='options_wrap'>{options}</div>
 				</div>
 			)}
-			<div className='card_content_wrap w_100'>{children}</div>
+			<div className='card_content_wrap w_100' style={{ height: `calc(100% - 44px)` }}>
+				{children}
+			</div>
 		</div>
 	)
 }

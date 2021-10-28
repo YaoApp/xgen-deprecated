@@ -55,9 +55,17 @@ const Index = ({ setting, data }: any) => {
 	)
 
 	return (
-		<Row className={styles._local} gutter={20} wrap style={{ margin: 0 }}>
+		<div className={styles._local} style={{ margin: 0 }}>
 			{charts.map((item: any, index: number) => (
-				<Col span={item.span} key={index}>
+				<div
+					className='chart_item border_box'
+					style={{
+						gridRow: `span ${item.height}`,
+						gridColumn: `span ${item.width}`,
+						width: `calc((100vw - 64px) / 24 * ${item.width})`
+					}}
+					key={index}
+				>
 					<Card
 						title={item.name}
 						scrollMask={item.type === 'table' || item.table}
@@ -71,6 +79,7 @@ const Index = ({ setting, data }: any) => {
 								></TypeSelect>
 							) : null
 						}
+						height='100%'
 					>
 						<Dynamic
 							type='chart'
@@ -94,9 +103,9 @@ const Index = ({ setting, data }: any) => {
 							></Dynamic>
 						)}
 					</Card>
-				</Col>
+				</div>
 			))}
-		</Row>
+		</div>
 	)
 }
 

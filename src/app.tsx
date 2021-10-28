@@ -3,7 +3,7 @@ import { findIndex } from 'lodash-es'
 import pathToRegexp from 'path-to-regexp'
 import { getDvaApp, history } from 'umi'
 
-import { chart, form, kanban, table } from '@/actions'
+import { chart, form, kanban, screen, table } from '@/actions'
 import { IMenu } from '@/typings/menu'
 
 import type { RequestConfig, Dispatch, IModelApp } from 'umi'
@@ -84,6 +84,10 @@ export function onRouteChange({ matchedRoutes }: any) {
 			model(kanban, match.url, app)
 
 			break
+		case '/screen/:name':
+			model(screen, match.url, app)
+
+			break
 		default:
 			break
 	}
@@ -92,6 +96,7 @@ export function onRouteChange({ matchedRoutes }: any) {
 	unmodel(pathToRegexp('/form/:name/:id'), match.url, app)
 	unmodel(pathToRegexp('/chart/:name'), match.url, app)
 	unmodel(pathToRegexp('/kanban/:name'), match.url, app)
+	unmodel(pathToRegexp('/screen/:name'), match.url, app)
 }
 
 /** 全局接口配置 */

@@ -6,6 +6,8 @@ import { getSetting } from '@/services/app'
 import { search } from '@/services/page'
 import pageModel from '@/utils/model'
 
+import type { IModelApp } from 'umi'
+
 export default modelExtend(pageModel, {
 	state: {
 		setting: {},
@@ -17,13 +19,24 @@ export default modelExtend(pageModel, {
 			const unlisten = _history.listen(async (location) => {
 				await window.$app.nextTick()
 
-				const reg = pathToRegexp('/kanban/:name')
+				const reg = pathToRegexp('/screen/:name')
 				const params_arr = reg.exec(location.pathname)
 
 				if (!params_arr) return
 				if (params_arr.length !== 2) return
 
 				const name = params_arr[1]
+
+				dispatch({
+					type: 'app/updateState',
+					payload: {
+						visible_nav: false,
+						visible_menu: false,
+						visible_header: false
+					} as IModelApp
+				})
+
+				document.body.style.overflow = 'hidden'
 
 				dispatch({
 					type: 'search',
@@ -36,7 +49,19 @@ export default modelExtend(pageModel, {
 				})
 			})
 
-			return unlisten
+			return () => {
+				dispatch({
+					type: 'app/updateState',
+					payload: {
+						visible_nav: true,
+						visible_header: true
+					} as IModelApp
+				})
+
+				document.body.style.overflow = 'auto'
+
+				unlisten()
+			}
 		}
 	},
 

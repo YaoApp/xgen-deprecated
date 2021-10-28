@@ -15,20 +15,36 @@ interface IProps {
 	children: React.ReactNode
 	className?: string
 	title: string
+	chart?: boolean
+	style?: React.CSSProperties
 	options?:
 		| Array<{
 				title: string
 				icon: string
-				action: string
+				action?: string
+				payload?: any
+				onClick?: () => void
 		  }>
 		| JSX.Element
+	visible_header: IModelApp['visible_header']
 	visible_menu: IModelApp['visible_menu']
 	app_info: IModelApp['app_info']
 	dispatch: Dispatch
 }
 
 const Index = (props: IProps) => {
-	const { children, className, title, options = [], visible_menu, app_info, dispatch } = props
+	const {
+		children,
+		className,
+		title,
+		chart,
+		style,
+		options = [],
+		visible_header,
+		visible_menu,
+		app_info,
+		dispatch
+	} = props
 
 	const params = useParams<{ id: string }>()
 
@@ -41,13 +57,21 @@ const Index = (props: IProps) => {
 		})
 	}, [visible_menu])
 
-	const onAction = useCallback((type) => {
-		dispatch({ type })
+	const onAction = useCallback((type, payload) => {
+		dispatch({ type, payload })
 	}, [])
 
 	return (
-		<div className={clsx([styles._local, className])}>
-			<header className='header w_100 border_box flex justify_between align_center'>
+		<div
+			className={clsx([styles._local, className, chart ? styles.chart : ''])}
+			style={style}
+		>
+			<header
+				className={clsx(
+					'header w_100 border_box flex justify_between align_center',
+					!visible_header ? 'invisible' : ''
+				)}
+			>
 				<div className='left_wrap flex align_center'>
 					<a
 						className='icon_wrap cursor_point flex justify_center align_center transition_normal clickable'
@@ -79,7 +103,18 @@ const Index = (props: IProps) => {
 								>
 									<a
 										className='option_item cursor_point flex justify_center align_center transition_normal clickable'
-										onClick={() => onAction(item.action)}
+										onClick={() => {
+											if (item.action) {
+												onAction(
+													item.action,
+													item.payload
+												)
+											}
+
+											if (item.onClick) {
+												item.onClick()
+											}
+										}}
 									>
 										<Icon
 											className='icon_option'
@@ -98,6 +133,7 @@ const Index = (props: IProps) => {
 }
 
 const getInitialProps = ({ app }: { app: IModelApp }) => ({
+	visible_header: app.visible_header,
 	visible_menu: app.visible_menu,
 	app_info: app.app_info
 })

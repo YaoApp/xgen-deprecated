@@ -28,7 +28,14 @@ const CustomDatePicker = (props: IProps) => {
 		setValue(v)
 	}
 
-	return <DatePicker {...props} value={value} onChange={onChange}></DatePicker>
+	return (
+		<DatePicker
+			style={{ width: '100%' }}
+			{...props}
+			value={value}
+			onChange={onChange}
+		></DatePicker>
+	)
 }
 
 const Index = (props: IProps) => {

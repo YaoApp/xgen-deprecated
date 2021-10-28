@@ -71,7 +71,7 @@ export default modelExtend(pageModel, {
 
 			yield window.$app.sleep(600)
 
-			history.push(store.get('app_info')?.option?.index || '/kanban/kanban')
+			history.push(store.get('app_info')?.option?.index || '/kanban/index')
 		}
 	}
 })

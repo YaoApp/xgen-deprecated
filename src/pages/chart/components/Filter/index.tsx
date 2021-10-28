@@ -47,7 +47,7 @@ const Index = ({ setting }: any) => {
 			onFinish={onFinish}
 			onReset={onReset}
 		>
-			<Row gutter={16} wrap={true} style={{ marginBottom: 20 }}>
+			<Row gutter={16} wrap={true} style={{ margin: 0, marginBottom: 20 }}>
 				{filters.map((item: any, index: number) => (
 					<Col span={item.span} key={index}>
 						<Dynamic

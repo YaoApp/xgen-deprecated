@@ -19,7 +19,8 @@ let path: any
 
 const Index = (props: IProps) => {
 	const { dispatch, children, loading, app_data } = props
-	const { app_info, user, menu, current_nav, current_menu, visible_menu } = app_data
+	const { app_info, user, menu, current_nav, current_menu, visible_nav, visible_menu } =
+		app_data
 	const global_loading = loading.global
 
 	useEffect(() => {
@@ -45,6 +46,7 @@ const Index = (props: IProps) => {
 		app_info,
 		user,
 		menu,
+		visible_nav,
 		current_nav,
 		setCurrentNav(current: IModelApp['current_nav']) {
 			dispatch({
@@ -82,6 +84,7 @@ const Index = (props: IProps) => {
 	}
 
 	const props_container: IPropsContainer = {
+		visible_nav,
 		visible_menu
 	}
 

@@ -1,0 +1,17 @@
+._local {
+	display: grid;
+	width: 100%;
+	height: calc(100vh - 64px);
+
+	@row: 12;
+	@col: 24;
+	grid-template-columns: repeat(@col, 100% / @col);
+	grid-template-rows: repeat(@row, 100% / @row);
+	grid-auto-flow: column;
+
+	:global {
+		.chart_item {
+			padding: 10px;
+		}
+	}
+}

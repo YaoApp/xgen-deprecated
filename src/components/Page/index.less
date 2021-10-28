@@ -1,6 +1,16 @@
 ._local {
 	width: 100%;
 
+	&.chart {
+		width: calc(100% + 20px);
+
+		:global {
+			.header {
+				padding: 0 18px;
+			}
+		}
+	}
+
 	:global {
 		.header {
 			position: sticky;
@@ -10,6 +20,10 @@
 			padding: 0 8px;
 			height: 60px;
 			background-color: var(--color_bg);
+
+			&.invisible {
+				display: none;
+			}
 
 			.left_wrap {
 				.icon_wrap {

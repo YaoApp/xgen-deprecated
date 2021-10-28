@@ -12,7 +12,7 @@ const Index = ({
 	menu,
 	current_nav,
 	setCurrentNav
-}: Omit<IPropsNav, 'app_info' | 'user' | 'getUserMenu'>) => {
+}: Omit<IPropsNav, 'app_info' | 'user' | 'getUserMenu' | 'visible_nav'>) => {
 	return (
 		<div className={styles._local}>
 			{menu.map((item, index) => (

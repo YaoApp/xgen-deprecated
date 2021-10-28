@@ -27,7 +27,9 @@ export interface IModelApp {
 	menu: Array<IMenu>
 	current_nav: number
 	current_menu: number
+	visible_nav: boolean
 	visible_menu: boolean
+	visible_header: boolean
 }
 
 export default {
@@ -39,7 +41,9 @@ export default {
 		menu: store.get('menu') || [],
 		current_nav: store.get('current_nav') || 0,
 		current_menu: store.get('current_menu') || 0,
-		visible_menu: true
+		visible_nav: true,
+		visible_menu: true,
+		visible_header: true
 	} as IModelApp,
 
 	subscriptions: {

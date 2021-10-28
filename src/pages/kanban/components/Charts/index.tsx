@@ -55,7 +55,7 @@ const Index = ({ setting, data }: any) => {
 	)
 
 	return (
-		<Row className={styles._local} gutter={20} wrap>
+		<Row className={styles._local} gutter={20} wrap style={{ margin: 0 }}>
 			{charts.map((item: any, index: number) => (
 				<Col span={item.span} key={index}>
 					<Card

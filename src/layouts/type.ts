@@ -12,6 +12,7 @@ export interface IPropsNav {
 	app_info: IModelApp['app_info']
 	user: IModelApp['user']
 	menu: Array<IMenu>
+	visible_nav: IModelApp['visible_nav']
 	current_nav: IModelApp['current_nav']
 	getUserMenu: () => void
 	setCurrentNav: (current: IModelApp['current_nav']) => void
@@ -34,5 +35,6 @@ export interface IPropsMenu {
 }
 
 export interface IPropsContainer {
-	visible_menu: boolean
+	visible_nav: IModelApp['visible_nav']
+	visible_menu: IModelApp['visible_menu']
 }

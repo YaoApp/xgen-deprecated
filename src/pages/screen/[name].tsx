@@ -1,9 +1,9 @@
+import { useEventListener } from 'ahooks'
 import { connect, history } from 'umi'
 
 import { Page } from '@/components'
 
 import Charts from './components/Charts'
-import Filter from './components/Filter'
 
 import type { ConnectRC, IModelChart } from 'umi'
 
@@ -14,13 +14,13 @@ interface IProps {
 const Index: ConnectRC<IProps> = (props) => {
 	const { page_data } = props
 
+	useEventListener('fullscreenchange', () => {
+		if (!document.fullscreenElement) history.goBack()
+	})
+
 	if (!page_data?.setting?.label) return null
 
 	const { setting, data } = page_data
-
-	const props_filter = {
-		setting
-	}
 
 	const props_charts = {
 		setting,
@@ -28,8 +28,7 @@ const Index: ConnectRC<IProps> = (props) => {
 	}
 
 	return (
-		<Page title={setting.label} chart>
-			<Filter {...props_filter}></Filter>
+		<Page title={setting.label} style={{ height: '100vh' }}>
 			<Charts {...props_charts}></Charts>
 		</Page>
 	)
