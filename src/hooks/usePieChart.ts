@@ -17,6 +17,7 @@ export interface IProps {
 	name: string
 	height: number
 	tooltip: TooltipComponentOption
+	legend: LegendComponentOption
 	data: Array<any>
 	series: Array<any>
 }
@@ -57,7 +58,8 @@ export default (ref: any, props: IProps) => {
 				itemHeight: 9,
 				textStyle: {
 					fontSize: 12
-				}
+				},
+				...props.legend
 			},
 			series
 		}
