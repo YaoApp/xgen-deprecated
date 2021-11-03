@@ -97,20 +97,41 @@ const Index = ({ setting = {}, data = {}, dispatch }: IProps) => {
 							<span className='desc'>{item.description}</span>
 						</div>
 						<Row gutter={16} wrap={true}>
-							{item.columns.map((it: any, idx: number) => (
-								<Col span={it.span} key={idx}>
-									<Dynamic
-										type='form'
-										name={it.edit.type}
-										props={{
-											...it.edit.props,
-											name: it.edit.props.value,
-											label: it.label,
-											rules: it.rules
-										}}
-									></Dynamic>
-								</Col>
-							))}
+							{item.columns.map((it: any, idx: number) => {
+								if (it.edit.type === 'table' && params.id === '0') {
+									return null
+								}
+
+								if (it.edit.type === 'table' && params.id !== '0') {
+									return (
+										<Col span={it.span} key={idx}>
+											<Dynamic
+												type='form'
+												name='table'
+												props={{
+													...it.edit.props,
+													queryDataSource: data
+												}}
+											></Dynamic>
+										</Col>
+									)
+								}
+
+								return (
+									<Col span={it.span} key={idx}>
+										<Dynamic
+											type='form'
+											name={it.edit.type}
+											props={{
+												...it.edit.props,
+												name: it.edit.props.value,
+												label: it.label,
+												rules: it.rules
+											}}
+										></Dynamic>
+									</Col>
+								)
+							})}
 						</Row>
 					</div>
 				))}

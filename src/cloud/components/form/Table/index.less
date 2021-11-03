@@ -1,0 +1,42 @@
+._local {
+	width: 100%;
+
+	&.inline {
+		margin-bottom: 20px;
+		border-radius: 6px;
+		background-color: var(--color_bg_nav);
+
+		table {
+			thead {
+				tr {
+					th {
+						padding-top: 12px;
+						padding-bottom: 12px;
+						border-bottom: 1px solid fade(white, 6%);
+						background-color: transparent;
+					}
+				}
+			}
+		}
+
+		table {
+			tbody {
+				tr {
+					td {
+						border: none;
+						background-color: transparent !important;
+
+						&:first-child,
+						&:last-child {
+							border: none;
+						}
+
+						&:last-child {
+							padding-right: 20px;
+						}
+					}
+				}
+			}
+		}
+	}
+}

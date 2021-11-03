@@ -1,12 +1,10 @@
-import { Table } from 'antd'
 import { history } from 'umi'
 
-import { useColumns } from './hooks'
+import Table from '@/cloud/components/form/Table'
+
 import styles from './index.less'
 
 const Index = ({ setting, table, pagination, batch, setSelected }: any) => {
-	const columns = useColumns(setting)
-
 	const onChangeSelected = (v: any) => {
 		setSelected(v)
 	}
@@ -18,10 +16,8 @@ const Index = ({ setting, table, pagination, batch, setSelected }: any) => {
 	return (
 		<div className={styles._local}>
 			<Table
-				dataSource={table}
-				columns={columns}
-				sticky={{ offsetHeader: 52 }}
-				rowKey={(item) => item.id}
+				data={table}
+				setting={setting}
 				pagination={
 					setting.list?.actions?.pagination
 						? {
