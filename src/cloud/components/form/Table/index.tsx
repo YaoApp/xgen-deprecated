@@ -12,9 +12,10 @@ import styles from './index.less'
 import type { TableProps } from 'antd'
 
 interface IProps extends TableProps<any> {
-	setting?: any | string
-	save?: string
+	setting?: any
 	data?: any
+	name?: string
+	query?: any
 	queryDataSource?: any
 }
 
@@ -22,25 +23,31 @@ const Index = (props: IProps) => {
 	const [setting, setSetting] = useState({})
 	const [data, setData] = useState([])
 
+	const api = {
+		setting: `/api/xiang/table/${props.name}/setting`,
+		data: `/api/xiang/table/${props.name}/search`,
+		save: `/api/xiang/table/${props.name}/save`
+	}
+
 	const getData = async () => {
 		const query: any = {}
 
-		if (props.data?.query && props?.queryDataSource) {
-			Object.keys(props.data?.query).map((item) => {
-				const value = props.data?.query[item]
+		if (!props?.query) return
 
-				if (value.indexOf(':') !== -1) {
-					const indexs = value.replace(':', '').split('.')
+		Object.keys(props.query).map((item) => {
+			const value = props.query[item]
 
-					query[item] = getDeepValue(indexs, props.queryDataSource)
-				} else {
-					query[item] = value
-				}
-			})
-		}
+			if (value.indexOf(':') !== -1) {
+				const indexs = value.replace(':', '').split('.')
+
+				query[item] = getDeepValue(indexs, props.queryDataSource)
+			} else {
+				query[item] = value
+			}
+		})
 
 		const { data } = await request(
-			`${props.data.api}${props.data?.query ? `?${qs.stringify(query)}` : ''}`
+			`${api.data}${props.query ? `?${qs.stringify(query)}` : ''}`
 		)
 
 		setData(data || [])
@@ -49,25 +56,26 @@ const Index = (props: IProps) => {
 	}
 
 	const getSetting = async () => {
-		const data = await request(props.setting)
+		const data = await request(api.setting)
 
 		setSetting(data)
 	}
 
 	const save = async (data: any) => {
-		if (!props.save) return
-
 		const close = message.loading('loading', 0)
 
-		await request(props.save, { method: 'POST', data })
-
+		await request(api.save, { method: 'POST', data })
 		await getData()
 
 		close()
 	}
 
 	useEffect(() => {
-		if (typeof props.setting === 'string') {
+		if (
+			props?.name &&
+			props?.queryDataSource &&
+			Object.keys(props.queryDataSource).length
+		) {
 			getSetting()
 			getData()
 		} else {
@@ -78,7 +86,7 @@ const Index = (props: IProps) => {
 
 	const columns = useColumns(
 		setting || {},
-		typeof props.setting === 'string'
+		props?.name
 			? {
 					noOptions: true,
 					save
@@ -88,13 +96,10 @@ const Index = (props: IProps) => {
 
 	return (
 		<Table
-			className={clsx([
-				styles._local,
-				typeof props.setting === 'string' ? styles.inline : ''
-			])}
+			className={clsx([styles._local, props?.name ? styles.inline : ''])}
 			dataSource={data || []}
 			columns={columns}
-			sticky={typeof props.setting === 'string' ? false : { offsetHeader: 52 }}
+			sticky={props?.name ? false : { offsetHeader: 52 }}
 			rowKey={(item) => item.id}
 			pagination={false}
 			{...props}
