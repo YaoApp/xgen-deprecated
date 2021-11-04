@@ -68,9 +68,9 @@ export const useColumns = (
 			const getRender = (cfg: any, dataItem: any, value?: any) => {
 				const dataIndex = _columns[cfg.label].view.props.value.replace(':', '')
 				const v = value
+				const text = getText(dataIndex, dataItem, v, cfg, _columns)
 
 				if (cfg.edit && Object.keys(cfg.edit).length) {
-					const text = getText(dataIndex, dataItem, v, cfg, _columns)
 					const key = _columns[cfg.label].edit.props.value.replace(':', '')
 					const value =
 						cfg.edit.type === 'select'
@@ -145,7 +145,16 @@ export const useColumns = (
 						</Popover>
 					)
 				} else {
-					return (
+					return cfg.view.type === 'image' ? (
+						<Dynamic
+							type='base'
+							name={cfg.view.type}
+							props={{
+								...cfg.view.props,
+								value: text
+							}}
+						></Dynamic>
+					) : (
 						<div className='line_clamp_2'>
 							{getText(dataIndex, dataItem, v, cfg, _columns)}
 						</div>
