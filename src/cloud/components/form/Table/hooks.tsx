@@ -145,7 +145,7 @@ export const useColumns = (
 						</Popover>
 					)
 				} else {
-					return cfg.view.type === 'image' ? (
+					return cfg.view.type ? (
 						<Dynamic
 							type='base'
 							name={cfg.view.type}
