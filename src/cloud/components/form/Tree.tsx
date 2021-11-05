@@ -1,12 +1,12 @@
-import { Cascader } from 'antd'
+import { Tree } from 'antd'
 import { useMemo, useState } from 'react'
 import { request } from 'umi'
 
 import { Item } from '@/components'
 
-import type { CascaderProps } from 'antd'
+import type { TreeProps } from 'antd'
 
-interface IProps extends CascaderProps {
+interface IProps extends TreeProps {
 	name: string
 	bind?: string
 	label?: string
@@ -22,8 +22,11 @@ interface IProps extends CascaderProps {
 	options: Array<any>
 }
 
-const Index = (props: IProps) => {
-	const [data, setData] = useState<Array<any>>([])
+type Keys = Array<React.Key> | { checked: Array<React.Key>; halfChecked: Array<React.Key> }
+
+const CustomTree = (props: IProps) => {
+	const [keys, setKeys] = useState<Keys>()
+	const [data, setData] = useState<TreeProps['treeData']>([])
 
 	const getData = async () => {
 		const data = await request(
@@ -34,7 +37,7 @@ const Index = (props: IProps) => {
 	}
 
 	const real_props = useMemo(() => {
-		const _props: any = { ...props }
+		const _props = { ...props }
 
 		if (_props.remote) {
 			getData()
@@ -44,26 +47,23 @@ const Index = (props: IProps) => {
 			setData(_props.options)
 		}
 
-		if (_props.showSearch) {
-			_props.showSearch = (input: string, option: any) => {
-				return option.some(
-					(item: any) =>
-						item.label.toLowerCase().indexOf(input.toLowerCase()) > -1
-				)
-			}
-		}
-
 		return _props
 	}, [props])
 
+	const onCheck = (v: Keys) => {
+		// @ts-ignore
+		props.onChange(v)
+
+		setKeys(v)
+	}
+
+	return <Tree {...real_props} treeData={data} checkedKeys={keys} onCheck={onCheck}></Tree>
+}
+
+const Index = (props: IProps) => {
 	return (
 		<Item {...(props as any)}>
-			<Cascader
-				{...real_props}
-				options={data}
-				placeholder={props.placeholder || `请选择${props.label}`}
-				allowClear
-			></Cascader>
+			<CustomTree {...props}></CustomTree>
 		</Item>
 	)
 }
