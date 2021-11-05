@@ -9,7 +9,7 @@ import { Icon } from '@/components'
 import { useFieldset } from './hooks'
 import styles from './index.less'
 
-import type { Dispatch, IModelApp } from 'umi'
+import type { Dispatch } from 'umi'
 
 const { useForm } = Form
 const { confirm } = Modal
