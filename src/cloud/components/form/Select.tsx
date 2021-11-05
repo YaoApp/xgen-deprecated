@@ -1,6 +1,7 @@
 import { useRequest } from 'ahooks'
 import { Select } from 'antd'
-import { useMemo } from 'react'
+import { throttle } from 'lodash-es'
+import { useMemo, useState } from 'react'
 import { request } from 'umi'
 
 import { Item } from '@/components'
@@ -22,28 +23,55 @@ interface IProps extends SelectProps<any> {
 			select: Array<string>
 		}
 	}
+	search: {
+		api: string
+		key: string
+	}
+	options: Array<any>
 }
 
 const Index = (props: IProps) => {
-	let data: any = []
+	const [data, setData] = useState<Array<any>>([])
 
-	if (props.remote) {
-		const res = useRequest(() =>
-			request(`${props.remote.api}?select=${props.remote.query.select.join(',')}`)
+	const getData = async () => {
+		const data = await request(
+			`${props.remote.api}?select=${props.remote.query.select.join(',')}`
 		)
 
-		data = res.data
-	} else {
-		data = props.options
+		setData(data)
 	}
 
 	const real_props = useMemo(() => {
 		const _props = { ...props }
 
+		if (_props.remote) {
+			getData()
+		}
+
+		if (_props.options) {
+			setData(_props.options)
+		}
+
 		if (_props.showSearch) {
 			_props.filterOption = (input, option) => {
 				return option?.children.toLowerCase().indexOf(input) >= 0
 			}
+		}
+
+		if (props.search) {
+			_props.onSearch = throttle(
+				async (v: string) => {
+					if (!v) return setData([])
+
+					const data = await request(
+						`${props.search.api}?${props.search.key}=${v}`
+					)
+
+					setData(data)
+				},
+				800,
+				{ leading: false }
+			)
 		}
 
 		return _props

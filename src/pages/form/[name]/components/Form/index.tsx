@@ -50,6 +50,8 @@ const Index = ({ setting = {}, data = {}, dispatch }: IProps) => {
 		})
 	}
 
+	console.log(fieldset)
+
 	return (
 		<Form
 			className={styles._local}
