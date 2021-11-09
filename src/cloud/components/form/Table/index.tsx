@@ -100,13 +100,31 @@ const Index = (props: IProps) => {
 
 		await find(id)
 
-		setFormParams({
-			id: id,
-			name: props.name || ''
-		})
+		setFormParams({ id: id, name: props.name || '' })
 		setVisibleForm(true)
 
 		close()
+	}
+
+	const del = async (name: string, id: string) => {
+		setFormData({})
+
+		const close = message.loading('loading', 0)
+
+		const res = await request(`/api/xiang/table/${name}/delete/${id}`, {
+			method: 'POST'
+		})
+
+		await getData()
+
+		close()
+
+		setFormParams({ id: '', name: '' })
+		setVisibleForm(false)
+
+		if (res === false) return
+
+		message.success('删除成功')
 	}
 
 	useEffect(() => {
@@ -139,7 +157,8 @@ const Index = (props: IProps) => {
 		data: form_data,
 		params: form_params,
 		onCancel: closeModal,
-		onSave: save
+		onSave: save,
+		onDelete: del
 	}
 
 	const props_modal: ModalProps = {
