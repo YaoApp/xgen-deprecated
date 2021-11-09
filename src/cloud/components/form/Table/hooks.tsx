@@ -33,8 +33,9 @@ const getText = (dataIndex: string, dataItem: any, v: any, item: any, _columns: 
 export const useColumns = (
 	setting: any,
 	options?: {
-		noOptions?: boolean
+		useInForm?: boolean
 		save?: (data: any) => void
+		edit?: (id: string) => void
 	}
 ) => {
 	const params = useParams<{ name: string }>()
@@ -229,42 +230,48 @@ export const useColumns = (
 			return total
 		}, [])
 
-		if (!options?.noOptions) {
-			columns.push({
-				title: '操作',
-				key: 'operation',
-				width: '60px',
-				render: (_: any, item: any) => (
-					<div className='flex justify_end'>
-						<Popover
-							overlayClassName='options_popover'
-							placement='bottomRight'
-							trigger='click'
-							destroyTooltipOnHide={{ keepParent: false }}
-							content={
-								<div className='table_option_items flex flex_column'>
-									<div
-										className='table_option_item flex align_center cursor_point'
-										onClick={() =>
+		columns.push({
+			title: '操作',
+			key: 'operation',
+			width: '60px',
+			render: (_: any, item: any) => (
+				<div className='flex justify_end'>
+					<Popover
+						overlayClassName='options_popover'
+						placement='bottomRight'
+						trigger='click'
+						zIndex={1000}
+						destroyTooltipOnHide={{ keepParent: false }}
+						content={
+							<div className='table_option_items flex flex_column'>
+								<div
+									className='table_option_item flex align_center cursor_point'
+									onClick={() => {
+										if (
+											options?.useInForm &&
+											options?.edit
+										) {
+											options.edit(item.id)
+										} else {
 											history.push({
 												pathname: `/form/${params.name}/${item.id}`
 											})
 										}
-									>
-										<Icon name='icon-eye' size={13}></Icon>
-										<span className='text'>查看</span>
-									</div>
+									}}
+								>
+									<Icon name='icon-eye' size={13}></Icon>
+									<span className='text'>查看</span>
 								</div>
-							}
-						>
-							<a className='option_icon_wrap flex justify_center align_center clickable'>
-								<Icon name='icon-more-vertical' size={18}></Icon>
-							</a>
-						</Popover>
-					</div>
-				)
-			})
-		}
+							</div>
+						}
+					>
+						<a className='option_icon_wrap flex justify_center align_center clickable'>
+							<Icon name='icon-more-vertical' size={18}></Icon>
+						</a>
+					</Popover>
+				</div>
+			)
+		})
 
 		return columns
 	}, [setting])

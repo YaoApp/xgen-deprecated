@@ -1,7 +1,7 @@
 import { Button, Col, Form, Row, Tooltip } from 'antd'
 import clsx from 'clsx'
 import { useEffect } from 'react'
-import { getDvaApp, history, useParams } from 'umi'
+import { history, useParams } from 'umi'
 
 import Dynamic from '@/cloud/core'
 import { Icon } from '@/components'

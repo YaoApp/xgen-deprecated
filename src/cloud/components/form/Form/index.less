@@ -1,0 +1,157 @@
+._local {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	width: 100%;
+	border: 1px solid var(--color_border);
+	border-radius: 6px;
+	background-color: var(--color_bg_menu);
+
+	:global {
+		.btn_normal {
+			border: none;
+			background-color: var(--color_bg);
+		}
+
+		.form_title_wrap {
+			padding: 12px 24px;
+			border-bottom: 1px solid var(--color_border);
+
+			.title {
+				color: var(--color_title);
+				font-weight: 600;
+				font-size: 18px;
+			}
+
+			.action_items {
+				&.stick {
+					transform: translateX(20px);
+				}
+
+				.btn_action {
+					width: 80px;
+				}
+
+				.btn_back {
+					margin-right: 16px;
+
+					&.stick {
+						background-color: var(--color_bg_nav);
+					}
+
+					&:hover,
+					&:active,
+					&:focus {
+						i {
+							color: var(--color_main) !important;
+						}
+					}
+
+					i {
+						transition: color ease 0.3s;
+						transform: translateY(1px);
+					}
+				}
+			}
+		}
+
+		.form_wrap {
+			padding: 40px;
+			padding-top: 20px;
+
+			.form_item_title_wrap {
+				margin-bottom: 20px;
+
+				.section_title {
+					color: var(--color_title);
+					font-weight: 600;
+				}
+
+				.desc {
+					font-weight: 300;
+					font-size: 12px;
+				}
+			}
+
+			.form_item {
+				margin-bottom: 20px;
+
+				.form_item_title {
+					margin-bottom: 20px;
+					color: var(--color_title);
+					font-weight: 600;
+				}
+
+				.ant-form-item {
+					display: flex;
+					flex-direction: column;
+
+					&.ant-form-item-with-help {
+						margin-bottom: 24px;
+					}
+
+					.ant-form-item-label {
+						display: flex;
+
+						label {
+							margin-bottom: 8px;
+							height: auto;
+							color: var(--color_text);
+							font-weight: 700;
+							font-size: 12.6px;
+
+							&::after {
+								display: none;
+							}
+						}
+					}
+
+					.ant-input-number {
+						width: 100%;
+					}
+
+					.ant-form-item-explain {
+						position: absolute;
+						top: -26px;
+						right: 2px;
+						font-size: 13px;
+					}
+				}
+			}
+
+			.actions_wrap {
+				&.danger {
+					.form_item_title_wrap {
+						.section_title {
+							color: var(--color_danger);
+						}
+					}
+				}
+
+				.action_items {
+					.action_item {
+						margin-bottom: 8px;
+						padding: 20px;
+						border: 1px solid var(--color_border);
+						border-radius: 10px;
+
+						.left_wrap {
+							.title {
+								color: var(--color_title);
+								font-weight: 600;
+							}
+
+							.desc {
+								font-size: 12px;
+							}
+						}
+
+						.btn_normal {
+							width: 80px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
