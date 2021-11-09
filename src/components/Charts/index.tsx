@@ -127,7 +127,7 @@ const Index = ({ setting, data }: any) => {
 										name={it.type}
 										props={{
 											name: it.name,
-											data: item.data,
+											data: data[it.data_key],
 											...it.props
 										}}
 										key={idx}
