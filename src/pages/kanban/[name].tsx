@@ -1,9 +1,7 @@
 import { useFullscreen } from 'ahooks'
 import { connect, history } from 'umi'
 
-import { Page } from '@/components'
-
-import Charts from './components/Charts'
+import { Charts, Page } from '@/components'
 
 import type { ConnectRC, IModelChart } from 'umi'
 

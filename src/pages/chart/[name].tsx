@@ -1,8 +1,7 @@
 import { connect, history } from 'umi'
 
-import { Page } from '@/components'
+import { Charts, Page } from '@/components'
 
-import Charts from './components/Charts'
 import Filter from './components/Filter'
 
 import type { ConnectRC, IModelChart } from 'umi'
