@@ -1,22 +1,32 @@
 import { useEventListener } from 'ahooks'
-import { connect, history } from 'umi'
+import { connect, history, useParams } from 'umi'
 
 import { Page } from '@/components'
+import useRequestInterval from '@/hooks/useRequestInterval'
 
 import Charts from './components/Charts'
 import Header from './components/Header'
 
-import type { ConnectRC, IModelChart } from 'umi'
+import type { ConnectRC, IModelChart, Dispatch } from 'umi'
 
 interface IProps {
 	page_data: IModelChart
+	dispatch: Dispatch
 }
 
 const Index: ConnectRC<IProps> = (props) => {
-	const { page_data } = props
+	const { page_data, dispatch } = props
+	const { name } = useParams<{ name: string }>()
 
 	useEventListener('fullscreenchange', () => {
 		if (!document.fullscreenElement) history.goBack()
+	})
+
+	useRequestInterval({
+		name,
+		pathname: history.location.pathname,
+		page_data,
+		dispatch
 	})
 
 	if (!page_data?.setting?.label) return null

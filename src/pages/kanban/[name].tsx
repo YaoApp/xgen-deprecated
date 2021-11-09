@@ -1,18 +1,29 @@
 import { useFullscreen } from 'ahooks'
-import { connect, history } from 'umi'
+import { useEffect } from 'react'
+import { connect, history, useParams } from 'umi'
 
 import { Charts, Page } from '@/components'
+import useRequestInterval from '@/hooks/useRequestInterval'
 
-import type { ConnectRC, IModelChart } from 'umi'
+import type { ConnectRC, IModelChart, Dispatch } from 'umi'
 
 interface IProps {
 	page_data: IModelChart
+	dispatch: Dispatch
 }
 
 const Index: ConnectRC<IProps> = (props) => {
-	const { page_data } = props
+	const { page_data, dispatch } = props
+	const { name } = useParams<{ name: string }>()
 
 	const [_, { setFull }] = useFullscreen(document.body)
+
+	useRequestInterval({
+		name,
+		pathname: history.location.pathname,
+		page_data,
+		dispatch
+	})
 
 	if (!page_data?.setting?.label) return null
 
