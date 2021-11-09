@@ -30,7 +30,6 @@ const Index = (props: IProps) => {
 					autoplaySpeed={props?.speed || 6000}
 					speed={props?.speed || 6000}
 					pauseOnHover
-					pauseOnFocus
 				>
 					{[0, 1].map((_, index) => (
 						<Table
