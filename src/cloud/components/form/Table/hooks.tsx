@@ -73,12 +73,14 @@ export const useColumns = (
 
 				if (cfg.edit && Object.keys(cfg.edit).length) {
 					const key = _columns[cfg.label].edit.props.value.replace(':', '')
-					const value =
-						cfg.edit.type === 'select'
-							? dataItem[key]
-								? dataItem[key]
-								: []
-							: dataItem[key]
+
+					const value = (() => {
+						if (cfg.edit.type === 'select') {
+							return dataItem[key] || []
+						}
+
+						return dataItem[key]
+					})()
 
 					return (
 						<Popover
@@ -146,12 +148,27 @@ export const useColumns = (
 						</Popover>
 					)
 				} else {
+					const other_props = (() => {
+						if (cfg.view.type === 'a' && cfg.view.props?.href) {
+							const href = cfg.view.props?.href
+
+							if (href.indexOf(':') === 0) {
+								return {
+									href: dataItem[href.replace(':', '')]
+								}
+							}
+						}
+
+						return {}
+					})()
+
 					return cfg.view.type ? (
 						<Dynamic
 							type='base'
 							name={cfg.view.type}
 							props={{
 								...cfg.view.props,
+								...other_props,
 								value: text
 							}}
 						></Dynamic>

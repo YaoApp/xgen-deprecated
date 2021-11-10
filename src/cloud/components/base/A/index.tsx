@@ -7,13 +7,18 @@ interface IProps
 		React.AnchorHTMLAttributes<HTMLAnchorElement>,
 		HTMLAnchorElement
 	> {
-	value: string | number
+	value: string | undefined
 }
 
 const Index = (props: IProps) => {
 	return (
-		<Tooltip title={`访问 ${props.href}`}>
-			<a className={styles._local} {...props}>
+		<Tooltip title={`访问 ${props.href || props.value}`}>
+			<a
+				className={styles._local}
+				{...props}
+				target='_blank'
+				href={props.href || props.value}
+			>
 				{props.value || '-'}
 			</a>
 		</Tooltip>
