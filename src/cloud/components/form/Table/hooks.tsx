@@ -1,7 +1,6 @@
 import { Button, Form, Popover } from 'antd'
 import clsx from 'clsx'
 import Equal from 'fast-deep-equal'
-import moment from 'moment'
 import { useMemo } from 'react'
 import { getDvaApp, history, useParams } from 'umi'
 
@@ -10,25 +9,7 @@ import { Icon } from '@/components'
 import { getDeepValue } from '@/utils/helpers/filters'
 import { CheckOutlined } from '@ant-design/icons'
 
-const getText = (dataIndex: string, dataItem: any, v: any, item: any, _columns: any) => {
-	let text = v
-
-	if (dataIndex.indexOf('.') !== -1) {
-		const indexs = dataIndex.split('.')
-
-		text = getDeepValue(indexs, dataItem)
-	}
-
-	if (item.title && _columns[item.title].view.props['format']) {
-		text = v ? moment(v).format(_columns[item.title].view.props['format']) : '-'
-	}
-
-	if (item.view.type === 'image') {
-		return text
-	}
-
-	return Array.isArray(text) ? text.join(',') : text !== undefined || null ? text : '-'
-}
+import { getTargetValue, getText } from './utils'
 
 export const useColumns = (
 	setting: any,
@@ -150,13 +131,19 @@ export const useColumns = (
 				} else {
 					const other_props = (() => {
 						if (cfg.view.type === 'a' && cfg.view.props?.href) {
-							const href = cfg.view.props?.href
+							return getTargetValue(
+								cfg.view.props?.href,
+								'href',
+								dataItem
+							)
+						}
 
-							if (href.indexOf(':') === 0) {
-								return {
-									href: dataItem[href.replace(':', '')]
-								}
-							}
+						if (cfg.view.type === 'tooltip' && cfg.view.props?.title) {
+							return getTargetValue(
+								cfg.view.props?.title,
+								'title',
+								dataItem
+							)
 						}
 
 						return {}
