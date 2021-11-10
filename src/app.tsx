@@ -119,7 +119,7 @@ export const request: RequestConfig = {
 			try {
 				const res = await response.clone().json()
 
-				if (res.code === 401 || res.status === 403) {
+				if (res.code === 401 || res.code === 403) {
 					message.warning('尚未登录')
 
 					history.push('/login')
@@ -132,7 +132,7 @@ export const request: RequestConfig = {
 	async errorHandler(error) {
 		const res: any = await error?.response.clone().json()
 
-		if (res && (res.status === 401 || res.status === 403)) return history.push('/login')
+		if (res && (res.code === 401 || res.code === 403)) return history.push('/login')
 		if (res && res.message) message.error(res.message)
 
 		return false
