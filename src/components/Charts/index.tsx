@@ -99,7 +99,7 @@ const Index = ({ setting, data }: any) => {
 			{charts.map((item: any, index: number) => (
 				<Col span={item.span} key={index}>
 					<Card
-						title={item.name}
+						title={item.type !== 'numberCard' ? item.name : ''}
 						scrollMask={item.type === 'table' || item.table}
 						options={
 							<TypeSelect
