@@ -1,7 +1,7 @@
-import { Affix, Button, Col, Form, Modal, Row } from 'antd'
+import { Affix, Button, Col, Form, message, Modal, Row } from 'antd'
 import clsx from 'clsx'
 import { useEffect, useMemo, useState } from 'react'
-import { history } from 'umi'
+import { history, request } from 'umi'
 
 import Dynamic from '@/cloud/core'
 import { Icon } from '@/components'
@@ -24,12 +24,12 @@ interface IProps {
 	pathname?: string
 	dispatch?: Dispatch
 	onCancel?: () => void
-	onSave?: (data: any) => void
-	onDelete?: (name: string, id: string) => void
+	getData?: () => Promise<void>
+	search?: () => void
 }
 
 const Index = (props: IProps) => {
-	const { setting, data, params, pathname, dispatch, onCancel, onSave, onDelete } = props
+	const { setting, data, params, pathname, dispatch, onCancel, getData, search } = props
 	const [form] = useForm()
 	const { setFieldsValue, resetFields } = form
 	const [stick, setStick] = useState<boolean | undefined>(false)
@@ -66,11 +66,37 @@ const Index = (props: IProps) => {
 			const onFinish = async (v: any) => {
 				const data = params.id === '0' ? v : { ...v, id: params.id }
 
-				onSave?.(data)
+				const close = message.loading('loading', 0)
+
+				await request(`/api/xiang/table/${params.name}/save`, {
+					method: 'POST',
+					data
+				})
+
+				await getData?.()
+				search?.()
+				close()
+				onCancel?.()
 			}
 
 			const onDel = async () => {
-				onDelete?.(params.name, params.id)
+				const close = message.loading('loading', 0)
+
+				const res = await request(
+					`/api/xiang/table/${params.name}/delete/${params.id}`,
+					{
+						method: 'POST'
+					}
+				)
+
+				if (res === false) return
+
+				message.success('删除成功')
+
+				await getData?.()
+				search?.()
+				close()
+				onCancel?.()
 			}
 
 			return { onFinish, onDel }

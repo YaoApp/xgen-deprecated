@@ -6,20 +6,20 @@ import { request } from 'umi'
 
 import Form from '@/cloud/components/form/Form'
 import { getDeepValue } from '@/utils/helpers/filters'
-import { PlusOutlined } from '@ant-design/icons'
 
 import { useColumns } from './hooks'
 import styles from './index.less'
 
 import type { TableProps, ModalProps } from 'antd'
 
-interface IProps extends TableProps<any> {
+export interface IProps extends TableProps<any> {
 	setting?: any
 	data?: any
 	name?: string
 	label?: string
 	query?: any
 	queryDataSource?: any
+	search?: () => void
 }
 
 const Index = (props: IProps) => {
@@ -28,12 +28,15 @@ const Index = (props: IProps) => {
 	const [visible_form, setVisibleForm] = useState(false)
 	const [form_params, setFormParams] = useState({ id: '', name: '' })
 	const [form_data, setFormData] = useState<any>({})
+	const [form_name, setFormName] = useState('')
+
+	useEffect(() => setFormName(props.name || ''), [props.name])
 
 	const api = {
-		setting: `/api/xiang/table/${props.name}/setting`,
-		data: `/api/xiang/table/${props.name}/search`,
-		save: `/api/xiang/table/${props.name}/save`,
-		find: `/api/xiang/table/${props.name}/find`
+		setting: `/api/xiang/table/${props.name || form_name}/setting`,
+		data: `/api/xiang/table/${props.name || form_name}/search`,
+		save: `/api/xiang/table/${props.name || form_name}/save`,
+		find: `/api/xiang/table/${props.name || form_name}/find`
 	}
 
 	const closeModal = () => {
@@ -84,23 +87,33 @@ const Index = (props: IProps) => {
 		await getData()
 
 		close()
+
 		closeModal()
 	}
 
-	const find = async (id: string) => {
-		const data = await request(`${api.find}/${id}`)
+	const find = async (id: string, name?: string) => {
+		const data = await request(
+			`${!name ? api.find : `/api/xiang/table/${name}/find`}/${id}`
+		)
 
 		setFormData(data)
 	}
 
-	const edit = async (id: string) => {
+	const edit = async (id: string, name?: string) => {
 		setFormData({})
 
 		const close = message.loading('loading', 0)
 
-		await find(id)
+		if (name) {
+			await find(id, name)
 
-		setFormParams({ id: id, name: props.name || '' })
+			setFormParams({ id: id, name })
+		} else {
+			await find(id)
+
+			setFormParams({ id: id, name: form_name })
+		}
+
 		setVisibleForm(true)
 
 		close()
@@ -141,24 +154,19 @@ const Index = (props: IProps) => {
 		}
 	}, [props])
 
-	const columns = useColumns(
-		setting || {},
-		props?.name
-			? {
-					useInForm: true,
-					save,
-					edit
-			  }
-			: undefined
-	)
+	const columns = useColumns(setting || {}, {
+		useInForm: props?.name ? true : false,
+		save,
+		edit
+	})
 
 	const props_form = {
 		setting,
 		data: form_data,
 		params: form_params,
 		onCancel: closeModal,
-		onSave: save,
-		onDelete: del
+		getData,
+		search: props.search
 	}
 
 	const props_modal: ModalProps = {
@@ -176,7 +184,7 @@ const Index = (props: IProps) => {
 
 		setFormParams({
 			id: '0',
-			name: props.name || ''
+			name: form_name || ''
 		})
 	}
 

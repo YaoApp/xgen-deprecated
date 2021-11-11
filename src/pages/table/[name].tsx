@@ -45,7 +45,16 @@ const Index: ConnectRC<IProps> = (props) => {
 		table,
 		pagination,
 		batch,
-		setSelected
+		setSelected,
+		search() {
+			dispatch({
+				type: `${namespace}/search`,
+				payload: {
+					name,
+					query: history.location.search
+				}
+			})
+		}
 	}
 
 	const props_modal = {

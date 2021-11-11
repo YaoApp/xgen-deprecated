@@ -13,10 +13,10 @@ import { getTargetValue, getText } from './utils'
 
 export const useColumns = (
 	setting: any,
-	options?: {
-		useInForm?: boolean
-		save?: (data: any) => void
-		edit?: (id: string) => void
+	options: {
+		useInForm: boolean
+		save: (data: any) => void
+		edit: (id: string, name?: string) => void
 	}
 ) => {
 	const params = useParams<{ name: string }>()
@@ -28,7 +28,7 @@ export const useColumns = (
 		const _layouts = setting.list.layout.columns
 
 		const onFinish = async (v: any, id: number) => {
-			if (options?.save) {
+			if (options?.useInForm) {
 				options.save({ id, ...v })
 			} else {
 				getDvaApp()._store.dispatch({
@@ -144,6 +144,17 @@ export const useColumns = (
 								'title',
 								dataItem
 							)
+						}
+
+						if (cfg.view.type === 'formModal') {
+							return {
+								...getTargetValue(
+									cfg.view.props?.formId,
+									'formId',
+									dataItem
+								),
+								edit: options.edit
+							}
 						}
 
 						return {}
