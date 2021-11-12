@@ -2,6 +2,7 @@ import { connect, history, useParams } from 'umi'
 
 import { Page } from '@/components'
 
+import Anchor from './components/Anchor'
 import Breadcrumb from './components/Breadcrumb'
 import Form from './components/Form'
 
@@ -32,10 +33,21 @@ const Index: ConnectRC<IProps> = (props) => {
 		dispatch
 	}
 
+	const props_anchor = {
+		setting
+	}
+
 	return (
 		<Page title={setting.name}>
-			<Breadcrumb {...props_breadcrumb}></Breadcrumb>
-			<Form {...props_form}></Form>
+			<div className='flex relative'>
+				<div className='w_100 flex flex_column'>
+					<Breadcrumb {...props_breadcrumb}></Breadcrumb>
+					<Form {...props_form}></Form>
+				</div>
+				<div className='absolute top_0' style={{ width: 180, right: -180 }}>
+					<Anchor {...props_anchor}></Anchor>
+				</div>
+			</div>
 		</Page>
 	)
 }

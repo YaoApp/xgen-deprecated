@@ -71,7 +71,7 @@ const CustomUpload = window.$app.memo((props: IProps) => {
 		return list.length < props.maxCount
 	}, [list, props.maxCount])
 
-	const onChange = ({ file, fileList }: any) => {
+	const onChange: UploadProps['onChange'] = ({ file, fileList }) => {
 		const { status } = file
 
 		if (!trigger) return

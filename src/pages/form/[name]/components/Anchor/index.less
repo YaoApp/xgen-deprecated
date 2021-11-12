@@ -1,0 +1,21 @@
+._local {
+	margin-top: 42px;
+	padding-left: 30px;
+	width: 100%;
+
+	@media screen and (max-width: 1500px) {
+		display: none;
+	}
+
+	:global {
+		.ant-anchor {
+			font-size: 12px;
+
+			.ant-anchor-ink {
+				&::before {
+					background-color: var(--color_border);
+				}
+			}
+		}
+	}
+}

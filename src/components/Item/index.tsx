@@ -17,7 +17,11 @@ const Index = (props: IProps) => {
 	const valuePropName = props.valuePropName ? { valuePropName: props.valuePropName } : {}
 
 	const props_item = {
-		label: props.label,
+		label: (
+			<a id={props.label} href={`#${props.label}`}>
+				<label>{props.label}</label>
+			</a>
+		),
 		name: props?.name?.replace(':', ''),
 		noStyle: !props.label,
 		...rules,

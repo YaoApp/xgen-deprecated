@@ -66,14 +66,14 @@ export default modelExtend(pageModel, {
 				payload: { data }
 			})
 		},
-		*save({ payload: { name, data } }, { call }) {
+		*save({ payload: { name, data, dev } }, { call }) {
 			const res = yield call(save, { name, data })
 
 			if (res === false) return
 
 			message.success('操作成功')
 
-			history.goBack()
+			if (!dev) history.goBack()
 		},
 		*del({ payload: { name, id } }, { call }) {
 			const res = yield call(del, { name, id })

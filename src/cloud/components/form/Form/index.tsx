@@ -45,12 +45,13 @@ const Index = (props: IProps) => {
 
 	const { onFinish, onDel } = useMemo(() => {
 		if (pathname && dispatch) {
+			// 针对 Form 页面
 			const onFinish = (v: any) => {
 				const data = params.id === '0' ? v : { ...v, id: params.id }
 
 				dispatch({
 					type: `${pathname}/save`,
-					payload: { name: params.name, data }
+					payload: { name: params.name, data, dev: setting?.edit?.option?.dev }
 				})
 			}
 
@@ -63,6 +64,7 @@ const Index = (props: IProps) => {
 
 			return { onFinish, onDel }
 		} else {
+			// 针对 Table 中的 Form
 			const onFinish = async (v: any) => {
 				const data = params.id === '0' ? v : { ...v, id: params.id }
 
@@ -73,8 +75,12 @@ const Index = (props: IProps) => {
 					data
 				})
 
+				// 针对在 Form 页面中使用的 Table 上的 Form
 				await getData?.()
+
+				// 针对在 Table 页面中使用的 Table 上的 Form
 				search?.()
+
 				close()
 				onCancel?.()
 			}
@@ -93,8 +99,12 @@ const Index = (props: IProps) => {
 
 				message.success('删除成功')
 
+				// 针对在 Form 页面中使用的 Table 上的 Form
 				await getData?.()
+
+				// 针对在 Table 页面中使用的 Table 上的 Form
 				search?.()
+
 				close()
 				onCancel?.()
 			}
@@ -145,10 +155,14 @@ const Index = (props: IProps) => {
 						className='form_item w_100 border_box flex flex_column'
 						key={index}
 					>
-						<div className='form_item_title_wrap flex flex_column'>
+						<a
+							id={item.title}
+							className='form_item_title_wrap flex flex_column'
+							href={`#${item.title}`}
+						>
 							<span className='section_title'>{item.title}</span>
 							<span className='desc'>{item.description}</span>
-						</div>
+						</a>
 						<Row gutter={16} wrap={true}>
 							{item.columns.map((it: any, idx: number) => {
 								if (it.edit.type === 'table' && params.id === '0') {

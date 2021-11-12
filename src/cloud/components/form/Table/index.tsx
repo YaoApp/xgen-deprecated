@@ -105,10 +105,12 @@ const Index = (props: IProps) => {
 		const close = message.loading('loading', 0)
 
 		if (name) {
+			// 针对在 Table 页面中使用的 Table 上的 Form
 			await find(id, name)
 
 			setFormParams({ id: id, name })
 		} else {
+			// 针对在 Form 页面中使用的 Table 上的 Form
 			await find(id)
 
 			setFormParams({ id: id, name: form_name })
@@ -117,27 +119,6 @@ const Index = (props: IProps) => {
 		setVisibleForm(true)
 
 		close()
-	}
-
-	const del = async (name: string, id: string) => {
-		setFormData({})
-
-		const close = message.loading('loading', 0)
-
-		const res = await request(`/api/xiang/table/${name}/delete/${id}`, {
-			method: 'POST'
-		})
-
-		await getData()
-
-		close()
-
-		setFormParams({ id: '', name: '' })
-		setVisibleForm(false)
-
-		if (res === false) return
-
-		message.success('删除成功')
 	}
 
 	useEffect(() => {
@@ -165,8 +146,8 @@ const Index = (props: IProps) => {
 		data: form_data,
 		params: form_params,
 		onCancel: closeModal,
-		getData,
-		search: props.search
+		getData, // 针对在 Form 页面中使用的 Table 数据的刷新
+		search: props.search // 针对在 Table 页面中使用的 Table 数据的刷新
 	}
 
 	const props_modal: ModalProps = {
@@ -197,7 +178,9 @@ const Index = (props: IProps) => {
 						styles.header
 					])}
 				>
-					<div className='table_title'>{props.label}</div>
+					<a id={props.label} className='table_title' href={`#${props.label}`}>
+						{props.label}
+					</a>
 					{setting?.list?.actions?.create && (
 						<Button
 							className='btn_add flex justify_center align_center'
