@@ -9,7 +9,7 @@ import { hidePopover } from '../utils'
 
 const { confirm } = Modal
 
-const Index = ({ _options, options, params }: any) => {
+const Index = ({ _operation, options, params }: any) => {
 	const onItem = (it: any, item: any) => {
 		const data = getGroupValue(it?.data, item)
 
@@ -45,15 +45,15 @@ const Index = ({ _options, options, params }: any) => {
 		}
 	}
 
-	if (_options) {
-		if (_options?.unfold) {
+	if (_operation) {
+		if (_operation?.unfold) {
 			return {
 				title: '操作',
 				key: 'operation',
-				width: _options?.width || 100,
+				width: _operation?.width || 100,
 				render: (_: any, item: any) => (
 					<div className='unfold_table_option_items flex flex_wrap justify_end'>
-						{!_options?.hideDefault && (
+						{!_operation?.hideDefault && (
 							<Tooltip title='编辑'>
 								<div className='unfold_table_option_item'>
 									<a
@@ -79,7 +79,7 @@ const Index = ({ _options, options, params }: any) => {
 								</div>
 							</Tooltip>
 						)}
-						{_options?.items.map((it: any, index: number) => (
+						{_operation?.items.map((it: any, index: number) => (
 							<Tooltip title={it.title} key={index}>
 								<div
 									className='unfold_table_option_item'
@@ -124,7 +124,7 @@ const Index = ({ _options, options, params }: any) => {
 							destroyTooltipOnHide={{ keepParent: false }}
 							content={
 								<div className='table_option_items flex flex_column'>
-									{!_options?.hideDefault && (
+									{!_operation?.hideDefault && (
 										<div
 											className='table_option_item flex align_center cursor_point'
 											onClick={() => {
@@ -147,7 +147,7 @@ const Index = ({ _options, options, params }: any) => {
 											<span className='text'>编辑</span>
 										</div>
 									)}
-									{_options?.items.map(
+									{_operation?.items.map(
 										(it: any, index: number) => (
 											<div
 												className={clsx([

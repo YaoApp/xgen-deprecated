@@ -28,7 +28,7 @@ export const useColumns = (
 
 		const _columns = setting.columns
 		const _layouts = setting.list.layout.columns
-		const _options = setting.list.option?.options
+		const _operation = setting.list.option?.operation
 
 		const onFinish = async (v: any, id: number) => {
 			if (options?.useInForm) {
@@ -241,7 +241,7 @@ export const useColumns = (
 			return total
 		}, [])
 
-		columns.push(Options({ _options, options, params }))
+		columns.push(Options({ _operation, options, params }))
 
 		return columns
 	}, [setting])
