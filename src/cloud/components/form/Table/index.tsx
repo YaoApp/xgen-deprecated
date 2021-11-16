@@ -26,7 +26,7 @@ const Index = (props: IProps) => {
 	const [setting, setSetting] = useState<any>({})
 	const [data, setData] = useState([])
 	const [visible_form, setVisibleForm] = useState(false)
-	const [form_params, setFormParams] = useState({ id: '', name: '' })
+	const [form_params, setFormParams] = useState({ id: '', name: '', type: '' })
 	const [form_data, setFormData] = useState<any>({})
 	const [form_name, setFormName] = useState('')
 
@@ -44,7 +44,8 @@ const Index = (props: IProps) => {
 
 		setFormParams({
 			id: '',
-			name: ''
+			name: '',
+			type: ''
 		})
 	}
 
@@ -99,7 +100,7 @@ const Index = (props: IProps) => {
 		setFormData(data)
 	}
 
-	const edit = async (id: string, name?: string) => {
+	const edit = async (id: string, name?: string, type?: string) => {
 		setFormData({})
 
 		const close = message.loading('loading', 0)
@@ -108,12 +109,12 @@ const Index = (props: IProps) => {
 			// 针对在 Table 页面中使用的 Table 上的 Form
 			await find(id, name)
 
-			setFormParams({ id: id, name })
+			setFormParams({ id: id, name, type: type || '' })
 		} else {
 			// 针对在 Form 页面中使用的 Table 上的 Form
 			await find(id)
 
-			setFormParams({ id: id, name: form_name })
+			setFormParams({ id: id, name: form_name, type: type || '' })
 		}
 
 		setVisibleForm(true)
@@ -167,7 +168,8 @@ const Index = (props: IProps) => {
 
 		setFormParams({
 			id: '0',
-			name: form_name || ''
+			name: form_name || '',
+			type: ''
 		})
 	}
 
@@ -180,7 +182,11 @@ const Index = (props: IProps) => {
 						styles.header
 					])}
 				>
-					<a id={props.label} className='table_title' href={`#${props.label}`}>
+					<a
+						id={props.label}
+						className='table_title disabled'
+						href={`#${props.label}`}
+					>
 						{props.label}
 					</a>
 					{setting?.list?.actions?.create && (

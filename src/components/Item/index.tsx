@@ -18,7 +18,7 @@ const Index = (props: IProps) => {
 
 	const props_item = {
 		label: (
-			<a id={props.label} href={`#${props.label}`}>
+			<a id={props.label} className='disabled' href={`#${props.label}`}>
 				<label>{props.label}</label>
 			</a>
 		),

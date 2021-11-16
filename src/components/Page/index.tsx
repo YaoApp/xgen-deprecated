@@ -2,7 +2,7 @@ import { useTitle } from 'ahooks'
 import { Tooltip } from 'antd'
 import clsx from 'clsx'
 import { useCallback } from 'react'
-import { connect, useParams } from 'umi'
+import { connect, history, useParams } from 'umi'
 
 import { Icon } from '@/components'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
@@ -45,7 +45,7 @@ const Index = (props: IProps) => {
 		app_info,
 		dispatch
 	} = props
-
+	const { query } = history.location
 	const params = useParams<{ id: string }>()
 
 	useTitle(app_info.name + ' - ' + title)
@@ -85,7 +85,11 @@ const Index = (props: IProps) => {
 					</a>
 					{params.id ? (
 						<span className='page_title'>
-							{params.id === '0' ? '添加' : '编辑'}
+							{params.id === '0'
+								? '添加'
+								: query?.type === 'view'
+								? '查看'
+								: '编辑'}
 							{title}
 						</span>
 					) : (

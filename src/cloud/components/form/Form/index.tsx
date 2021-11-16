@@ -5,6 +5,7 @@ import { history, request } from 'umi'
 
 import Dynamic from '@/cloud/core'
 import { Icon } from '@/components'
+import { getDeepValueByText, getGroupValue } from '@/utils/helpers/filters'
 
 import { useFieldset } from './hooks'
 import styles from './index.less'
@@ -20,6 +21,7 @@ interface IProps {
 	params: {
 		id: string
 		name: string
+		type: string
 	}
 	pathname?: string
 	dispatch?: Dispatch
@@ -30,10 +32,12 @@ interface IProps {
 
 const Index = (props: IProps) => {
 	const { setting, data, params, pathname, dispatch, onCancel, getData, search } = props
-	const [form] = useForm()
-	const { setFieldsValue, resetFields } = form
 	const [stick, setStick] = useState<boolean | undefined>(false)
+	const [type, setType] = useState('')
+	const [form] = useForm()
 	const fieldset = useFieldset(setting)
+	const { setFieldsValue, resetFields } = form
+	const { query } = history.location
 
 	useEffect(() => {
 		if (params.id === '0' || !Object.keys(data).length) {
@@ -42,6 +46,18 @@ const Index = (props: IProps) => {
 
 		setFieldsValue(data)
 	}, [params, data])
+
+	useEffect(() => {
+		if (pathname && dispatch) {
+			// 针对 Form 页面
+			setType((query?.type as string) || '')
+		} else {
+			// 针对 Table 中的 Form
+			setType(params.type || '')
+		}
+	}, [params, query])
+
+	// console.log(type)
 
 	const { onFinish, onDel } = useMemo(() => {
 		if (pathname && dispatch) {
@@ -113,6 +129,41 @@ const Index = (props: IProps) => {
 		}
 	}, [params, data])
 
+	const onItem = (it: any) => {
+		const post_data = getGroupValue(it?.data, data)
+
+		const postAction = async () => {
+			const res = await request(it.api, {
+				method: 'POST',
+				data: post_data
+			})
+
+			if (!res) return
+
+			if (pathname && dispatch) {
+				if (!setting?.edit?.option?.dev) {
+					history.goBack()
+				}
+			} else {
+				onCancel?.()
+			}
+
+			message.success('操作成功！')
+		}
+
+		if (it?.confirm) {
+			confirm({
+				title: '操作提示',
+				content: `确认${it.title}？`,
+				onOk() {
+					postAction()
+				}
+			})
+		} else {
+			postAction()
+		}
+	}
+
 	return (
 		<Form
 			className={styles._local}
@@ -121,7 +172,9 @@ const Index = (props: IProps) => {
 			onFinish={onFinish}
 		>
 			<div className='form_title_wrap w_100 border_box flex justify_between align_center'>
-				<span className='title'>{params.id === '0' ? '创建' : '编辑'}</span>
+				<span className='title'>
+					{params.id === '0' ? '创建' : type === 'view' ? '查看' : '编辑'}
+				</span>
 				<Affix offsetTop={11} style={{ zIndex: 101 }} onChange={(v) => setStick(v)}>
 					<div
 						className={clsx([
@@ -129,9 +182,45 @@ const Index = (props: IProps) => {
 							stick ? 'stick' : ''
 						])}
 					>
+						{type === 'view' && setting.edit?.option?.operation && (
+							<div className='operation_wrap flex align_center'>
+								{setting.edit?.option?.operation?.map(
+									(item: any, index: number) => (
+										<Button
+											className={clsx([
+												'btn_action btn_back btn auto',
+												stick ? 'stick' : '',
+												item?.type
+													? item.type +
+													  ' has_type'
+													: 'btn_normal',
+												item?.disabled
+													? getDeepValueByText(
+															item.disabled,
+															data
+													  )
+														? 'disabled'
+														: ''
+													: ''
+											])}
+											icon={
+												<Icon
+													name={item.icon}
+													size={15}
+												></Icon>
+											}
+											key={index}
+											onClick={() => onItem(item)}
+										>
+											{item.title}
+										</Button>
+									)
+								)}
+							</div>
+						)}
 						<Button
 							className={clsx([
-								'btn_action btn_normal btn_back',
+								'btn_action btn_back btn btn_normal',
 								stick ? 'stick' : ''
 							])}
 							icon={<Icon name='icon-arrow-left' size={15}></Icon>}
@@ -139,13 +228,15 @@ const Index = (props: IProps) => {
 						>
 							{pathname ? '返回' : '取消'}
 						</Button>
-						<Button
-							className='btn_action btn_confirm'
-							type='primary'
-							htmlType='submit'
-						>
-							保存
-						</Button>
+						{type !== 'view' && (
+							<Button
+								className='btn_action btn_confirm'
+								type='primary'
+								htmlType='submit'
+							>
+								保存
+							</Button>
+						)}
 					</div>
 				</Affix>
 			</div>
@@ -157,7 +248,7 @@ const Index = (props: IProps) => {
 					>
 						<a
 							id={item.title}
-							className='form_item_title_wrap flex flex_column'
+							className='form_item_title_wrap flex flex_column disabled'
 							href={`#${item.title}`}
 						>
 							<span className='section_title'>{item.title}</span>
@@ -194,7 +285,11 @@ const Index = (props: IProps) => {
 												...it.edit.props,
 												name: it.edit.props.value,
 												label: it.label,
-												rules: it.rules
+												rules:
+													type === 'view'
+														? []
+														: it.rules,
+												disabled: type === 'view'
 											}}
 										></Dynamic>
 									</Col>
@@ -203,7 +298,7 @@ const Index = (props: IProps) => {
 						</Row>
 					</div>
 				))}
-				{params.id !== '0' && setting.edit.actions.delete.type && (
+				{params.id !== '0' && type !== 'view' && setting.edit.actions.delete.type && (
 					<div className='actions_wrap danger w_100 border_box flex flex_column'>
 						<div className='form_item_title_wrap flex flex_column'>
 							<span className='section_title'>危险操作</span>

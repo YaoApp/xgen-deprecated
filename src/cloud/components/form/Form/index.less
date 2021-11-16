@@ -8,7 +8,7 @@
 	background-color: var(--color_bg_menu);
 
 	:global {
-		.btn_normal {
+		.btn {
 			border: none;
 			background-color: var(--color_bg);
 		}
@@ -29,14 +29,59 @@
 				}
 
 				.btn_action {
+					box-sizing: border-box;
+					margin-left: 16px;
 					width: 80px;
+
+					&.auto {
+						width: auto;
+					}
+
+					&.has_type {
+						color: white;
+
+						&:hover,
+						&:active,
+						&:focus {
+							filter: brightness(1.2);
+
+							i {
+								color: white !important;
+							}
+						}
+
+						i {
+							color: white !important;
+						}
+					}
+
+					&.success {
+						background-color: fade(@primary-color, 60%);
+					}
+
+					&.warning {
+						background-color: fade(@warning-color, 60%);
+					}
+
+					&.danger {
+						background-color: fade(@error-color, 60%);
+					}
+
+					&.disabled {
+						opacity: 0.4;
+					}
+
+					i {
+						transition: color ease 0.3s;
+						transform: translateY(1px);
+					}
 				}
 
 				.btn_back {
-					margin-right: 16px;
-
-					&.stick {
-						background-color: var(--color_bg_nav);
+					&.btn_normal {
+						&.stick {
+							background-color: var(--color_bg_nav);
+						}
 					}
 
 					&:hover,
@@ -46,10 +91,15 @@
 							color: var(--color_main) !important;
 						}
 					}
+				}
 
-					i {
-						transition: color ease 0.3s;
-						transform: translateY(1px);
+				.operation_wrap {
+					&::after {
+						margin-left: 16px;
+						width: 1px;
+						height: 60%;
+						background-color: var(--color_border);
+						content: '';
 					}
 				}
 			}
@@ -116,6 +166,18 @@
 						right: 2px;
 						font-size: 13px;
 					}
+
+					.ant-input[disabled],
+					.ant-input-disabled,
+					.ant-select-disabled.ant-select:not(.ant-select-customize-input)
+						.ant-select-selector {
+						background-color: var(--color_bg_nav);
+						color: var(--color_text);
+					}
+
+					.ant-select-disabled.ant-select-multiple .ant-select-selection-item {
+						color: var(--color_text);
+					}
 				}
 			}
 
@@ -146,7 +208,7 @@
 							}
 						}
 
-						.btn_normal {
+						.btn {
 							width: 80px;
 						}
 					}
