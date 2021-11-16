@@ -220,8 +220,50 @@
 			border-bottom: none;
 		}
 
+		&.danger {
+			i {
+				color: var(--color_danger) !important;
+			}
+
+			.text {
+				color: var(--color_danger) !important;
+			}
+		}
+
+		&.disabled {
+			opacity: 0.4;
+		}
+
 		.text {
 			margin-left: 6px;
+		}
+	}
+}
+
+.unfold_table_option_items {
+	.unfold_table_option_item {
+		padding: 4px;
+
+		.icon_wrap {
+			width: 30px;
+			height: 30px;
+			border: 1px solid var(--color_border);
+			border-radius: 50%;
+
+			&:hover {
+				background-color: var(--color_bg_nav);
+			}
+
+			&.danger {
+				i {
+					color: var(--color_danger) !important;
+				}
+			}
+
+			&.disabled {
+				background-color: var(--color_border);
+				opacity: 0.4;
+			}
 		}
 	}
 }

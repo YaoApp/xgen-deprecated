@@ -39,3 +39,11 @@ export const getTargetValue = (v: string, key: string, dataItem: any) => {
 
 	return {}
 }
+
+export const hidePopover = () => {
+	const td_popover = document.getElementById('td_popover')
+
+	if (!td_popover) return
+
+	td_popover.style.display = 'none'
+}

@@ -5,11 +5,11 @@ import { useMemo } from 'react'
 import { getDvaApp, history, useParams } from 'umi'
 
 import Dynamic from '@/cloud/core'
-import { Icon } from '@/components'
 import { getDeepValue } from '@/utils/helpers/filters'
 import { CheckOutlined } from '@ant-design/icons'
 
-import { getTargetValue, getText } from './utils'
+import Options from './components/Options'
+import { getTargetValue, getText, hidePopover } from './utils'
 
 export const useColumns = (
 	setting: any,
@@ -17,6 +17,8 @@ export const useColumns = (
 		useInForm: boolean
 		save: (data: any) => void
 		edit: (id: string, name?: string) => void
+		search: () => void
+		getData: () => Promise<void>
 	}
 ) => {
 	const params = useParams<{ name: string }>()
@@ -26,6 +28,7 @@ export const useColumns = (
 
 		const _columns = setting.columns
 		const _layouts = setting.list.layout.columns
+		const _options = setting.list.option?.options
 
 		const onFinish = async (v: any, id: number) => {
 			if (options?.useInForm) {
@@ -36,6 +39,8 @@ export const useColumns = (
 					payload: { name: params.name, data: { id, ...v } }
 				})
 			}
+
+			hidePopover()
 		}
 
 		const columns = _layouts.reduce((total: Array<any>, it: any, index: number) => {
@@ -82,15 +87,6 @@ export const useColumns = (
 									}}
 									onFinish={(v) => {
 										onFinish(v, dataItem.id)
-
-										const td_popover =
-											document.getElementById(
-												'td_popover'
-											)
-
-										if (!td_popover) return
-
-										td_popover.style.display = 'none'
 									}}
 								>
 									<Dynamic
@@ -245,48 +241,7 @@ export const useColumns = (
 			return total
 		}, [])
 
-		columns.push({
-			title: '操作',
-			key: 'operation',
-			width: '60px',
-			render: (_: any, item: any) => (
-				<div className='flex justify_end'>
-					<Popover
-						overlayClassName='options_popover'
-						placement='bottomRight'
-						trigger='click'
-						zIndex={1000}
-						destroyTooltipOnHide={{ keepParent: false }}
-						content={
-							<div className='table_option_items flex flex_column'>
-								<div
-									className='table_option_item flex align_center cursor_point'
-									onClick={() => {
-										if (
-											options?.useInForm &&
-											options?.edit
-										) {
-											options.edit(item.id)
-										} else {
-											history.push({
-												pathname: `/form/${params.name}/${item.id}`
-											})
-										}
-									}}
-								>
-									<Icon name='icon-eye' size={13}></Icon>
-									<span className='text'>查看</span>
-								</div>
-							</div>
-						}
-					>
-						<a className='option_icon_wrap flex justify_center align_center clickable'>
-							<Icon name='icon-more-vertical' size={18}></Icon>
-						</a>
-					</Popover>
-				</div>
-			)
-		})
+		columns.push(Options({ _options, options, params }))
 
 		return columns
 	}, [setting])

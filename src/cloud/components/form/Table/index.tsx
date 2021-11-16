@@ -138,7 +138,9 @@ const Index = (props: IProps) => {
 	const columns = useColumns(setting || {}, {
 		useInForm: props?.name ? true : false,
 		save,
-		edit
+		edit,
+		search: props.search, // 针对在 Table 页面中使用的 Table 数据的刷新
+		getData // 针对在 Form 页面中使用的 Table 数据的刷新
 	})
 
 	const props_form = {
@@ -146,8 +148,8 @@ const Index = (props: IProps) => {
 		data: form_data,
 		params: form_params,
 		onCancel: closeModal,
-		getData, // 针对在 Form 页面中使用的 Table 数据的刷新
-		search: props.search // 针对在 Table 页面中使用的 Table 数据的刷新
+		search: props.search, // 针对在 Table 页面中使用的 Table 数据的刷新
+		getData // 针对在 Form 页面中使用的 Table 数据的刷新
 	}
 
 	const props_modal: ModalProps = {

@@ -24,8 +24,8 @@ interface IProps {
 	pathname?: string
 	dispatch?: Dispatch
 	onCancel?: () => void
-	getData?: () => Promise<void>
 	search?: () => void
+	getData?: () => Promise<void>
 }
 
 const Index = (props: IProps) => {
