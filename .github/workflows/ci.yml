@@ -16,7 +16,7 @@ jobs:
                   - name: Checkout Repo
                     uses: actions/checkout@v2
 
-                  - name: Checkout Repo
+                  - name: Node and Cache
                     uses: actions/setup-node@v2
                     with:
                           node-version: '14'
