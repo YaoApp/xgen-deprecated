@@ -1,3 +1,5 @@
+import 'nprogress/nprogress.css'
+
 import { message } from 'antd'
 import { findIndex } from 'lodash-es'
 import pathToRegexp from 'path-to-regexp'

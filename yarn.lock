@@ -328,7 +328,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.0", "@babel/runtime@^7.15.4", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
   version "7.16.3"
   resolved "https://registry.npmmirror.com/@babel/runtime/download/@babel/runtime-7.16.3.tgz?cache=0&sync_timestamp=1636495274221&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.16.3.tgz#b86f0db02a04187a3c17caa77de69840165d42d5"
   integrity sha512-WBwekcqacdY2e9AF/Q7WLFUWmdJGJTkbjqTjoMDgXkVZ3ZRUvOPsLb5KdwISoQVsbP+DQzVZW4Zhci0DvpbNTQ==
@@ -1145,6 +1145,11 @@
   version "2.4.1"
   resolved "https://registry.npmmirror.com/@types/normalize-package-data/download/@types/normalize-package-data-2.4.1.tgz?cache=0&sync_timestamp=1637270290556&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fnormalize-package-data%2Fdownload%2F%40types%2Fnormalize-package-data-2.4.1.tgz#d3357479a0fdfdd5907fe67e17e0a85c906e1301"
   integrity sha1-0zV0eaD9/dWQf+Z+F+CoXJBuEwE=
+
+"@types/nprogress@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.npmmirror.com/@types/nprogress/download/@types/nprogress-0.2.0.tgz#86c593682d4199212a0509cc3c4d562bbbd6e45f"
+  integrity sha1-hsWTaC1BmSEqBQnMPE1WK7vW5F8=
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -5193,7 +5198,7 @@ lines-and-columns@^1.1.6:
 
 lint-staged@^11.0.0:
   version "11.2.6"
-  resolved "https://registry.npmmirror.com/lint-staged/download/lint-staged-11.2.6.tgz?cache=0&sync_timestamp=1637507608540&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Flint-staged%2Fdownload%2Flint-staged-11.2.6.tgz#f477b1af0294db054e5937f171679df63baa4c43"
+  resolved "https://registry.npmmirror.com/lint-staged/download/lint-staged-11.2.6.tgz?cache=0&sync_timestamp=1637565457446&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Flint-staged%2Fdownload%2Flint-staged-11.2.6.tgz#f477b1af0294db054e5937f171679df63baa4c43"
   integrity sha1-9HexrwKU2wVOWTfxcWed9juqTEM=
   dependencies:
     cli-truncate "2.1.0"
@@ -6960,7 +6965,7 @@ rc-tree-select@~4.3.0:
 
 rc-tree@^4.0.0, rc-tree@~4.2.1:
   version "4.2.2"
-  resolved "https://registry.npmmirror.com/rc-tree/download/rc-tree-4.2.2.tgz?cache=0&sync_timestamp=1635165420089&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Frc-tree%2Fdownload%2Frc-tree-4.2.2.tgz#4429187cbbfbecbe989714a607e3de8b3ab7763f"
+  resolved "https://registry.npmmirror.com/rc-tree/download/rc-tree-4.2.2.tgz?cache=0&sync_timestamp=1637568319570&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Frc-tree%2Fdownload%2Frc-tree-4.2.2.tgz#4429187cbbfbecbe989714a607e3de8b3ab7763f"
   integrity sha1-RCkYfLv77L6YlxSmB+Peizq3dj8=
   dependencies:
     "@babel/runtime" "^7.10.1"
@@ -7229,7 +7234,7 @@ react@16.x:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
 
-react@17.0.2, "react@^16.8.0 || ^17.0.0":
+react@17.0.2:
   version "17.0.2"
   resolved "https://registry.npmmirror.com/react/download/react-17.0.2.tgz?cache=0&sync_timestamp=1637338772418&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Freact%2Fdownload%2Freact-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
   integrity sha1-0LXMUW0p6z7uOD91tihkz7aAADc=
@@ -8462,34 +8467,15 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@^4.3.5, typescript@^4.4.3:
+typescript@^4.4.3:
   version "4.5.2"
-  resolved "https://registry.npmmirror.com/typescript/download/typescript-4.5.2.tgz?cache=0&sync_timestamp=1637479210523&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Ftypescript%2Fdownload%2Ftypescript-4.5.2.tgz#8ac1fba9f52256fdb06fb89e4122fa6a346c2998"
+  resolved "https://registry.npmmirror.com/typescript/download/typescript-4.5.2.tgz?cache=0&sync_timestamp=1637565670733&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Ftypescript%2Fdownload%2Ftypescript-4.5.2.tgz#8ac1fba9f52256fdb06fb89e4122fa6a346c2998"
   integrity sha512-5BlMof9H1yGt0P8/WF+wPNw6GfctgGjXp5hkblpyT+8rkASSmkUKMXrxR0Xg8ThVCi/JnHQiKXeBaEwCeQwMFw==
 
 ua-parser-js@^0.7.30:
   version "0.7.31"
   resolved "https://registry.npmmirror.com/ua-parser-js/download/ua-parser-js-0.7.31.tgz?cache=0&sync_timestamp=1635347062487&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fua-parser-js%2Fdownload%2Fua-parser-js-0.7.31.tgz#649a656b191dffab4f21d5e053e27ca17cbff5c6"
   integrity sha1-ZJplaxkd/6tPIdXgU+J8oXy/9cY=
-
-umi-plugin-nprogress-runtime@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.npmmirror.com/umi-plugin-nprogress-runtime/download/umi-plugin-nprogress-runtime-3.5.0.tgz#6c7f08f3ef9130fc3846ded9565774b790d18d57"
-  integrity sha1-bH8I8++RMPw4Rt7ZVld0t5DRjVc=
-  dependencies:
-    "@babel/runtime" "^7.15.0"
-    nprogress "0.2.0"
-  optionalDependencies:
-    react "^16.8.0 || ^17.0.0"
-
-umi-plugin-nprogress@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.npmmirror.com/umi-plugin-nprogress/download/umi-plugin-nprogress-3.5.0.tgz#57d9eb4b34dc5120cab2db9a1be811c30808b034"
-  integrity sha1-V9nrSzTcUSDKstuaG+gRwwgIsDQ=
-  dependencies:
-    "@babel/runtime" "^7.15.0"
-    typescript "^4.3.5"
-    umi-plugin-nprogress-runtime "^3.5.0"
 
 umi-request@^1.2.14:
   version "1.4.0"
@@ -8499,7 +8485,7 @@ umi-request@^1.2.14:
     isomorphic-fetch "^2.2.1"
     qs "^6.9.1"
 
-umi@^3.5.19:
+umi@^3.5.20:
   version "3.5.20"
   resolved "https://registry.npmmirror.com/umi/download/umi-3.5.20.tgz#7380d4dd62b9b5b3e6da303a3312a7b68a10eb51"
   integrity sha1-c4DU3WK5tbPm2jA6MxKntooQ61E=

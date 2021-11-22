@@ -1,7 +1,8 @@
+import NProgress from 'nprogress'
 import config from 'R/config'
 import { Fragment, useEffect } from 'react'
 import store from 'store'
-import { connect, Helmet, history, NProgress } from 'umi'
+import { connect, Helmet, history } from 'umi'
 
 import { Loader } from '@/components'
 import { install } from '@/utils/pwa'
