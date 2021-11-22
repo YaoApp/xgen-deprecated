@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { history } from 'umi'
 
 import styles from './index.less'
 
@@ -12,7 +13,8 @@ const Index = (props: IPropsContainer & { children: React.ReactNode }) => {
 			className={clsx([
 				styles._local,
 				!visible_menu ? styles.no_menu : '',
-				!visible_menu && !visible_nav ? styles.no_left_nav : ''
+				!visible_menu && !visible_nav ? styles.no_left_nav : '',
+				history.location.pathname.indexOf('/iframe') !== -1 ? styles.iframe : ''
 			])}
 		>
 			<div className='content_wrap w_100 border_box'>{children}</div>
