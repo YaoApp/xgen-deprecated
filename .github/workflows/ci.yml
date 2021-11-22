@@ -5,6 +5,7 @@ on:
             branches:
                   - main
             paths-ignore:
+                  - test
                   - README.md
                   - LICENSE
 
@@ -15,22 +16,18 @@ jobs:
                   - name: Checkout Repo
                     uses: actions/checkout@v2
 
-                  - name: Get yarn cache directory path
-                    id: yarn-cache-dir-path
-                    run: echo "::set-output name=dir::$(yarn cache dir)"
-
                   - name: Get npm cache
                     id: cache
                     uses: actions/cache@v2
                     with:
-                          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-                          restore-keys: |
-                            ${{ runner.os }}-yarn-
+                        path: node_modules
+                        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                        restore-keys: |
+                              ${{ runner.os }}-node-
 
                   - name: Install
                     if: steps.cache.outputs.cache-hit != 'true'
-                    run: yarn
+                    run: npm install
 
                   - name: Test Build
                     run: npm run build
