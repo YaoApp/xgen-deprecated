@@ -1,7 +1,16 @@
+import { useEffect } from 'react'
 import { history } from 'umi'
 
 const Index = () => {
 	const { location } = history
+
+	useEffect(() => {
+		document.body.style.overflow = 'hidden'
+
+		return () => {
+			document.body.style.overflow = 'auto'
+		}
+	}, [])
 
 	return (
 		<iframe
