@@ -8,11 +8,12 @@
 		.bg_wrap {
 			width: 100% / 12 * 8;
 			height: 100%;
+			border-right: 1px solid var(--color_bg);
 			background-color: var(--color_bg);
 
 			.bg {
-				max-width: 60%;
-				width: 60%;
+				max-width: 72%;
+				width: 72%;
 			}
 		}
 
@@ -146,9 +147,31 @@
 
 				.btn_login {
 					margin-top: 24px;
-					width: 140px;
 					height: 46px;
 					font-weight: 600;
+				}
+			}
+
+			.or_wrap {
+				margin: 30px 0;
+
+				.line {
+					width: 42%;
+					height: 1px;
+					background-color: fade(white, 6%);
+				}
+			}
+
+			.third_wrap {
+				.btn_third {
+					height: 46px;
+					border: 1px solid var(--color_border);
+
+					.logo_third {
+						left: 30px;
+						margin-top: 2px;
+						width: 24px;
+					}
 				}
 			}
 

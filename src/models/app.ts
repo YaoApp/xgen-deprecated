@@ -21,6 +21,17 @@ export interface IModelApp {
 		option: {
 			nav_user: string
 			nav_menu: string
+			login: {
+				password: {
+					captcha: string
+					login: string
+					inspect: string
+				}
+				feishu?: {
+					authUrl: string
+					login: string
+				}
+			}
 		}
 	}
 	user: any

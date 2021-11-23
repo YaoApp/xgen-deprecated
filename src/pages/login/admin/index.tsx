@@ -1,20 +1,20 @@
 import { Button, Form, Input, message } from 'antd'
 import clsx from 'clsx'
-import { connect, Helmet } from 'umi'
+import { connect, Helmet, Link } from 'umi'
 
 import { Icon } from '@/components'
-import bg_login from '@/images/bg_login.svg'
+import bg_login from '@/images/bg_login_admin.svg'
 
 import styles from './index.less'
 
-import type { ConnectRC, Loading, Dispatch, IModelApp, IModelLogin } from 'umi'
+import type { ConnectRC, Loading, Dispatch, IModelApp, IModelLoginAdmin } from 'umi'
 
 const { Item, useForm } = Form
 
 interface IProps {
 	loading: boolean
 	app_data: IModelApp
-	page_data: IModelLogin
+	page_data: IModelLoginAdmin
 	dispatch: Dispatch
 }
 
@@ -43,7 +43,7 @@ const Index: ConnectRC<IProps> = (props) => {
 		}
 
 		dispatch({
-			type: 'login/login',
+			type: 'login_admin/login',
 			payload: {
 				[is_email ? 'email' : 'mobile']: v.mobile,
 				password: v.password,
@@ -80,9 +80,7 @@ const Index: ConnectRC<IProps> = (props) => {
 					</div>
 					<div className='title_wrap w_100 border_box flex flex_column'>
 						<span className='title'>登录系统</span>
-						<span className='desc'>
-							请使用管理员手机号和登录密码登录系统
-						</span>
+						<span className='desc'>请使用管理员账号和登录密码登录系统</span>
 					</div>
 					<Form
 						className='form_wrap flex flex_column'
@@ -170,7 +168,7 @@ const Index: ConnectRC<IProps> = (props) => {
 									backgroundImage: `url(${captcha.content})`
 								}}
 								onClick={() =>
-									dispatch({ type: 'login/getCaptcha' })
+									dispatch({ type: 'login_admin/getCaptcha' })
 								}
 							/>
 						</div>
@@ -180,7 +178,6 @@ const Index: ConnectRC<IProps> = (props) => {
 									className='btn_login'
 									type='primary'
 									htmlType='submit'
-									shape='round'
 									disabled={
 										!(
 											getFieldValue('mobile') &&
@@ -194,6 +191,9 @@ const Index: ConnectRC<IProps> = (props) => {
 								</Button>
 							)}
 						</Item>
+						<Link className='btn_link w_100 text_center' to='/login/user'>
+							普通用户登录
+						</Link>
 					</Form>
 					<div className='copyright w_100 absolute flex justify_center'>
 						<span>由</span>
@@ -211,15 +211,15 @@ const Index: ConnectRC<IProps> = (props) => {
 const getInitialProps = ({
 	loading,
 	app,
-	login
+	login_admin
 }: {
 	loading: Loading
 	app: IModelApp
-	login: IModelLogin
+	login_admin: IModelLoginAdmin
 }) => ({
-	loading: !!loading.effects[`login/login`],
+	loading: !!loading.effects[`login_admin/login`],
 	app_data: app,
-	page_data: login
+	page_data: login_admin
 })
 
 export default window.$app.memo(connect(getInitialProps)(Index))

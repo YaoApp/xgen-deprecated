@@ -3,9 +3,11 @@ import 'nprogress/nprogress.css'
 import { message } from 'antd'
 import { findIndex } from 'lodash-es'
 import pathToRegexp from 'path-to-regexp'
+import store from 'store'
 import { getDvaApp, history } from 'umi'
 
 import { chart, form, kanban, screen, table } from '@/actions'
+import { login_url } from '@/entry'
 import { IMenu } from '@/typings/menu'
 
 import type { RequestConfig, Dispatch, IModelApp } from 'umi'
@@ -124,7 +126,9 @@ export const request: RequestConfig = {
 				if (res.code === 401 || res.code === 403) {
 					message.warning('尚未登录')
 
-					history.push('/login')
+					if (store.get('role')) {
+						history.push(login_url)
+					}
 				}
 			} catch (_) {}
 
@@ -134,7 +138,14 @@ export const request: RequestConfig = {
 	async errorHandler(error) {
 		const res: any = await error?.response.clone().json()
 
-		if (res && (res.code === 401 || res.code === 403)) return history.push('/login')
+		if (res && (res.code === 401 || res.code === 403)) {
+			if (store.get('role')) {
+				history.push(login_url)
+			}
+
+			return
+		}
+
 		if (res && res.message) message.error(res.message)
 
 		return false

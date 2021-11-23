@@ -3,6 +3,7 @@ import store from 'store'
 import { history, NavLink } from 'umi'
 
 import { Icon } from '@/components'
+import { login_url } from '@/entry'
 
 import styles from './index.less'
 
@@ -49,7 +50,7 @@ const Index = (props: IPropsOptions) => {
 
 						sessionStorage.removeItem('token')
 
-						history.push('/login')
+						history.push(login_url)
 					}}
 				>
 					<Icon name='icon-log-out' size={15} color='white'></Icon>

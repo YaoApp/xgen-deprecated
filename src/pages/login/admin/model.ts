@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import modelExtend from 'dva-model-extend'
 import store from 'store'
 import { history } from 'umi'
@@ -8,7 +9,7 @@ import { getCaptcha, login } from './service'
 
 import type { IModelApp } from 'umi'
 
-export interface IModelLogin {
+export interface IModelLoginAdmin {
 	captcha: {
 		id: string
 		content: string
@@ -16,7 +17,7 @@ export interface IModelLogin {
 }
 
 export default modelExtend(pageModel, {
-	namespace: 'login',
+	namespace: 'login_admin',
 
 	state: {
 		captcha: {}
@@ -25,7 +26,7 @@ export default modelExtend(pageModel, {
 	subscriptions: {
 		setup({ history, dispatch }) {
 			history.listen((location) => {
-				if (location.pathname !== '/login') return
+				if (location.pathname !== '/login/admin') return
 
 				dispatch({ type: 'getCaptcha' })
 				dispatch({ type: 'app/updateState', payload: { visible_menu: false } })
@@ -67,11 +68,18 @@ export default modelExtend(pageModel, {
 			sessionStorage.setItem('token', res.token)
 			store.set('user', res.user)
 			store.set('menu', res.menus)
+			store.set('role', 'admin')
 			store.set('current_nav', 0)
 
 			yield window.$app.sleep(600)
 
-			history.push(store.get('app_info')?.option?.index || '/kanban/index')
+			const index = store.get('app_info')?.option?.index
+
+			if (index) {
+				history.push(index)
+			} else {
+				message.success('应用未设置首页，请联系管理员')
+			}
 		}
 	}
 })

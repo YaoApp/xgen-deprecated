@@ -5,6 +5,7 @@ import store from 'store'
 import { connect, Helmet, history } from 'umi'
 
 import { Loader } from '@/components'
+import { login_url } from '@/entry'
 import { install } from '@/utils/pwa'
 
 import Container from './components/Container'
@@ -20,8 +21,15 @@ let path: any
 
 const Index = (props: IProps) => {
 	const { dispatch, children, loading, app_data } = props
-	const { app_info, user, menu, current_nav, current_menu, visible_nav, visible_menu } =
-		app_data
+	const {
+		app_info,
+		user,
+		menu,
+		current_nav,
+		current_menu,
+		visible_nav,
+		visible_menu
+	} = app_data
 	const global_loading = loading.global
 
 	useEffect(() => {
@@ -36,9 +44,15 @@ const Index = (props: IProps) => {
 		path = history.location.pathname
 	}, [path, history.location.pathname, global_loading])
 
-	if (history.location.pathname === '/login') return children
+	if (
+		history.location.pathname === '/login/admin' ||
+		history.location.pathname === '/login/user'
+	) {
+		return children
+	}
+
 	if (!menu || !menu.length) {
-		history.push('/login')
+		history.push(login_url)
 
 		return null
 	}
