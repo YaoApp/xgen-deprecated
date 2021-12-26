@@ -1,5 +1,6 @@
 import { Affix, Button, Col, Form, message, Modal, Row } from 'antd'
 import clsx from 'clsx'
+import qs from 'query-string'
 import { useEffect, useMemo, useState } from 'react'
 import { history, request } from 'umi'
 
@@ -21,7 +22,7 @@ interface IProps {
 	params: {
 		id: string
 		name: string
-		type: string
+		type?: string
 	}
 	pathname?: string
 	dispatch?: Dispatch
@@ -56,8 +57,6 @@ const Index = (props: IProps) => {
 			setType(params.type || '')
 		}
 	}, [params, query])
-
-	// console.log(type)
 
 	const { onFinish, onDel } = useMemo(() => {
 		if (pathname && dispatch) {
@@ -131,6 +130,16 @@ const Index = (props: IProps) => {
 
 	const onItem = (it: any) => {
 		const post_data = getGroupValue(it?.data, data)
+
+		if (it?.link) {
+			window.open(
+				`${it.link}?${qs.stringify(
+					post_data
+				)}&token=${`Bearer ${sessionStorage.getItem('token')}`}`
+			)
+
+			return
+		}
 
 		const postAction = async () => {
 			const res = await request(it.api, {
@@ -268,6 +277,7 @@ const Index = (props: IProps) => {
 												name='table'
 												props={{
 													...it.edit.props,
+													type,
 													label: it.label,
 													queryDataSource: data
 												}}
@@ -317,7 +327,8 @@ const Index = (props: IProps) => {
 									onClick={() =>
 										confirm({
 											title: '确认删除',
-											content: '删除之后数据不可恢复，请谨慎操作！',
+											content:
+												'删除之后数据不可恢复，请谨慎操作！',
 											centered: true,
 											onOk() {
 												onDel()

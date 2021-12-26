@@ -10,17 +10,6 @@ import { hidePopover } from '../utils'
 const { confirm } = Modal
 
 const Index = ({ _operation, options, params }: any) => {
-	const default_operation = [
-		{
-			title: '查看',
-			icon: 'icon-eye'
-		},
-		{
-			title: '编辑',
-			icon: 'icon-edit-2'
-		}
-	]
-
 	const onItem = (it: any, item: any) => {
 		const data = getGroupValue(it?.data, item)
 
@@ -84,21 +73,30 @@ const Index = ({ _operation, options, params }: any) => {
 			width: options?.useInForm ? 110 : _operation?.width || 110,
 			render: (_: any, item: any) => (
 				<div className='unfold_table_option_items flex flex_wrap justify_end'>
-					{!_operation?.hideDefault &&
-						default_operation.map((it: any, index) => (
-							<Tooltip title={it.title} key={index}>
-								<div className='unfold_table_option_item'>
-									<a
-										className='icon_wrap border_box flex justify_center align_center clickable'
-										onClick={() =>
-											onDefaultOperation(item, index)
-										}
-									>
-										<Icon name={it.icon} size={13}></Icon>
-									</a>
-								</div>
-							</Tooltip>
-						))}
+					{!_operation?.hideView && (
+						<Tooltip title='查看'>
+							<div className='unfold_table_option_item'>
+								<a
+									className='icon_wrap border_box flex justify_center align_center clickable'
+									onClick={() => onDefaultOperation(item, 0)}
+								>
+									<Icon name='icon-eye' size={13}></Icon>
+								</a>
+							</div>
+						</Tooltip>
+					)}
+					{!_operation?.hideEdit && (
+						<Tooltip title='编辑'>
+							<div className='unfold_table_option_item'>
+								<a
+									className='icon_wrap border_box flex justify_center align_center clickable'
+									onClick={() => onDefaultOperation(item, 1)}
+								>
+									<Icon name='icon-edit-2' size={13}></Icon>
+								</a>
+							</div>
+						</Tooltip>
+					)}
 					{!options?.useInForm &&
 						_operation?.items.map((it: any, index: number) => (
 							<Tooltip title={it.title} key={index}>
@@ -145,27 +143,31 @@ const Index = ({ _operation, options, params }: any) => {
 						destroyTooltipOnHide={{ keepParent: false }}
 						content={
 							<div className='table_option_items flex flex_column'>
-								{!_operation?.hideDefault &&
-									default_operation.map((it: any, index) => (
-										<div
-											className='table_option_item flex align_center cursor_point'
-											key={index}
-											onClick={() =>
-												onDefaultOperation(
-													item,
-													index
-												)
-											}
-										>
-											<Icon
-												name={it.icon}
-												size={13}
-											></Icon>
-											<span className='text'>
-												{it.title}
-											</span>
-										</div>
-									))}
+								{!_operation?.hideView && (
+									<div
+										className='table_option_item flex align_center cursor_point'
+										onClick={() =>
+											onDefaultOperation(item, 0)
+										}
+									>
+										<Icon name='icon-eye' size={13}></Icon>
+										<span className='text'>查看</span>
+									</div>
+								)}
+								{!_operation?.hideEdit && (
+									<div
+										className='table_option_item flex align_center cursor_point'
+										onClick={() =>
+											onDefaultOperation(item, 1)
+										}
+									>
+										<Icon
+											name='icon-edit-2'
+											size={13}
+										></Icon>
+										<span className='text'>编辑</span>
+									</div>
+								)}
 								{!options?.useInForm &&
 									_operation?.items.map(
 										(it: any, index: number) => (

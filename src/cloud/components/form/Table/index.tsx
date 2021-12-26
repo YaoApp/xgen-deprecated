@@ -13,6 +13,7 @@ import styles from './index.less'
 import type { TableProps, ModalProps } from 'antd'
 
 export interface IProps extends TableProps<any> {
+	type: string
 	setting?: any
 	data?: any
 	name?: string
@@ -189,7 +190,7 @@ const Index = (props: IProps) => {
 					>
 						{props.label}
 					</a>
-					{setting?.list?.actions?.create && (
+					{props.type !== 'view' && setting?.list?.actions?.create && (
 						<Button
 							className='btn_add flex justify_center align_center'
 							type='link'

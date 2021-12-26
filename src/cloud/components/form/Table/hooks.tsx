@@ -96,6 +96,7 @@ export const useColumns = (
 											...cfg.edit.props,
 											label: cfg.label,
 											name: key,
+											value,
 											style: { width: 240 }
 										}}
 									></Dynamic>

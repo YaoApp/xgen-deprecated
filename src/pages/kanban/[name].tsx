@@ -45,9 +45,17 @@ const Index: ConnectRC<IProps> = (props) => {
 								title: '显示大屏',
 								icon: 'icon-airplay',
 								onClick: () => {
-									history.push(setting.page.option.screen)
+									if (
+										setting.page.option.screen.indexOf(
+											'http'
+										) !== -1
+									) {
+										window.open(setting.page.option.screen)
+									} else {
+										history.push(setting.page.option.screen)
 
-									setFull()
+										setFull()
+									}
 								}
 							}
 					  ]

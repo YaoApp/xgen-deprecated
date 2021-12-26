@@ -14,11 +14,12 @@ interface IProps extends SelectProps<any> {
 	bind?: string
 	label?: string
 	string?: '1' | '0' | undefined
+	value: string
 	rules: Array<any>
 	remote: {
 		api: string
 		query: {
-			keyword: string
+			useValue?: boolean
 			select: Array<string>
 		}
 	}
@@ -33,8 +34,14 @@ const Index = (props: IProps) => {
 	const [data, setData] = useState<Array<any>>([])
 
 	const getData = async () => {
+		let v = ''
+
+		if (props.remote.query?.useValue) {
+			v = `&value=${props.value}`
+		}
+
 		const data = await request(
-			`${props.remote.api}?select=${props.remote.query.select.join(',')}`
+			`${props.remote.api}?select=${props.remote.query.select.join(',')}${v}`
 		)
 
 		setData(data)
