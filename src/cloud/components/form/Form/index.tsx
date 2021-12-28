@@ -132,11 +132,7 @@ const Index = (props: IProps) => {
 		const post_data = getGroupValue(it?.data, data)
 
 		if (it?.link) {
-			window.open(
-				`${it.link}?${qs.stringify(
-					post_data
-				)}&token=${`Bearer ${sessionStorage.getItem('token')}`}`
-			)
+			window.open(`${it.link}?${qs.stringify(post_data)}`)
 
 			return
 		}
@@ -286,6 +282,23 @@ const Index = (props: IProps) => {
 									)
 								}
 
+								if (it.edit.type === 'quickTable') {
+									return (
+										<Col span={it.span} key={idx}>
+											<Dynamic
+												type='form'
+												name='quickTable'
+												props={{
+													...it.edit.props,
+													type,
+													label: it.label,
+													queryDataSource: data
+												}}
+											></Dynamic>
+										</Col>
+									)
+								}
+
 								return (
 									<Col span={it.span} key={idx}>
 										<Dynamic
@@ -327,8 +340,7 @@ const Index = (props: IProps) => {
 									onClick={() =>
 										confirm({
 											title: '确认删除',
-											content:
-												'删除之后数据不可恢复，请谨慎操作！',
+											content: '删除之后数据不可恢复，请谨慎操作！',
 											centered: true,
 											onOk() {
 												onDel()
