@@ -1,17 +1,20 @@
-import { Input } from 'antd'
+import { InputNumber } from 'antd'
 
 import { Item } from '@/components'
 
-import type { InputProps } from 'antd'
+import type { InputNumberProps } from 'antd'
 
-interface IProps extends InputProps {
+interface IProps extends InputNumberProps {
 	pure?: string
 	label?: string
 }
 
 const Index = (props: IProps) => {
 	const El = (
-		<Input {...props} placeholder={props.placeholder || `请输入${props.label}`}></Input>
+		<InputNumber
+			{...props}
+			placeholder={props.placeholder || `请输入${props.label}`}
+		></InputNumber>
 	)
 
 	if (props.pure) return El

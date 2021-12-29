@@ -10,6 +10,7 @@ import type { SelectProps } from 'antd'
 const { Option } = Select
 
 interface IProps extends SelectProps<any> {
+	pure?: string
 	name: string
 	bind?: string
 	label?: string
@@ -83,30 +84,32 @@ const Index = (props: IProps) => {
 		return _props
 	}, [props])
 
-	return (
-		<Item {...(props as any)}>
-			<Select
-				{...real_props}
-				placeholder={props.placeholder || `请选择${props.label}`}
-				allowClear
-			>
-				{(data || []).map(
-					(item: { id: number; name: string; label?: string; value?: any }) => (
-						<Option
-							key={item.id || item.value}
-							value={
-								props.string === '1'
-									? String(item.id || item.value)
-									: item.id || item.value
-							}
-						>
-							{item.name || item.label}
-						</Option>
-					)
-				)}
-			</Select>
-		</Item>
+	const El = (
+		<Select
+			{...real_props}
+			placeholder={props.placeholder || `请选择${props.label}`}
+			allowClear
+		>
+			{(data || []).map(
+				(item: { id: number; name: string; label?: string; value?: any }) => (
+					<Option
+						key={item.id || item.value}
+						value={
+							props.string === '1'
+								? String(item.id || item.value)
+								: item.id || item.value
+						}
+					>
+						{item.name || item.label}
+					</Option>
+				)
+			)}
+		</Select>
 	)
+
+	if (props.pure) return El
+
+	return <Item {...(props as any)}>{El}</Item>
 }
 
 export default window.$app.memo(Index)
