@@ -16,7 +16,7 @@ const Index: ConnectRC<IProps> = (props) => {
 	const { page_data, dispatch } = props
 	const { name } = useParams<{ name: string }>()
 
-	const [_, { setFull }] = useFullscreen(document.body)
+	const [_, { enterFullscreen }] = useFullscreen(document.body)
 
 	useRequestInterval({
 		name,
@@ -34,6 +34,23 @@ const Index: ConnectRC<IProps> = (props) => {
 		data
 	}
 
+	const onFull = () => {
+		enterFullscreen()
+
+		if (setting.page.option.screen.indexOf('http') !== -1) {
+			window.open(setting.page.option.screen)
+		} else if (setting.page.option.screen.indexOf('.html') !== -1) {
+			window.open(
+				window.location.protocol +
+					'//' +
+					window.location.host +
+					setting.page.option.screen
+			)
+		} else {
+			history.push(setting.page.option.screen)
+		}
+	}
+
 	return (
 		<Page
 			title={setting.label}
@@ -44,19 +61,7 @@ const Index: ConnectRC<IProps> = (props) => {
 							{
 								title: '显示大屏',
 								icon: 'icon-airplay',
-								onClick: () => {
-									if (
-										setting.page.option.screen.indexOf(
-											'http'
-										) !== -1
-									) {
-										window.open(setting.page.option.screen)
-									} else {
-										history.push(setting.page.option.screen)
-
-										setFull()
-									}
-								}
+								onClick: onFull
 							}
 					  ]
 					: undefined

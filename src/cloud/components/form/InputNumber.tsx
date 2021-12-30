@@ -19,7 +19,7 @@ const Index = (props: IProps) => {
 
 	if (props.pure) return El
 
-	return <Item {...(props as any)}></Item>
+	return <Item {...(props as any)}>{El}</Item>
 }
 
 export default window.$app.memo(Index)
