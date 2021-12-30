@@ -35,8 +35,6 @@ const Index: ConnectRC<IProps> = (props) => {
 	}
 
 	const onFull = () => {
-		enterFullscreen()
-
 		if (setting.page.option.screen.indexOf('http') !== -1) {
 			window.location.href = setting.page.option.screen
 		} else if (setting.page.option.screen.indexOf('.html') !== -1) {
@@ -48,6 +46,8 @@ const Index: ConnectRC<IProps> = (props) => {
 		} else {
 			history.push(setting.page.option.screen)
 		}
+
+		enterFullscreen()
 	}
 
 	return (
