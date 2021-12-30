@@ -38,14 +38,13 @@ const Index: ConnectRC<IProps> = (props) => {
 		enterFullscreen()
 
 		if (setting.page.option.screen.indexOf('http') !== -1) {
-			window.open(setting.page.option.screen)
+			window.location.href = setting.page.option.screen
 		} else if (setting.page.option.screen.indexOf('.html') !== -1) {
-			window.open(
+			window.location.href =
 				window.location.protocol +
-					'//' +
-					window.location.host +
-					setting.page.option.screen
-			)
+				'//' +
+				window.location.host +
+				setting.page.option.screen
 		} else {
 			history.push(setting.page.option.screen)
 		}
