@@ -16,7 +16,10 @@ const Index = (props: IProps) => {
 	const { children, className, title, options, scrollMask, width, height } = props
 
 	return (
-		<div className={clsx([styles._local, className])} style={{ width, height }}>
+		<div
+			className={clsx([styles._local, className, 'card_wrap'])}
+			style={{ width, height }}
+		>
 			{scrollMask && <div className='mask w_100 absolute left_0'></div>}
 			{title && (
 				<div className='card_title_wrap w_100 border_box flex justify_between align_center'>

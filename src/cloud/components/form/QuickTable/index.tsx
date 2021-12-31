@@ -19,6 +19,8 @@ interface IProps {
 	chart?: any
 	query?: any
 	queryDataSource?: any
+	update_form?: boolean
+	search?: () => void
 }
 
 const Index = (props: IProps) => {
@@ -125,6 +127,7 @@ const Index = (props: IProps) => {
 		message.success('保存成功')
 
 		getData()
+		props.search?.()
 	}
 
 	useEffect(() => {

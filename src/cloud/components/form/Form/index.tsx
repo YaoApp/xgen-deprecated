@@ -283,6 +283,24 @@ const Index = (props: IProps) => {
 								}
 
 								if (it.edit.type === 'quickTable') {
+									let other_props: any = {}
+
+									if (it.edit.props?.update_form) {
+										if (pathname && dispatch) {
+											other_props['search'] = () => {
+												dispatch({
+													type: `${pathname}/find`,
+													payload: {
+														name: params.name,
+														id: params.id
+													}
+												})
+											}
+										} else {
+											other_props['search'] = getData
+										}
+									}
+
 									return (
 										<Col span={it.span} key={idx}>
 											<Dynamic
@@ -290,6 +308,7 @@ const Index = (props: IProps) => {
 												name='quickTable'
 												props={{
 													...it.edit.props,
+													...other_props,
 													type,
 													label: it.label,
 													queryDataSource: data

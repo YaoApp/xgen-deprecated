@@ -1,5 +1,4 @@
 import { Button, Col, Form, Row } from 'antd'
-import { useEffect } from 'react'
 import { history } from 'umi'
 
 import Dynamic from '@/cloud/core'
@@ -9,38 +8,25 @@ import styles from './index.less'
 
 const { useForm } = Form
 
-const Index = ({ setting }: any) => {
+const Index = ({ setting, setQuery }: any) => {
 	const [form] = useForm()
-	const { getFieldsValue, setFieldsValue, resetFields } = form
+	const { getFieldsValue, resetFields } = form
 	const filters = useFilters(setting)
-	const query = history.location.query
-
-	useEffect(() => {
-		if (!Object.keys(query as any).length) return resetFields()
-
-		setFieldsValue(query)
-	}, [query])
 
 	const onFinish = (v: any) => {
-		history.push({
-			pathname: history.location.pathname,
-			query: {
-				...query,
-				...v
-			}
-		})
+		setQuery(v)
 	}
 
 	const onReset = () => {
 		resetFields()
-		onFinish(getFieldsValue())
+		onFinish({})
 	}
 
 	return (
 		<Form
 			className={styles._local}
 			form={form}
-			name={`form_filter_${history.location.pathname}`}
+			name={`custom_modal_filter_${history.location.pathname}`}
 			onFinish={onFinish}
 			onReset={onReset}
 		>
