@@ -241,18 +241,27 @@ const Index = (props: IProps) => {
 			const chart_data = getDeepValueByText(it.edit.props.value, data)
 
 			return (
-				<Card title={it.edit.props?.hide_title ? '' : it.label} key={idx}>
-					<Dynamic
-						type='chart'
-						name={it.edit.props.type}
-						props={{
-							name: it.label,
-							data: chart_data,
-							...it.edit.props.chart_props
-						}}
-						key={idx}
-					></Dynamic>
-				</Card>
+				<Col span={it.span} key={idx}>
+					<a
+						id={it.label}
+						className='table_item_title inline_block disabled'
+						href={`#${it.label}`}
+					>
+						{it.label}
+					</a>
+					<Card>
+						<Dynamic
+							type='chart'
+							name={it.edit.props.type}
+							props={{
+								name: it.label,
+								data: chart_data,
+								...it.edit.props.chart_props
+							}}
+							key={idx}
+						></Dynamic>
+					</Card>
+				</Col>
 			)
 		}
 
