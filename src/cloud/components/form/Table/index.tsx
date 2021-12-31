@@ -13,7 +13,7 @@ import styles from './index.less'
 import type { TableProps, ModalProps } from 'antd'
 
 export interface IProps extends TableProps<any> {
-	type: string
+	type?: string
 	setting?: any
 	data?: any
 	name?: string

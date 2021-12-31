@@ -1,5 +1,6 @@
 import { message, Modal, Popover, Tooltip } from 'antd'
 import clsx from 'clsx'
+import qs from 'query-string'
 import { history, request } from 'umi'
 
 import { Icon } from '@/components'
@@ -12,6 +13,12 @@ const { confirm } = Modal
 const Index = ({ _operation, options, params }: any) => {
 	const onItem = (it: any, item: any) => {
 		const data = getGroupValue(it?.data, item)
+
+		if (it?.link) {
+			window.open(`${it.link}?${qs.stringify(data)}`)
+
+			return
+		}
 
 		const postAction = async () => {
 			const res = await request(it.api, {
