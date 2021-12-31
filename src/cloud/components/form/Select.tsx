@@ -61,7 +61,11 @@ const Index = (props: IProps) => {
 
 		if (_props.showSearch) {
 			_props.filterOption = (input, option) => {
-				return option?.indexOf(input) >= 0
+				return (
+					(option?.children as any)
+						.toLowerCase()
+						.indexOf(input.toLowerCase()) >= 0
+				)
 			}
 		}
 
