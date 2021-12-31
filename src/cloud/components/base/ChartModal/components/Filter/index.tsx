@@ -19,7 +19,7 @@ const Index = ({ setting, setQuery }: any) => {
 
 	const onReset = () => {
 		resetFields()
-		onFinish({})
+		onFinish(getFieldsValue())
 	}
 
 	return (

@@ -74,6 +74,8 @@ const Index = (props: IProps) => {
 	}, [props, visible_modal])
 
 	useEffect(() => {
+		if (!Object.keys(query).length) return
+
 		getData()
 	}, [query])
 

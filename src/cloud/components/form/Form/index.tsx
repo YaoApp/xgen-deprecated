@@ -1,4 +1,4 @@
-import { Affix, Button, Col, Form, message, Modal, Row } from 'antd'
+import { Affix, Button, Col, Form, message, Modal, Row, Tabs } from 'antd'
 import clsx from 'clsx'
 import qs from 'query-string'
 import { useEffect, useMemo, useState } from 'react'
@@ -15,6 +15,7 @@ import type { Dispatch } from 'umi'
 
 const { useForm } = Form
 const { confirm } = Modal
+const { TabPane } = Tabs
 
 interface IProps {
 	setting: any
@@ -169,6 +170,97 @@ const Index = (props: IProps) => {
 		}
 	}
 
+	const getFormItem = (it: any, idx: number) => {
+		if (it.edit.type === 'table' && params.id === '0') {
+			return null
+		}
+
+		if (it.edit.type === 'table' && params.id !== '0') {
+			return (
+				<Col span={it.span} key={idx}>
+					<Dynamic
+						type='form'
+						name='table'
+						props={{
+							...it.edit.props,
+							type,
+							label: it.label,
+							queryDataSource: data
+						}}
+					></Dynamic>
+				</Col>
+			)
+		}
+
+		if (it.edit.type === 'quickTable') {
+			let other_props: any = {}
+
+			if (it.edit.props?.update_form) {
+				if (pathname && dispatch) {
+					other_props['search'] = () => {
+						dispatch({
+							type: `${pathname}/find`,
+							payload: {
+								name: params.name,
+								id: params.id
+							}
+						})
+					}
+				} else {
+					other_props['search'] = getData
+				}
+			}
+
+			return (
+				<Col span={it.span} key={idx}>
+					<Dynamic
+						type='form'
+						name='quickTable'
+						props={{
+							...it.edit.props,
+							...other_props,
+							type,
+							label: it.label,
+							queryDataSource: data
+						}}
+					></Dynamic>
+				</Col>
+			)
+		}
+
+		return (
+			<Col span={it.span} key={idx}>
+				<Dynamic
+					type='form'
+					name={it.edit.type}
+					props={{
+						...it.edit.props,
+						name: it.edit.props.value,
+						label: it.label,
+						rules: type === 'view' ? [] : it.rules,
+						disabled: type === 'view'
+					}}
+				></Dynamic>
+			</Col>
+		)
+	}
+
+	const getTabs = (it: any, index: number) => {
+		return (
+			<Tabs className='w_100' key={index} style={{ padding: '0 8px' }}>
+				{it.items.map((a: any, b: number) => (
+					<TabPane tab={a.name} key={index + b}>
+						<Row gutter={16} wrap={true}>
+							{a.columns.map((x: any, y: number) => {
+								return getFormItem(x, index + b + y)
+							})}
+						</Row>
+					</TabPane>
+				))}
+			</Tabs>
+		)
+	}
+
 	return (
 		<Form
 			className={styles._local}
@@ -261,81 +353,11 @@ const Index = (props: IProps) => {
 						</a>
 						<Row gutter={16} wrap={true}>
 							{item.columns.map((it: any, idx: number) => {
-								if (it.edit.type === 'table' && params.id === '0') {
-									return null
+								if (it.tab) {
+									return getTabs(it, index + idx)
+								} else {
+									return getFormItem(it, index + idx)
 								}
-
-								if (it.edit.type === 'table' && params.id !== '0') {
-									return (
-										<Col span={it.span} key={idx}>
-											<Dynamic
-												type='form'
-												name='table'
-												props={{
-													...it.edit.props,
-													type,
-													label: it.label,
-													queryDataSource: data
-												}}
-											></Dynamic>
-										</Col>
-									)
-								}
-
-								if (it.edit.type === 'quickTable') {
-									let other_props: any = {}
-
-									if (it.edit.props?.update_form) {
-										if (pathname && dispatch) {
-											other_props['search'] = () => {
-												dispatch({
-													type: `${pathname}/find`,
-													payload: {
-														name: params.name,
-														id: params.id
-													}
-												})
-											}
-										} else {
-											other_props['search'] = getData
-										}
-									}
-
-									return (
-										<Col span={it.span} key={idx}>
-											<Dynamic
-												type='form'
-												name='quickTable'
-												props={{
-													...it.edit.props,
-													...other_props,
-													type,
-													label: it.label,
-													queryDataSource: data
-												}}
-											></Dynamic>
-										</Col>
-									)
-								}
-
-								return (
-									<Col span={it.span} key={idx}>
-										<Dynamic
-											type='form'
-											name={it.edit.type}
-											props={{
-												...it.edit.props,
-												name: it.edit.props.value,
-												label: it.label,
-												rules:
-													type === 'view'
-														? []
-														: it.rules,
-												disabled: type === 'view'
-											}}
-										></Dynamic>
-									</Col>
-								)
 							})}
 						</Row>
 					</div>

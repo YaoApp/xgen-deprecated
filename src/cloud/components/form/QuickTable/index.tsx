@@ -234,7 +234,7 @@ const Index = (props: IProps) => {
 									? props.chart.width
 									: '100%'
 							}
-							height={props.chart.height + 48}
+							height={props.chart.props.height || 300 + 48}
 						>
 							<Dynamic
 								type='chart'
