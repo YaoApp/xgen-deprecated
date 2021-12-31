@@ -20,7 +20,7 @@ interface IProps {
 	query?: any
 	queryDataSource?: any
 	update_form?: boolean
-	search?: () => void
+	searchData?: () => void
 }
 
 const Index = (props: IProps) => {
@@ -127,7 +127,7 @@ const Index = (props: IProps) => {
 		message.success('保存成功')
 
 		getData()
-		props.search?.()
+		props.searchFormData?.()
 	}
 
 	useEffect(() => {
@@ -234,7 +234,7 @@ const Index = (props: IProps) => {
 									? props.chart.width
 									: '100%'
 							}
-							height={props.chart.props.height || 300 + 48}
+							height={props.chart.props.height + 48}
 						>
 							<Dynamic
 								type='chart'

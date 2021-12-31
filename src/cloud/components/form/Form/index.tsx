@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { history, request } from 'umi'
 
 import Dynamic from '@/cloud/core'
-import { Icon } from '@/components'
+import { Card, Icon } from '@/components'
 import { getDeepValueByText, getGroupValue } from '@/utils/helpers/filters'
 
 import { useFieldset } from './hooks'
@@ -170,12 +170,32 @@ const Index = (props: IProps) => {
 		}
 	}
 
+	const searchFormData = () => {
+		if (pathname && dispatch) {
+			dispatch({
+				type: `${pathname}/find`,
+				payload: {
+					name: params.name,
+					id: params.id
+				}
+			})
+		} else {
+			return getData
+		}
+	}
+
 	const getFormItem = (it: any, idx: number) => {
 		if (it.edit.type === 'table' && params.id === '0') {
 			return null
 		}
 
 		if (it.edit.type === 'table' && params.id !== '0') {
+			let other_props: any = {}
+
+			if (it.edit.props?.update_form) {
+				other_props['searchFormData'] = searchFormData
+			}
+
 			return (
 				<Col span={it.span} key={idx}>
 					<Dynamic
@@ -183,6 +203,7 @@ const Index = (props: IProps) => {
 						name='table'
 						props={{
 							...it.edit.props,
+							...other_props,
 							type,
 							label: it.label,
 							queryDataSource: data
@@ -196,19 +217,7 @@ const Index = (props: IProps) => {
 			let other_props: any = {}
 
 			if (it.edit.props?.update_form) {
-				if (pathname && dispatch) {
-					other_props['search'] = () => {
-						dispatch({
-							type: `${pathname}/find`,
-							payload: {
-								name: params.name,
-								id: params.id
-							}
-						})
-					}
-				} else {
-					other_props['search'] = getData
-				}
+				other_props['searchFormData'] = searchFormData
 			}
 
 			return (
@@ -225,6 +234,25 @@ const Index = (props: IProps) => {
 						}}
 					></Dynamic>
 				</Col>
+			)
+		}
+
+		if (it.edit.type === 'chart') {
+			const chart_data = getDeepValueByText(it.edit.props.value, data)
+
+			return (
+				<Card title={it.edit.props?.hide_title ? '' : it.label} key={idx}>
+					<Dynamic
+						type='chart'
+						name={it.edit.props.type}
+						props={{
+							name: it.label,
+							data: chart_data,
+							...it.edit.props.chart_props
+						}}
+						key={idx}
+					></Dynamic>
+				</Card>
 			)
 		}
 

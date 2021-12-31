@@ -17,8 +17,6 @@ export const useColumns = (
 		useInForm: boolean
 		save: (data: any) => void
 		edit: (id: string, name?: string, type?: string) => void
-		search?: () => void
-		getData: () => Promise<void>
 	}
 ) => {
 	const params = useParams<{ name: string }>()
