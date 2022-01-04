@@ -20,7 +20,7 @@ interface IProps {
 	query?: any
 	queryDataSource?: any
 	update_form?: boolean
-	searchData?: () => void
+	searchFormData?: () => void
 }
 
 const Index = (props: IProps) => {

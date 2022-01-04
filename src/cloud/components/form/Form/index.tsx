@@ -1,21 +1,20 @@
-import { Affix, Button, Col, Form, message, Modal, Row, Tabs } from 'antd'
-import clsx from 'clsx'
+import { Button, Form, message, Modal } from 'antd'
 import qs from 'query-string'
 import { useEffect, useMemo, useState } from 'react'
 import { history, request } from 'umi'
 
-import Dynamic from '@/cloud/core'
-import { Card, Icon } from '@/components'
-import { getDeepValueByText, getGroupValue } from '@/utils/helpers/filters'
+import { getGroupValue } from '@/utils/helpers/filters'
 
+import FormItems from './components/FormItems'
+import Options from './components/Options'
 import { useFieldset } from './hooks'
 import styles from './index.less'
 
 import type { Dispatch } from 'umi'
+import type { IProps as IPropsFormItems } from './components/FormItems'
 
 const { useForm } = Form
 const { confirm } = Modal
-const { TabPane } = Tabs
 
 interface IProps {
 	setting: any
@@ -34,7 +33,6 @@ interface IProps {
 
 const Index = (props: IProps) => {
 	const { setting, data, params, pathname, dispatch, onCancel, getData, search } = props
-	const [stick, setStick] = useState<boolean | undefined>(false)
 	const [type, setType] = useState('')
 	const [form] = useForm()
 	const fieldset = useFieldset(setting)
@@ -184,118 +182,21 @@ const Index = (props: IProps) => {
 		}
 	}
 
-	const getFormItem = (it: any, idx: number) => {
-		if (it.edit.type === 'table' && params.id === '0') {
-			return null
-		}
-
-		if (it.edit.type === 'table' && params.id !== '0') {
-			let other_props: any = {}
-
-			if (it.edit.props?.update_form) {
-				other_props['searchFormData'] = searchFormData
-			}
-
-			return (
-				<Col span={it.span} key={idx}>
-					<Dynamic
-						type='form'
-						name='table'
-						props={{
-							...it.edit.props,
-							...other_props,
-							type,
-							label: it.label,
-							queryDataSource: data
-						}}
-					></Dynamic>
-				</Col>
-			)
-		}
-
-		if (it.edit.type === 'quickTable') {
-			let other_props: any = {}
-
-			if (it.edit.props?.update_form) {
-				other_props['searchFormData'] = searchFormData
-			}
-
-			return (
-				<Col span={it.span} key={idx}>
-					<Dynamic
-						type='form'
-						name='quickTable'
-						props={{
-							...it.edit.props,
-							...other_props,
-							type,
-							label: it.label,
-							queryDataSource: data
-						}}
-					></Dynamic>
-				</Col>
-			)
-		}
-
-		if (it.edit.type === 'chart') {
-			const chart_data = getDeepValueByText(it.edit.props.value, data)
-
-			return (
-				<Col span={it.span} key={idx}>
-					<a
-						id={it.label}
-						className='table_item_title inline_block disabled'
-						href={`#${it.label}`}
-					>
-						{it.label}
-					</a>
-					<Card>
-						<Dynamic
-							type='chart'
-							name={it.edit.props.type}
-							props={{
-								name: it.label,
-								data: chart_data,
-								...it.edit.props.chart_props
-							}}
-							key={idx}
-						></Dynamic>
-					</Card>
-				</Col>
-			)
-		}
-
-		return (
-			<Col span={it.span} key={idx}>
-				<Dynamic
-					type='form'
-					name={it.edit.type}
-					props={{
-						...it.edit.props,
-						name: it.edit.props.value,
-						label: it.label,
-						rules: type === 'view' ? [] : it.rules,
-						disabled: type === 'view'
-					}}
-				></Dynamic>
-			</Col>
-		)
+	const props_options = {
+		setting,
+		type,
+		data,
+		pathname,
+		onItem,
+		onCancel
 	}
 
-	const getTabs = (it: any, index: number) => {
-		return (
-			<Tabs className='w_100' key={index} style={{ padding: '0 8px' }}>
-				{it.items.map((a: any, b: number) => (
-					<TabPane tab={a.name} key={index + b}>
-						<Row gutter={16} wrap={true}>
-							{a.columns.map((x: any, y: number) => {
-								return getFormItem(x, index + b + y)
-							})}
-						</Row>
-					</TabPane>
-				))}
-			</Tabs>
-		)
+	const props_form_items: IPropsFormItems = {
+		fieldset,
+		params,
+		type,
+		data,
+		searchFormData
 	}
 
 	return (
@@ -309,96 +210,10 @@ const Index = (props: IProps) => {
 				<span className='title'>
 					{params.id === '0' ? '创建' : type === 'view' ? '查看' : '编辑'}
 				</span>
-				<Affix offsetTop={11} style={{ zIndex: 101 }} onChange={(v) => setStick(v)}>
-					<div
-						className={clsx([
-							'action_items flex transition_normal',
-							stick ? 'stick' : ''
-						])}
-					>
-						{type === 'view' && setting.edit?.option?.operation && (
-							<div className='operation_wrap flex align_center'>
-								{setting.edit?.option?.operation?.map(
-									(item: any, index: number) => (
-										<Button
-											className={clsx([
-												'btn_action btn_back btn auto',
-												stick ? 'stick' : '',
-												item?.type
-													? item.type +
-													  ' has_type'
-													: 'btn_normal',
-												item?.disabled
-													? getDeepValueByText(
-															item.disabled,
-															data
-													  )
-														? 'disabled'
-														: ''
-													: ''
-											])}
-											icon={
-												<Icon
-													name={item.icon}
-													size={15}
-												></Icon>
-											}
-											key={index}
-											onClick={() => onItem(item)}
-										>
-											{item.title}
-										</Button>
-									)
-								)}
-							</div>
-						)}
-						<Button
-							className={clsx([
-								'btn_action btn_back btn btn_normal',
-								stick ? 'stick' : ''
-							])}
-							icon={<Icon name='icon-arrow-left' size={15}></Icon>}
-							onClick={pathname ? () => history.goBack() : onCancel}
-						>
-							{pathname ? '返回' : '取消'}
-						</Button>
-						{type !== 'view' && (
-							<Button
-								className='btn_action btn_confirm'
-								type='primary'
-								htmlType='submit'
-							>
-								保存
-							</Button>
-						)}
-					</div>
-				</Affix>
+				<Options {...props_options}></Options>
 			</div>
 			<div className='form_wrap w_100 border_box flex flex_column'>
-				{fieldset.map((item, index) => (
-					<div
-						className='form_item w_100 border_box flex flex_column'
-						key={index}
-					>
-						<a
-							id={item.title}
-							className='form_item_title_wrap flex flex_column disabled'
-							href={`#${item.title}`}
-						>
-							<span className='section_title'>{item.title}</span>
-							<span className='desc'>{item.description}</span>
-						</a>
-						<Row gutter={16} wrap={true}>
-							{item.columns.map((it: any, idx: number) => {
-								if (it.tab) {
-									return getTabs(it, index + idx)
-								} else {
-									return getFormItem(it, index + idx)
-								}
-							})}
-						</Row>
-					</div>
-				))}
+				<FormItems {...props_form_items}></FormItems>
 				{params.id !== '0' && type !== 'view' && setting.edit.actions.delete.type && (
 					<div className='actions_wrap danger w_100 border_box flex flex_column'>
 						<div className='form_item_title_wrap flex flex_column'>
