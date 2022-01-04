@@ -74,13 +74,14 @@ const Index = (props: IProps) => {
 
 	const add = (index: number) => {
 		const _data = cloneDeep(data)
-		const _item = cloneDeep(data[0])
+		const _columns = cloneDeep(columns)
+		const item: any = {}
 
-		for (const key in _item) {
-			_item[key] = undefined
-		}
+		_columns.map((it: any) => {
+			item[it['key']] = undefined
+		})
 
-		_data.splice(index + 1, 0, _item)
+		_data.splice(index + 1, 0, item)
 
 		setData(_data)
 	}
@@ -158,6 +159,22 @@ const Index = (props: IProps) => {
 				>
 					<div className='table_title_wrap flex justify_between align_center'>
 						<span className='table_title'>{props.label}</span>
+						<div className='flex'>
+							{data.length === 0 && (
+								<a
+									className='btn_save cursor_point clickable mr_12'
+									onClick={() => add(-1)}
+								>
+									新增
+								</a>
+							)}
+							<a
+								className='btn_save cursor_point clickable'
+								onClick={onSave}
+							>
+								保存
+							</a>
+						</div>
 					</div>
 					{data.map((item, index) => (
 						<div className='table_item flex' key={index}>
@@ -209,10 +226,7 @@ const Index = (props: IProps) => {
 									<Icon name='icon-plus' size={20}></Icon>
 								</a>
 								<a
-									className={clsx([
-										'btn_option flex justify_center align_center cursor_point clickable',
-										data.length === 1 && 'disabled'
-									])}
+									className='btn_option flex justify_center align_center cursor_point clickable'
 									onClick={() => remove(index)}
 								>
 									<Icon name='icon-x-circle' size={18}></Icon>
