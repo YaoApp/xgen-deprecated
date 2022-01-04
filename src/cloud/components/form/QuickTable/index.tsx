@@ -145,22 +145,19 @@ const Index = (props: IProps) => {
 
 	return (
 		<div className={styles._local}>
-			<div className={clsx(['quick_table_wrap w_100', props.chart.position])}>
+			<div className={clsx(['quick_table_wrap w_100', props?.chart?.position])}>
 				<div
 					className='table_content'
 					style={{
 						width:
-							props.chart.position === 'left' ||
-							props.chart.position === 'right'
-								? `calc(100% - ${props.chart.width}px)`
+							props?.chart?.position === 'left' ||
+							props?.chart?.position === 'right'
+								? `calc(100% - ${props?.chart?.width || 0}px)`
 								: '100%'
 					}}
 				>
 					<div className='table_title_wrap flex justify_between align_center'>
 						<span className='table_title'>{props.label}</span>
-						<a className='btn_save cursor_point clickable' onClick={onSave}>
-							保存
-						</a>
 					</div>
 					{data.map((item, index) => (
 						<div className='table_item flex' key={index}>
@@ -212,7 +209,10 @@ const Index = (props: IProps) => {
 									<Icon name='icon-plus' size={20}></Icon>
 								</a>
 								<a
-									className='btn_option flex justify_center align_center cursor_point clickable'
+									className={clsx([
+										'btn_option flex justify_center align_center cursor_point clickable',
+										data.length === 1 && 'disabled'
+									])}
 									onClick={() => remove(index)}
 								>
 									<Icon name='icon-x-circle' size={18}></Icon>
@@ -221,7 +221,7 @@ const Index = (props: IProps) => {
 						</div>
 					))}
 				</div>
-				{props.chart && (
+				{props?.chart && (
 					<div className='table_chart_wrap flex flex_column'>
 						<div className='table_title_wrap flex justify_between align_center opacity_0'>
 							<span className='table_title'>{props.label}</span>
