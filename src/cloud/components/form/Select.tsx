@@ -31,32 +31,6 @@ interface IProps extends SelectProps<any> {
 	options: Array<any>
 }
 
-interface IPropsOptions {
-	data: Array<any>
-	string?: '1' | '0' | undefined
-}
-
-const Options = (props: IPropsOptions) => {
-	const { data, string } = props
-
-	return (
-		<Fragment>
-			{data.map((item: { id: number; name: string; label?: string; value?: any }) => (
-				<Option
-					key={item.id || item.value}
-					value={
-						string === '1'
-							? String(item.id || item.value)
-							: item.id || item.value
-					}
-				>
-					{item.name || item.label}
-				</Option>
-			))}
-		</Fragment>
-	)
-}
-
 const Index = (props: IProps) => {
 	const [data, setData] = useState<Array<any>>([])
 
@@ -73,8 +47,6 @@ const Index = (props: IProps) => {
 
 		setData(data)
 	}
-
-	console.log(props)
 
 	const real_props = useMemo(() => {
 		const _props = { ...props }
@@ -122,7 +94,18 @@ const Index = (props: IProps) => {
 			placeholder={props.placeholder || `请选择${props.label}`}
 			allowClear
 		>
-			{data.length && <Options data={data} string={props.string}></Options>}
+			{data.map((item: { id: number; name: string; label?: string; value?: any }) => (
+				<Option
+					key={item.id || item.value}
+					value={
+						props.string === '1'
+							? String(item.id || item.value)
+							: item.id || item.value
+					}
+				>
+					{item.name || item.label}
+				</Option>
+			))}
 		</Select>
 	)
 
