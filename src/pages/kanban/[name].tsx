@@ -1,5 +1,4 @@
 import { useFullscreen } from 'ahooks'
-import { useEffect } from 'react'
 import { connect, history, useParams } from 'umi'
 
 import { Charts, Page } from '@/components'

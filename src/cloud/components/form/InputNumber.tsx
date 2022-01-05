@@ -17,6 +17,8 @@ const Index = (props: IProps) => {
 		></InputNumber>
 	)
 
+	console.log(123)
+
 	if (props.pure) return El
 
 	return <Item {...(props as any)}>{El}</Item>
