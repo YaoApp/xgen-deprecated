@@ -1,6 +1,6 @@
 import { Select } from 'antd'
 import { throttle } from 'lodash-es'
-import { Fragment, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { request } from 'umi'
 
 import { Item } from '@/components'
@@ -88,25 +88,29 @@ const Index = (props: IProps) => {
 		return _props
 	}, [props])
 
+	const options = useMemo(() => {
+		if (!data.length) return []
+
+		return data.reduce((total, item) => {
+			total.push({
+				label: item.name || item.label,
+				value:
+					props.string === '1'
+						? String(item.id || item.value)
+						: item.id || item.value
+			})
+
+			return total
+		}, [])
+	}, [data, props.string])
+
 	const El = (
 		<Select
 			{...real_props}
 			placeholder={props.placeholder || `请选择${props.label}`}
 			allowClear
-		>
-			{data.map((item: { id: number; name: string; label?: string; value?: any }) => (
-				<Option
-					key={item.id || item.value}
-					value={
-						props.string === '1'
-							? String(item.id || item.value)
-							: item.id || item.value
-					}
-				>
-					{item.name || item.label}
-				</Option>
-			))}
-		</Select>
+			options={options}
+		></Select>
 	)
 
 	if (props.pure) return El
