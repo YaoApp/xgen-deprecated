@@ -35,7 +35,7 @@ interface IPropsItem {
 	onChange: (index: number, v: any) => void
 }
 
-const Item = (props: IPropsItem) => {
+const Item = window.$app.memo((props: IPropsItem) => {
 	const { item, it, index, onChange } = props
 	const { value, ...props_no_value } = it.edit.props
 
@@ -70,9 +70,9 @@ const Item = (props: IPropsItem) => {
 			></Dynamic>
 		</Col>
 	)
-}
+})
 
-const List = (props: IPropsList) => {
+const List = window.$app.memo((props: IPropsList) => {
 	const { label, data, columns, onSave } = props
 	const { list, remove, getKey, insert, replace } = useDynamicList(data)
 	const [delete_ids, setDeleteIds] = useState<Array<number>>([])
@@ -153,7 +153,7 @@ const List = (props: IPropsList) => {
 			))}
 		</Fragment>
 	)
-}
+})
 
 const Index = (props: IProps) => {
 	const [setting, setSetting] = useState<any>({})
