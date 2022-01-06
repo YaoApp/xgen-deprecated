@@ -111,9 +111,12 @@ const List = window.$app.memo((props: IPropsList) => {
 			<div className='table_title_wrap flex justify_between align_center'>
 				<span className='table_title'>{label}</span>
 				<div className='flex'>
-					{data.length === 0 && (
-						<a className='btn_save cursor_point clickable mr_12'>新增</a>
-					)}
+					<a
+						className='btn_save cursor_point clickable mr_12'
+						onClick={() => add(-1)}
+					>
+						新增
+					</a>
 					<a
 						className='btn_save cursor_point clickable'
 						onClick={() => {
