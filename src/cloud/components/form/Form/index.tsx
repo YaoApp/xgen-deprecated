@@ -233,7 +233,8 @@ const Index = (props: IProps) => {
 									onClick={() =>
 										confirm({
 											title: '确认删除',
-											content: '删除之后数据不可恢复，请谨慎操作！',
+											content:
+												'删除之后数据不可恢复，请谨慎操作！',
 											centered: true,
 											onOk() {
 												onDel()

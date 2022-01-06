@@ -51,12 +51,6 @@ const Index = (props: IProps) => {
 		}
 
 		if (it.edit.type === 'quickTable') {
-			let other_props: any = {}
-
-			if (it.edit.props?.update_form) {
-				other_props['searchFormData'] = searchFormData
-			}
-
 			return (
 				<Col span={it.span} key={idx}>
 					<Dynamic
@@ -64,10 +58,10 @@ const Index = (props: IProps) => {
 						name='quickTable'
 						props={{
 							...it.edit.props,
-							...other_props,
+							name: it.edit.props.value,
 							type,
 							label: it.label,
-							queryDataSource: data
+							rules: type === 'view' ? [] : it.rules
 						}}
 					></Dynamic>
 				</Col>

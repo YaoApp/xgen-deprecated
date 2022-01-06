@@ -50,9 +50,17 @@
 				.table_options {
 					width: 108px;
 
+					&.disabled {
+						.btn_option {
+							i {
+								opacity: 0.3;
+							}
+						}
+					}
+
 					.btn_option {
-						width: 36px;
-						height: 36px;
+						width: 40px;
+						height: 40px;
 						border-radius: 6px;
 						background-color: var(--color_bg_nav);
 
@@ -67,6 +75,12 @@
 						}
 					}
 				}
+			}
+
+			.td_text {
+				padding: 0 12px;
+				border-radius: 6px;
+				background-color: var(--color_bg_nav);
 			}
 		}
 	}

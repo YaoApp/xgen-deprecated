@@ -5,11 +5,12 @@ import { useMemo } from 'react'
 import { getDvaApp, history, useParams } from 'umi'
 
 import Dynamic from '@/cloud/core'
+import { hidePopover } from '@/utils/helpers/dom'
 import { getDeepValue } from '@/utils/helpers/filters'
 import { CheckOutlined } from '@ant-design/icons'
 
 import Options from './components/Options'
-import { getTargetValue, getText, hidePopover } from './utils'
+import { getTargetValue, getText } from './utils'
 
 export const useColumns = (
 	setting: any,
