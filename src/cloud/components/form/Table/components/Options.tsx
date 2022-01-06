@@ -4,14 +4,23 @@ import qs from 'query-string'
 import { history, request } from 'umi'
 
 import { Icon } from '@/components'
+import { hidePopover } from '@/utils/helpers/dom'
 import { getDeepValueByText, getGroupValue } from '@/utils/helpers/filters'
-
-import { hidePopover } from '../utils'
 
 const { confirm } = Modal
 
 const Index = ({ _operation, options, params }: any) => {
 	const onItem = (it: any, item: any) => {
+		if (it?.useModal) {
+			if (it?.type === 'view') {
+				options.edit(item.id, params.name, 'view')
+			} else {
+				options.edit(item.id, params.name, 'edit')
+			}
+
+			return
+		}
+
 		const data = getGroupValue(it?.data, item)
 
 		if (it?.link) {

@@ -60,7 +60,7 @@ const QuickTable = (props: IProps) => {
 					props?.type === 'view' && 'disabled'
 				])}
 			>
-				{columns.length && RealList && (
+				{columns.length !== 0 && RealList && (
 					<RealList
 						{...{ data, columns }}
 						type={props.type}
