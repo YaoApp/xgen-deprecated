@@ -1,7 +1,7 @@
 import { useDynamicList } from 'ahooks'
 import { Col, message, Row } from 'antd'
 import qs from 'query-string'
-import { Fragment, useCallback, useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { request } from 'umi'
 
 import Dynamic from '@/cloud/core'
@@ -233,11 +233,20 @@ const Index = (props: IProps) => {
 
 	const columns = useColumns(setting)
 
+	const RealList = useMemo(() => {
+		if (!data.length) return null
+
+		return List as any
+	}, [data])
+
 	return (
 		<div className={styles._local}>
 			<div className='quick_table_wrap w_100'>
-				{data.length && columns.length && (
-					<List {...{ data, columns, onSave }} label={props.label}></List>
+				{columns.length && RealList && (
+					<RealList
+						{...{ data, columns, onSave }}
+						label={props.label}
+					></RealList>
 				)}
 			</div>
 		</div>
