@@ -11,11 +11,24 @@ const { confirm } = Modal
 
 const Index = ({ _operation, options, params }: any) => {
 	const onItem = (it: any, item: any) => {
-		if (it?.useModal) {
-			if (it?.type === 'view') {
-				options.edit(item.id, params.name, 'view')
+		if (it?.type) {
+			if (it?.useModal) {
+				if (it?.type === 'view') {
+					options.edit(item.id, params.name, 'view')
+				} else {
+					options.edit(item.id, params.name, 'edit')
+				}
 			} else {
-				options.edit(item.id, params.name, 'edit')
+				if (it?.type === 'view') {
+					history.push({
+						pathname: `/form/${params.name}/${item.id}`,
+						query: { type: 'view' }
+					})
+				} else {
+					history.push({
+						pathname: `/form/${params.name}/${item.id}`
+					})
+				}
 			}
 
 			return

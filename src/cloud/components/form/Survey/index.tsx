@@ -5,7 +5,6 @@ import { request } from 'umi'
 import { Item } from '@/components'
 
 import List from './components/List'
-import { useColumns } from './hooks'
 import styles from './index.less'
 
 interface IProps {
@@ -44,14 +43,6 @@ const QuickTable = (props: IProps) => {
 		setData(Array.isArray(props.value) ? props.value : props.value.data)
 	}, [props.value])
 
-	const columns = useColumns(setting)
-
-	const RealList = useMemo(() => {
-		if (!data.length) return null
-
-		return List as any
-	}, [data])
-
 	return (
 		<div className={styles._local}>
 			<div
@@ -60,14 +51,15 @@ const QuickTable = (props: IProps) => {
 					props?.type === 'view' && 'disabled'
 				])}
 			>
-				{columns.length !== 0 && RealList && (
-					<RealList
-						{...{ setting, data, columns }}
+				{setting?.options && Object.keys(setting?.options).length > 0 && (
+					<List
+						options={setting.options}
+						data={data}
 						type={props.type}
 						label={props.label}
 						query={props.query || {}}
 						trigger={props.onChange}
-					></RealList>
+					></List>
 				)}
 			</div>
 		</div>

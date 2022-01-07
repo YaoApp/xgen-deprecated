@@ -6,28 +6,30 @@ import { Fragment, useState } from 'react'
 import { Icon } from '@/components'
 import { hidePopover } from '@/utils/helpers/dom'
 
+import { useDefaultColumns } from '../hooks'
+import Children from './Children'
 import ListItem from './ListItem'
 
 interface IPropsList {
 	type: string
 	label: string
+	options: any
 	data: Array<any>
 	query: any
-	columns: Array<any>
 	trigger: any
 }
 
 const Index = (props: IPropsList) => {
-	const { type, label, data, query, columns, trigger } = props
+	const { type, label, options, data, query, trigger } = props
 	const { list, remove, getKey, getIndex, insert, replace } = useDynamicList(data)
 	const [delete_ids, setDeleteIds] = useState<Array<number>>([])
 
+	const default_columns = useDefaultColumns(options)
+
+	console.log(list)
+
 	const add = (index: number) => {
 		const item: any = {}
-
-		columns.map((it: any) => {
-			item[it['key']] = undefined
-		})
 
 		insert(index + 1, item)
 	}
@@ -74,36 +76,49 @@ const Index = (props: IPropsList) => {
 			</div>
 			{list.length !== 0 ? (
 				list.map((item: any, index) => (
-					<div className='table_item flex' key={getKey(index)}>
-						<Row className='table_row' gutter={12}>
-							{columns.map((it: any, idx: number) => (
-								<ListItem
-									{...{ item, it, onChange }}
-									item_key={getKey(index)}
-									col_key={idx}
-									key={getKey(index) + idx}
-								></ListItem>
-							))}
-						</Row>
-						<div
-							className={clsx([
-								'table_options flex justify_end',
-								type === 'view' && 'disabled'
-							])}
-						>
-							<a
-								className='btn_option flex justify_center align_center cursor_point clickable'
-								onClick={() => add(index)}
+					<div className='table_item_wrap flex flex_column' key={getKey(index)}>
+						<div className='table_item flex'>
+							<Row className='table_row' gutter={12}>
+								{default_columns.map((it: any, idx: number) => (
+									<ListItem
+										{...{ item, it, onChange }}
+										item_key={getKey(index)}
+										col_key={idx}
+										key={getKey(index) + idx}
+									></ListItem>
+								))}
+							</Row>
+							<div
+								className={clsx([
+									'table_options flex justify_end',
+									type === 'view' && 'disabled'
+								])}
 							>
-								<Icon name='icon-plus' size={20}></Icon>
-							</a>
-							<a
-								className='btn_option flex justify_center align_center cursor_point clickable'
-								onClick={() => del(index)}
-							>
-								<Icon name='icon-x-circle' size={18}></Icon>
-							</a>
+								<a
+									className='btn_option flex justify_center align_center cursor_point clickable'
+									onClick={() => add(index)}
+								>
+									<Icon name='icon-plus' size={20}></Icon>
+								</a>
+								<a
+									className='btn_option flex justify_center align_center cursor_point clickable'
+									onClick={() => del(index)}
+								>
+									<Icon name='icon-x-circle' size={18}></Icon>
+								</a>
+							</div>
 						</div>
+						{item?.type && (
+							<div className='table_children_wrap w_100 border_box'>
+								<Children
+									{...options[item.type]}
+									type={type}
+									item={item}
+									item_key={getKey(index)}
+									onChange={onChange}
+								></Children>
+							</div>
+						)}
 					</div>
 				))
 			) : (

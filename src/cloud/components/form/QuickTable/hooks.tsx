@@ -7,7 +7,7 @@ export const useColumns = (setting: any) => {
 		const _columns = setting.columns
 		const _layouts = setting.list.layout.columns
 
-		const columns = _layouts.reduce((total: Array<any>, it: any, index: number) => {
+		const columns = _layouts.reduce((total: Array<any>, it: any) => {
 			const item = {
 				..._columns[it.name],
 				...it,
