@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { request } from 'umi'
 
 import { Item } from '@/components'
@@ -17,7 +17,7 @@ interface IProps {
 	onChange: any
 }
 
-const QuickTable = (props: IProps) => {
+const Component = (props: IProps) => {
 	const [setting, setSetting] = useState<any>({})
 	const [data, setData] = useState<Array<any>>([])
 
@@ -69,7 +69,7 @@ const QuickTable = (props: IProps) => {
 const Index = (props: IProps) => {
 	return (
 		<Item {...(props as any)} label=''>
-			<QuickTable {...props}></QuickTable>
+			<Component {...props}></Component>
 		</Item>
 	)
 }

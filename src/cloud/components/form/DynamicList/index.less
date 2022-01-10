@@ -29,12 +29,18 @@
 				}
 			}
 
-			.table_item {
+			.table_item_wrap {
 				margin-bottom: 12px;
+			}
 
+			.table_item {
 				.table_row {
 					margin: 0 !important;
 					width: calc(100% - 108px);
+
+					&.one_row {
+						width: 100%;
+					}
 
 					.ant-col {
 						&:first-child {
@@ -74,6 +80,18 @@
 							margin-right: 14px;
 						}
 					}
+				}
+			}
+
+			.table_children_wrap {
+				padding-right: 108px;
+			}
+
+			.children_wrap {
+				margin-top: 12px;
+
+				.children_row {
+					margin-bottom: 12px;
 				}
 			}
 

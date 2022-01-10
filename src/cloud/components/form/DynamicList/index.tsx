@@ -1,11 +1,10 @@
 import clsx from 'clsx'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { request } from 'umi'
 
 import { Item } from '@/components'
 
 import List from './components/List'
-import { useColumns } from './hooks'
 import styles from './index.less'
 
 interface IProps {
@@ -18,7 +17,7 @@ interface IProps {
 	onChange: any
 }
 
-const QuickTable = (props: IProps) => {
+const Component = (props: IProps) => {
 	const [setting, setSetting] = useState<any>({})
 	const [data, setData] = useState<Array<any>>([])
 
@@ -44,14 +43,6 @@ const QuickTable = (props: IProps) => {
 		setData(Array.isArray(props.value) ? props.value : props.value.data)
 	}, [props.value])
 
-	const columns = useColumns(setting)
-
-	const RealList = useMemo(() => {
-		if (!data.length) return null
-
-		return List as any
-	}, [data])
-
 	return (
 		<div className={styles._local}>
 			<div
@@ -60,14 +51,15 @@ const QuickTable = (props: IProps) => {
 					props?.type === 'view' && 'disabled'
 				])}
 			>
-				{columns.length !== 0 && RealList && (
-					<RealList
-						{...{ setting, data, columns }}
+				{setting?.columns && (
+					<List
+						setting={setting}
+						data={data}
 						type={props.type}
 						label={props.label}
 						query={props.query || {}}
 						trigger={props.onChange}
-					></RealList>
+					></List>
 				)}
 			</div>
 		</div>
@@ -77,7 +69,7 @@ const QuickTable = (props: IProps) => {
 const Index = (props: IProps) => {
 	return (
 		<Item {...(props as any)} label=''>
-			<QuickTable {...props}></QuickTable>
+			<Component {...props}></Component>
 		</Item>
 	)
 }

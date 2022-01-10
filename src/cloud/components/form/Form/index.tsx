@@ -63,6 +63,10 @@ const Index = (props: IProps) => {
 			const onFinish = (v: any) => {
 				const data = params.id === '0' ? v : { ...v, id: params.id }
 
+				console.log(data)
+
+				return
+
 				dispatch({
 					type: `${pathname}/save`,
 					payload: { name: params.name, data, dev: setting?.edit?.option?.dev }

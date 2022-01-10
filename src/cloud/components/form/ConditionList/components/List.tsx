@@ -1,7 +1,7 @@
 import { useDynamicList } from 'ahooks'
 import { Empty, Row } from 'antd'
 import clsx from 'clsx'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import { Icon } from '@/components'
 import { hidePopover } from '@/utils/helpers/dom'
@@ -26,7 +26,9 @@ const Index = (props: IPropsList) => {
 
 	const default_columns = useDefaultColumns(options)
 
-	console.log(list)
+	useEffect(() => {
+		trigger({ data: list, delete: delete_ids, query })
+	}, [list, delete_ids, query])
 
 	const add = (index: number) => {
 		const item: any = {}
@@ -54,9 +56,7 @@ const Index = (props: IPropsList) => {
 
 		replace(index, item)
 
-		hidePopover('quicktable_td_popover')
-
-		trigger({ data: list, delete: delete_ids, query })
+		hidePopover('dynamic_list_td_popover')
 	}
 
 	return (

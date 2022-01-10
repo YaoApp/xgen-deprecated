@@ -50,18 +50,21 @@ const Index = (props: IProps) => {
 			)
 		}
 
-		if (it.edit.type === 'quickTable') {
+		if (it.edit.type === 'dynamicList' || it.edit.type === 'conditionList') {
+			const value = getDeepValueByText(it.edit.props.value, data)
+
 			return (
 				<Col span={it.span} key={idx}>
 					<Dynamic
 						type='form'
-						name='quickTable'
+						name={it.edit.type}
 						props={{
 							...it.edit.props,
 							name: it.edit.props.value,
 							type,
 							label: it.label,
-							rules: type === 'view' ? [] : it.rules
+							rules: type === 'view' ? [] : it.rules,
+							value
 						}}
 					></Dynamic>
 				</Col>
@@ -69,7 +72,7 @@ const Index = (props: IProps) => {
 		}
 
 		if (it.edit.type === 'chart') {
-			const chart_data = getDeepValueByText(it.edit.props.value, data)
+			const value = getDeepValueByText(it.edit.props.value, data)
 
 			return (
 				<Col span={it.span} key={idx}>
@@ -86,7 +89,7 @@ const Index = (props: IProps) => {
 							name={it.edit.props.type}
 							props={{
 								name: it.label,
-								data: chart_data,
+								data: value,
 								...it.edit.props.chart_props
 							}}
 							key={idx}

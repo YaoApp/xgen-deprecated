@@ -12,21 +12,24 @@ const { confirm } = Modal
 const Index = ({ _operation, options, params }: any) => {
 	const onItem = (it: any, item: any) => {
 		if (it?.type) {
+			const form_name = it?.formName || params.name
+			const form_id = it?.formId ? getDeepValueByText(it?.formId, item) : item.id
+
 			if (it?.useModal) {
 				if (it?.type === 'view') {
-					options.edit(item.id, params.name, 'view')
+					options.edit(form_id, form_name, 'view')
 				} else {
-					options.edit(item.id, params.name, 'edit')
+					options.edit(form_id, form_name, 'edit')
 				}
 			} else {
 				if (it?.type === 'view') {
 					history.push({
-						pathname: `/form/${params.name}/${item.id}`,
+						pathname: `/form/${form_name}/${form_id}`,
 						query: { type: 'view' }
 					})
 				} else {
 					history.push({
-						pathname: `/form/${params.name}/${item.id}`
+						pathname: `/form/${form_name}/${form_id}`
 					})
 				}
 			}
