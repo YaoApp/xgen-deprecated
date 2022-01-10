@@ -18,6 +18,8 @@ export interface IProps {
 	searchFormData: () => void
 }
 
+const custom_components = ['dynamicList', 'conditionList', 'extend']
+
 const Index = (props: IProps) => {
 	const { fieldset, params, type, data, searchFormData } = props
 
@@ -50,7 +52,7 @@ const Index = (props: IProps) => {
 			)
 		}
 
-		if (it.edit.type === 'dynamicList' || it.edit.type === 'conditionList') {
+		if (custom_components.includes(it.edit.type)) {
 			const value = getDeepValueByText(it.edit.props.value, data)
 
 			return (

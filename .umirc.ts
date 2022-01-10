@@ -85,6 +85,10 @@ export default defineConfig({
 		'/api': {
 			target: 'http://local.iqka.com:5099',
 			changeOrigin: true
+		},
+		'/extend': {
+			target: 'http://local.iqka.com:5099',
+			changeOrigin: true
 		}
 	}
 })
