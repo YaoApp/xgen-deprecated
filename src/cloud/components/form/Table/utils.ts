@@ -15,11 +15,11 @@ export const getText = (dataIndex: string, dataItem: any, v: any, item: any, _co
 		text = v ? moment(v).format(_columns[item.title].view.props['format']) : '-'
 	}
 
-	if (item.view.type === 'image') {
+	if (item.view.type === 'image' || item.view.type === 'tag') {
 		return text
 	}
 
-	return Array.isArray(text) ? text.join(',') : text !== undefined || null ? text : '-'
+	return Array.isArray(text) ? text.join(',') : text !== undefined && text !== null ? text : '-'
 }
 
 export const getTargetValue = (v: string, key: string, dataItem: any) => {
