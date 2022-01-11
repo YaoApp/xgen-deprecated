@@ -62,24 +62,28 @@ const Index = (props: IPropsOptions) => {
 
 	return (
 		<div className={styles._local}>
-			<Tooltip title='账号管理' placement='right'>
-				<NavLink
-					className='nav_item w_100 flex justify_center align_center clickable'
-					to={`/table/${app_info?.option?.nav_user || 'xiang.user'}`}
-					onClick={() => setCurrentNav(-1)}
-				>
-					<Icon name='icon-user' size={20}></Icon>
-				</NavLink>
-			</Tooltip>
-			<Tooltip title='系统设置' placement='right'>
-				<NavLink
-					className='nav_item w_100 flex justify_center align_center clickable'
-					to={`/table/${app_info?.option?.nav_menu || 'xiang.menu'}`}
-					onClick={() => setCurrentNav(-1)}
-				>
-					<Icon name='icon-settings' size={20}></Icon>
-				</NavLink>
-			</Tooltip>
+			{!app_info?.option?.hide_user && (
+				<Tooltip title='账号管理' placement='right'>
+					<NavLink
+						className='nav_item w_100 flex justify_center align_center clickable'
+						to={`/table/${app_info?.option?.nav_user || 'xiang.user'}`}
+						onClick={() => setCurrentNav(-1)}
+					>
+						<Icon name='icon-user' size={20}></Icon>
+					</NavLink>
+				</Tooltip>
+			)}
+			{!app_info?.option?.hide_menu && (
+				<Tooltip title='系统设置' placement='right'>
+					<NavLink
+						className='nav_item w_100 flex justify_center align_center clickable'
+						to={`/table/${app_info?.option?.nav_menu || 'xiang.menu'}`}
+						onClick={() => setCurrentNav(-1)}
+					>
+						<Icon name='icon-settings' size={20}></Icon>
+					</NavLink>
+				</Tooltip>
+			)}
 			<div id='option_item' className='option_item flex justify_center align_center'>
 				<Popover
 					overlayClassName='popover_user_wrap'

@@ -28,6 +28,8 @@ const Index: ConnectRC<IProps> = (props) => {
 	const login = app_info?.option?.login
 	const third_login = app_info?.option?.login?.feishu
 
+	console.log(captcha)
+
 	const onFinish = (v: any) => {
 		const is_email = v.mobile.indexOf('@') !== -1
 

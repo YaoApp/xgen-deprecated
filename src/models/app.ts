@@ -21,6 +21,8 @@ export interface IModelApp {
 		option: {
 			nav_user: string
 			nav_menu: string
+			hide_user: boolean
+			hide_menu: boolean
 			login: {
 				password: {
 					captcha: string
