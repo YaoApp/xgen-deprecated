@@ -19,7 +19,7 @@ const Index = ({ _operation, options, params }: any) => {
 				if (it?.type === 'view') {
 					options.edit(form_id, form_name, 'view')
 				} else {
-					options.edit(form_id, form_name, 'edit')
+					options.edit(form_id, form_name)
 				}
 			} else {
 				if (it?.type === 'view') {

@@ -18,7 +18,7 @@ export interface IProps {
 	searchFormData: () => void
 }
 
-const custom_components = ['dynamicList', 'conditionList', 'extend']
+const custom_components = ['dynamicList', 'conditionList']
 
 const Index = (props: IProps) => {
 	const { fieldset, params, type, data, searchFormData } = props
@@ -46,27 +46,6 @@ const Index = (props: IProps) => {
 							type,
 							label: it.label,
 							queryDataSource: data
-						}}
-					></Dynamic>
-				</Col>
-			)
-		}
-
-		if (custom_components.includes(it.edit.type)) {
-			const value = getDeepValueByText(it.edit.props.value, data)
-
-			return (
-				<Col span={it.span} key={idx}>
-					<Dynamic
-						type='form'
-						name={it.edit.type}
-						props={{
-							...it.edit.props,
-							name: it.edit.props.value,
-							type,
-							label: it.label,
-							rules: type === 'view' ? [] : it.rules,
-							value
 						}}
 					></Dynamic>
 				</Col>
@@ -101,6 +80,16 @@ const Index = (props: IProps) => {
 			)
 		}
 
+		const other_props: any = {}
+
+		if (custom_components.includes(it.edit.type)) {
+			other_props['value'] = getDeepValueByText(it.edit.props.value, data)
+		}
+
+		if (it.edit.type === 'extend') {
+			other_props['value'] = data
+		}
+
 		return (
 			<Col span={it.span} key={idx}>
 				<Dynamic
@@ -108,6 +97,7 @@ const Index = (props: IProps) => {
 					name={it.edit.type}
 					props={{
 						...it.edit.props,
+						...other_props,
 						name: it.edit.props.value,
 						label: it.label,
 						rules: type === 'view' ? [] : it.rules,

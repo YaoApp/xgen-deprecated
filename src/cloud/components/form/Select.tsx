@@ -7,8 +7,6 @@ import { Item } from '@/components'
 
 import type { SelectProps } from 'antd'
 
-const { Option } = Select
-
 interface IProps extends SelectProps<any> {
 	name: string
 	bind?: string

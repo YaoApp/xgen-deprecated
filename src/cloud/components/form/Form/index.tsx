@@ -39,6 +39,8 @@ const Index = (props: IProps) => {
 	const { setFieldsValue, resetFields } = form
 	const { query } = history.location
 
+	console.log(props)
+
 	useEffect(() => {
 		if (params.id === '0' || !Object.keys(data).length) {
 			return resetFields()
@@ -62,10 +64,6 @@ const Index = (props: IProps) => {
 			// 针对 Form 页面
 			const onFinish = (v: any) => {
 				const data = params.id === '0' ? v : { ...v, id: params.id }
-
-				console.log(data)
-
-				return
 
 				dispatch({
 					type: `${pathname}/save`,
