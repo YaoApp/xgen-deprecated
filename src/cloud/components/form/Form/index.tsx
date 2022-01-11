@@ -39,8 +39,6 @@ const Index = (props: IProps) => {
 	const { setFieldsValue, resetFields } = form
 	const { query } = history.location
 
-	console.log(props)
-
 	useEffect(() => {
 		if (params.id === '0' || !Object.keys(data).length) {
 			return resetFields()
