@@ -26,6 +26,7 @@ const Index: ConnectRC<IProps> = (props) => {
 	const [form] = useForm()
 	const { getFieldValue } = form
 	const login = app_info?.option?.login
+	const third_login = app_info?.option?.login?.feishu
 
 	const onFinish = (v: any) => {
 		const is_email = v.mobile.indexOf('@') !== -1
@@ -200,27 +201,31 @@ const Index: ConnectRC<IProps> = (props) => {
 							)}
 						</Item>
 					</Form>
-					<div className='or_wrap flex justify_between align_center'>
-						<span className='line'></span>
-						<span className='text'>or</span>
-						<span className='line'></span>
-					</div>
-					<div className='third_wrap w_100 flex flex_column'>
-						<Button
-							className='btn_third relative'
-							shape='round'
-							icon={
-								<img
-									className='logo_third absolute'
-									src={logo_feishu}
-									alt='feishu'
-								/>
-							}
-							onClick={onFeishu}
-						>
-							使用飞书进行登录
-						</Button>
-					</div>
+					{third_login && (
+						<>
+							<div className='or_wrap flex justify_between align_center'>
+								<span className='line'></span>
+								<span className='text'>or</span>
+								<span className='line'></span>
+							</div>
+							<div className='third_wrap w_100 flex flex_column'>
+								<Button
+									className='btn_third relative'
+									shape='round'
+									icon={
+										<img
+											className='logo_third absolute'
+											src={logo_feishu}
+											alt='feishu'
+										/>
+									}
+									onClick={onFeishu}
+								>
+									使用飞书进行登录
+								</Button>
+							</div>
+						</>
+					)}
 					<div className='copyright w_100 absolute flex justify_center'>
 						<span>由</span>
 						<a href='https://www.iqka.com/' target='_blank'>
