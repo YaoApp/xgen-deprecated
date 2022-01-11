@@ -4,6 +4,8 @@ import clsx from 'clsx'
 import Dynamic from '@/cloud/core'
 import { CheckOutlined } from '@ant-design/icons'
 
+import { useItemText } from '../hooks'
+
 interface IPropsItem {
 	item: any
 	it: any
@@ -15,6 +17,7 @@ interface IPropsItem {
 const Index = (props: IPropsItem) => {
 	const { item, it, item_key, col_key, onChange } = props
 	const { value, ...props_no_value } = it.edit.props
+	const text = useItemText(it, item)
 
 	const change = (v: any) => {
 		onChange(item_key, v)
@@ -63,7 +66,7 @@ const Index = (props: IPropsItem) => {
 						!item[it.key] && 'empty'
 					])}
 				>
-					<span className='text'>{item[it.key] ?? it.title}</span>
+					<span className='text'>{text}</span>
 				</div>
 			</Popover>
 		</Col>

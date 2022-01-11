@@ -26,6 +26,7 @@ interface IProps extends SelectProps<any> {
 		key: string
 	}
 	options: Array<any>
+	setSelectOptions?: (v: Array<any>) => void
 }
 
 const Index = (props: IProps) => {

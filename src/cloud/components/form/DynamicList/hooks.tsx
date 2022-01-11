@@ -1,4 +1,6 @@
-import { useMemo } from 'react'
+import { find } from 'lodash-es'
+import { useEffect, useMemo, useState } from 'react'
+import { request } from 'umi'
 
 export const useColumns = (setting: any) => {
 	const { columns, children_columns } = useMemo(() => {
@@ -44,4 +46,63 @@ export const useColumns = (setting: any) => {
 	}, [setting])
 
 	return { columns, children_columns }
+}
+
+export const useItemText = (it: any, item: any) => {
+	const { props } = it.edit
+	const [data, setData] = useState<Array<any>>([])
+
+	const getData = async () => {
+		let v = ''
+
+		if (props.remote.query?.useValue) {
+			v = `&value=${props.value}`
+		}
+
+		const data = await request(
+			`${props.remote.api}?select=${props.remote.query.select.join(',')}${v}`
+		)
+
+		setData(data)
+	}
+
+	useEffect(() => {
+		if (props.remote) {
+			getData()
+		}
+
+		if (props.options) {
+			setData(props.options)
+		}
+	}, [props])
+
+	const options = useMemo(() => {
+		if (!data.length) return []
+
+		return data.reduce((total, item) => {
+			total.push({
+				label: item.name || item.label,
+				value:
+					props.string === '1'
+						? String(item.id || item.value)
+						: item.id || item.value
+			})
+
+			return total
+		}, [])
+	}, [data, props.string])
+
+	const text = useMemo(() => {
+		if (it.edit.type !== 'select') {
+			return item[it.key] !== undefined ? item[it.key] : it.title
+		} else {
+			if (item[it.key] === undefined) return it.title
+
+			const target = find(options, (option) => option.value === item[it.key])
+
+			return target?.label || it.title
+		}
+	}, [item, it, options])
+
+	return text
 }

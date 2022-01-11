@@ -5,6 +5,8 @@ import moment from 'moment'
 import Dynamic from '@/cloud/core'
 import { CheckOutlined } from '@ant-design/icons'
 
+import { useItemText } from '../hooks'
+
 interface IPropsItem {
 	item: any
 	it: any
@@ -15,6 +17,7 @@ interface IPropsItem {
 
 const Index = (props: IPropsItem) => {
 	const { item, it, item_key, col_key, onChange } = props
+	const text = useItemText(it, item)
 	const v_key = it.edit.props.value.replace(':', '')
 	const form_value =
 		it.type === 'datePicker' && item[v_key]
@@ -77,9 +80,7 @@ const Index = (props: IPropsItem) => {
 						!item[v_key] && 'empty'
 					])}
 				>
-					<span className='text'>
-						{item[v_key] !== undefined ? item[v_key] : it.title}
-					</span>
+					<span className='text'>{text}</span>
 				</div>
 			</Popover>
 		</Col>
