@@ -32,8 +32,6 @@ const Index = (props: IProps) => {
 		getHTML()
 	}, [props])
 
-	console.log(props)
-
 	return (
 		<Fragment>
 			<style>{css}</style>

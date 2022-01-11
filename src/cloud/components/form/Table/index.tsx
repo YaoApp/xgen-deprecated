@@ -29,6 +29,7 @@ const Index = (props: IProps) => {
 	const [data, setData] = useState([])
 	const [visible_form, setVisibleForm] = useState(false)
 	const [form_params, setFormParams] = useState({ id: '', name: '', type: '' })
+	const [form_setting, setFormSetting] = useState<any>({})
 	const [form_data, setFormData] = useState<any>({})
 	const [form_name, setFormName] = useState('')
 
@@ -101,11 +102,18 @@ const Index = (props: IProps) => {
 			`${!name ? api.find : `/api/xiang/table/${name}/find`}/${id}`
 		)
 
+		if (name) {
+			const setting = await request(`/api/xiang/table/${name}/setting`)
+
+			setFormSetting(setting)
+		}
+
 		setFormData(data)
 	}
 
 	const edit = async (id: string, name?: string, type?: string) => {
 		setFormData({})
+		setFormSetting({})
 
 		const close = message.loading('loading', 0)
 
@@ -147,7 +155,7 @@ const Index = (props: IProps) => {
 	})
 
 	const props_form = {
-		setting,
+		setting: Object.keys(form_setting).length ? form_setting : setting,
 		data: form_data,
 		params: form_params,
 		onCancel: closeModal,
