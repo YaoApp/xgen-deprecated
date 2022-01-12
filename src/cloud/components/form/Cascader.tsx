@@ -6,11 +6,10 @@ import { Item } from '@/components'
 
 import type { CascaderProps } from 'antd'
 
-interface IProps extends CascaderProps {
+interface IProps extends CascaderProps<any> {
 	name: string
 	bind?: string
 	label?: string
-	string?: '1' | '0' | undefined
 	rules: Array<any>
 	remote: {
 		api: string
