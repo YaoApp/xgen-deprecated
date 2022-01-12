@@ -229,7 +229,7 @@ export const useColumns = (
 		}, [])
 
 		if (_operation?.width !== 0) {
-			columns.push(Options({ _operation, options, params }))
+			columns.push(Options({ _operation, options, params, save: onFinish }))
 		}
 
 		return columns

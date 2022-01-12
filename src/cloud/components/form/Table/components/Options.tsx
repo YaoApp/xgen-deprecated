@@ -1,4 +1,4 @@
-import { message, Modal, Popover, Tooltip } from 'antd'
+import { Checkbox, message, Modal, Popover, Tooltip } from 'antd'
 import clsx from 'clsx'
 import qs from 'query-string'
 import { history, request } from 'umi'
@@ -9,7 +9,7 @@ import { getDeepValueByText, getGroupValue } from '@/utils/helpers/filters'
 
 const { confirm } = Modal
 
-const Index = ({ _operation, options, params }: any) => {
+const Index = ({ _operation, options, params, save }: any) => {
 	const onItem = (it: any, item: any) => {
 		if (it?.type) {
 			const form_name = it?.formName || params.name
@@ -105,6 +105,40 @@ const Index = ({ _operation, options, params }: any) => {
 			width: options?.useInForm ? 110 : _operation?.width || 110,
 			render: (_: any, item: any) => (
 				<div className='unfold_table_option_items flex flex_wrap justify_end'>
+					{_operation?.checkbox?.map((it: any, index: number) => {
+						const checked =
+							getDeepValueByText(it.value, item) === it.status[0].value
+						const title = it.status[checked ? 0 : 1].label
+
+						const onChange = (status: boolean) => {
+							const status_value = it.status[status ? 0 : 1].value
+
+							save(
+								{
+									[it.value.replace(':', '')]: status_value
+								},
+								item.id
+							)
+						}
+
+						return (
+							<Tooltip title={'已' + title} key={index}>
+								<div className='unfold_table_checkbox_item flex flex_column justify_center align_center'>
+									<Checkbox
+										checked={checked}
+										onChange={({ target: { checked } }) =>
+											onChange(checked)
+										}
+									></Checkbox>
+									{it?.visible_label && (
+										<div className='check_label'>
+											{title}
+										</div>
+									)}
+								</div>
+							</Tooltip>
+						)
+					})}
 					{!_operation?.hideView && (
 						<Tooltip title='查看'>
 							<div className='unfold_table_option_item'>
@@ -130,7 +164,7 @@ const Index = ({ _operation, options, params }: any) => {
 						</Tooltip>
 					)}
 					{!options?.useInForm &&
-						_operation?.items.map((it: any, index: number) => (
+						_operation?.items?.map((it: any, index: number) => (
 							<Tooltip title={it.title} key={index}>
 								<div
 									className='unfold_table_option_item'
@@ -201,7 +235,7 @@ const Index = ({ _operation, options, params }: any) => {
 									</div>
 								)}
 								{!options?.useInForm &&
-									_operation?.items.map(
+									_operation?.items?.map(
 										(it: any, index: number) => (
 											<div
 												className={clsx([
