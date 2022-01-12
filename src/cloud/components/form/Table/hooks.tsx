@@ -9,6 +9,7 @@ import { hidePopover } from '@/utils/helpers/dom'
 import { getDeepValue } from '@/utils/helpers/filters'
 import { CheckOutlined } from '@ant-design/icons'
 
+import Block from './components/Block'
 import Options from './components/Options'
 import { getTargetValue, getText } from './utils'
 
@@ -191,24 +192,9 @@ export const useColumns = (
 
 				item.dataIndex = deps
 
-				item.render = (_: any, dataItem: any) => {
-					const elements: any = {}
-
-					for (const key in item.view.components) {
-						const config = _columns[item.view.components[key]]
-						const value = dataItem[config.view.props.value.replace(':', '')]
-
-						elements[key] = getRender(config, dataItem, value)
-					}
-
-					return (
-						<Dynamic
-							type='group'
-							name={item.view.type}
-							props={elements}
-						></Dynamic>
-					)
-				}
+				item.render = (_: any, dataItem: any) => (
+					<Block {...{ _columns, item, dataItem, getRender }}></Block>
+				)
 
 				// 针对复合组件，提取依赖字段，手动管理是否更新
 				item.shouldCellUpdate = (new_val: any, old_val: any) => {
@@ -242,7 +228,9 @@ export const useColumns = (
 			return total
 		}, [])
 
-		columns.push(Options({ _operation, options, params }))
+		if (_operation?.width) {
+			columns.push(Options({ _operation, options, params }))
+		}
 
 		return columns
 	}, [setting])
