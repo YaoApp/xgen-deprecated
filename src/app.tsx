@@ -126,7 +126,7 @@ export const request: RequestConfig = {
 				if (res.code === 401 || res.code === 403) {
 					message.warning('尚未登录')
 
-					if (store.get('role')) {
+					if (store.get('login_url')) {
 						history.push(login_url)
 					}
 				}
@@ -139,7 +139,7 @@ export const request: RequestConfig = {
 		const res: any = await error?.response.clone().json()
 
 		if (res && (res.code === 401 || res.code === 403)) {
-			if (store.get('role')) {
+			if (store.get('login_url')) {
 				history.push(login_url)
 			}
 

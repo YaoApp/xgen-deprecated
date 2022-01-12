@@ -46,7 +46,7 @@ const Index = (props: IProps) => {
 
 	if (
 		history.location.pathname === '/login/admin' ||
-		history.location.pathname === '/login/user'
+		history.location.pathname.indexOf('/login/user') !== -1
 	) {
 		return children
 	}

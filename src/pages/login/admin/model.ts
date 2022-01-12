@@ -16,6 +16,8 @@ export interface IModelLoginAdmin {
 	}
 }
 
+console.log()
+
 export default modelExtend(pageModel, {
 	namespace: 'login_admin',
 
@@ -68,8 +70,8 @@ export default modelExtend(pageModel, {
 			sessionStorage.setItem('token', res.token)
 			store.set('user', res.user)
 			store.set('menu', res.menus)
-			store.set('role', 'admin')
 			store.set('current_nav', 0)
+			store.set('login_url', history.location.pathname)
 
 			yield window.$app.sleep(600)
 

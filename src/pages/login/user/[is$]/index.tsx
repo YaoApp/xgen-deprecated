@@ -1,6 +1,6 @@
 import { Button, Form, Input, message } from 'antd'
 import clsx from 'clsx'
-import { connect, Helmet, request } from 'umi'
+import { connect, Helmet, request, useParams } from 'umi'
 
 import { Icon } from '@/components'
 import bg_login from '@/images/bg_login_user.svg'
@@ -28,6 +28,7 @@ const Index: ConnectRC<IProps> = (props) => {
 	const login = app_info?.option?.login
 	const third_login = app_info?.option?.login?.feishu
 	const login_images = app_info.option?.login_images
+	const { is } = useParams<{ is: string | undefined }>()
 
 	const onFinish = (v: any) => {
 		const is_email = v.mobile.indexOf('@') !== -1
@@ -54,7 +55,8 @@ const Index: ConnectRC<IProps> = (props) => {
 				captcha: {
 					id: captcha.id,
 					code: v.captcha_code
-				}
+				},
+				is
 			}
 		})
 	}

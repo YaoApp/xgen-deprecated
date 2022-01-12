@@ -1,7 +1,5 @@
 import store from 'store'
 
 export const login_url = (() => {
-	const role = store.get('role') || 'user'
-
-	return `/login/${role}`
+	return store.get('login_url') || '/login/user'
 })()

@@ -27,7 +27,7 @@ export default modelExtend(pageModel, {
 	subscriptions: {
 		setup({ history, dispatch }) {
 			history.listen((location) => {
-				if (location.pathname !== '/login/user') return
+				if (location.pathname.indexOf('/login/user') === -1) return
 
 				if (location?.query?.from) {
 					const { from, ...params } = location?.query
@@ -87,8 +87,8 @@ export default modelExtend(pageModel, {
 			sessionStorage.setItem('token', res.token)
 			store.set('user', res.user)
 			store.set('menu', res.menus)
-			store.set('role', 'user')
 			store.set('current_nav', 0)
+			store.set('login_url', history.location.pathname)
 
 			yield window.$app.sleep(600)
 
