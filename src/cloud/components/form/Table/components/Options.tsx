@@ -163,33 +163,29 @@ const Index = ({ _operation, options, params, save }: any) => {
 							</div>
 						</Tooltip>
 					)}
-					{!options?.useInForm &&
-						_operation?.items?.map((it: any, index: number) => (
-							<Tooltip title={it.title} key={index}>
-								<div
-									className='unfold_table_option_item'
-									key={index}
-								>
-									<a
-										className={clsx([
-											'icon_wrap border_box flex justify_center align_center clickable',
-											it?.danger ? 'danger' : '',
-											it?.disabled
-												? getDeepValueByText(
-														it.disabled,
-														item
-												  )
-													? 'disabled'
-													: ''
+					{_operation?.items?.map((it: any, index: number) => (
+						<Tooltip title={it.title} key={index}>
+							<div className='unfold_table_option_item' key={index}>
+								<a
+									className={clsx([
+										'icon_wrap border_box flex justify_center align_center clickable',
+										it?.danger ? 'danger' : '',
+										it?.disabled
+											? getDeepValueByText(
+													it.disabled,
+													item
+											  )
+												? 'disabled'
 												: ''
-										])}
-										onClick={() => onItem(it, item)}
-									>
-										<Icon name={it.icon} size={13}></Icon>
-									</a>
-								</div>
-							</Tooltip>
-						))}
+											: ''
+									])}
+									onClick={() => onItem(it, item)}
+								>
+									<Icon name={it.icon} size={13}></Icon>
+								</a>
+							</div>
+						</Tooltip>
+					))}
 				</div>
 			)
 		}
@@ -234,39 +230,34 @@ const Index = ({ _operation, options, params, save }: any) => {
 										<span className='text'>编辑</span>
 									</div>
 								)}
-								{!options?.useInForm &&
-									_operation?.items?.map(
-										(it: any, index: number) => (
-											<div
-												className={clsx([
-													'table_option_item flex align_center cursor_point',
-													it?.danger
-														? 'danger'
-														: '',
-													it?.disabled
-														? getDeepValueByText(
-																it.disabled,
-																item
-														  )
-															? 'disabled'
-															: ''
+								{_operation?.items?.map(
+									(it: any, index: number) => (
+										<div
+											className={clsx([
+												'table_option_item flex align_center cursor_point',
+												it?.danger ? 'danger' : '',
+												it?.disabled
+													? getDeepValueByText(
+															it.disabled,
+															item
+													  )
+														? 'disabled'
 														: ''
-												])}
-												key={index}
-												onClick={() =>
-													onItem(it, item)
-												}
-											>
-												<Icon
-													name={it.icon}
-													size={13}
-												></Icon>
-												<span className='text'>
-													{it.title}
-												</span>
-											</div>
-										)
-									)}
+													: ''
+											])}
+											key={index}
+											onClick={() => onItem(it, item)}
+										>
+											<Icon
+												name={it.icon}
+												size={13}
+											></Icon>
+											<span className='text'>
+												{it.title}
+											</span>
+										</div>
+									)
+								)}
 							</div>
 						}
 					>
