@@ -23,6 +23,7 @@ interface IProps {
 		table_name: string
 	}
 	queryDataSource: any
+	height?: number
 }
 
 const Index = (props: IProps) => {
@@ -72,7 +73,10 @@ const Index = (props: IProps) => {
 	}
 
 	return (
-		<div className={clsx([styles._local, 'w_100 border_box flex flex_column'])}>
+		<div
+			className={clsx([styles._local, 'w_100 border_box flex flex_column'])}
+			style={{ height: props?.height ?? 'auto' }}
+		>
 			<div className='title_wrap flex justify_between align_center'>
 				<span className='title'>{title}</span>
 				<Icon
@@ -82,7 +86,14 @@ const Index = (props: IProps) => {
 					onClick={() => showForm()}
 				></Icon>
 			</div>
-			<div className='indicator_wrap w_100 border_box flex flex_column'>
+			<div
+				className='indicator_wrap w_100 border_box flex flex_column justify_center'
+				style={{
+					height: props?.height
+						? `calc(${props.height}px - 48px - 33px + 24px)`
+						: 'auto'
+				}}
+			>
 				<div className='desc_items w_100 border_box flex justify_between'>
 					{data.desc.map((item, index) => (
 						<span className='desc_item' key={index}>

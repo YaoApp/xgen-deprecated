@@ -28,6 +28,10 @@ const Index = (props: IProps) => {
 			return null
 		}
 
+		if (it.edit.type === 'chart' && params.id === '0') {
+			return null
+		}
+
 		if (it.edit.type === 'table' && params.id !== '0') {
 			let other_props: any = {}
 

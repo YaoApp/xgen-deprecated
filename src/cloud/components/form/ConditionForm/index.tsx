@@ -14,6 +14,7 @@ import Time from './components/Time'
 import styles from './index.less'
 
 interface IProps {
+	api: string
 	id: string
 	name: string
 	setting: string
@@ -26,20 +27,19 @@ interface IProps {
 const Component = (props: IProps) => {
 	const [setting, setSetting] = useState<Array<any>>([])
 	const [data, setData] = useState<Array<any>>([])
-
 	const id = getDeepValueByText(props.id, props.queryDataSource)
 
-	const getData = async () => {
-		const setting = await request(`/api/survey/setting/${id}`)
+	const getSetting = async () => {
+		const setting = await request(`${props.api}?id=${id}`)
 
 		setSetting(setting)
 	}
 
 	useEffect(() => {
-		if (!props.id) return
+		if (!props.api) return
 
-		getData()
-	}, [props.id])
+		getSetting()
+	}, [props.api])
 
 	useEffect(() => {
 		if (!props.value) return
