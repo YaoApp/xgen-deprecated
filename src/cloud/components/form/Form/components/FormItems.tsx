@@ -84,7 +84,8 @@ const Index = (props: IProps) => {
 								...it.edit.props.chart_props,
 								...other_props,
 								name: it.label,
-								data: value
+								data: value,
+								hide_label: !!it.edit.props?.hide_label
 							}}
 							key={idx}
 						></Dynamic>

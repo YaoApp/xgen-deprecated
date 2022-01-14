@@ -5,11 +5,16 @@ import type { BarSeriesOption } from 'echarts/charts'
 import type {
 	GridComponentOption,
 	AriaComponentOption,
-	TooltipComponentOption
+	TooltipComponentOption,
+	TitleComponentOption
 } from 'echarts/components'
 
 type Option = echarts.ComposeOption<
-	BarSeriesOption | GridComponentOption | AriaComponentOption | TooltipComponentOption
+	| BarSeriesOption
+	| GridComponentOption
+	| AriaComponentOption
+	| TooltipComponentOption
+	| TitleComponentOption
 >
 
 export interface IProps {
@@ -22,6 +27,7 @@ export interface IProps {
 	textWrap: boolean
 	textLength: number
 	series: Array<any>
+	hide_label: boolean
 }
 
 export default (ref: any, props: IProps) => {
@@ -58,6 +64,17 @@ export default (ref: any, props: IProps) => {
 		const chart = echarts.init(ref.current, 'dark')
 
 		const option: Option = {
+			title: props.hide_label
+				? {
+						left: 'left',
+						text: props.name,
+						textStyle: {
+							color: '#aaaab3',
+							fontSize: 14,
+							fontWeight: 500
+						}
+				  }
+				: undefined,
 			backgroundColor: 'transparent',
 			aria: {
 				decal: { show: true }

@@ -1,5 +1,5 @@
 import { BarChart } from 'echarts/charts'
-import { AriaComponent, GridComponent, TooltipComponent } from 'echarts/components'
+import { AriaComponent, GridComponent, TitleComponent, TooltipComponent } from 'echarts/components'
 import * as echarts from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { useRef } from 'react'
@@ -8,7 +8,14 @@ import useChart from '@/hooks/useAxisChart'
 
 import type { IProps } from '@/hooks/useAxisChart'
 
-echarts.use([CanvasRenderer, BarChart, GridComponent, AriaComponent, TooltipComponent])
+echarts.use([
+	CanvasRenderer,
+	BarChart,
+	TitleComponent,
+	GridComponent,
+	AriaComponent,
+	TooltipComponent
+])
 
 const Index = (props: IProps) => {
 	const ref = useRef<any>()
