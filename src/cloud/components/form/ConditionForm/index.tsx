@@ -1,4 +1,7 @@
 import clsx from 'clsx'
+import { cloneDeep } from 'lodash-es'
+import { useEffect, useState } from 'react'
+import { request } from 'umi'
 
 import { Item } from '@/components'
 
@@ -8,9 +11,9 @@ import Single from './components/Single'
 import Text from './components/Text'
 import Time from './components/Time'
 import styles from './index.less'
-import setting from './setting'
 
 interface IProps {
+	id: string
 	name: string
 	setting: string
 	label: string
@@ -19,10 +22,41 @@ interface IProps {
 }
 
 const Component = (props: IProps) => {
+	const [setting, setSetting] = useState<Array<any>>([])
+	const [data, setData] = useState<Array<any>>([])
+
+	const getData = async () => {
+		const setting = await request(`/api/survey/setting/${props.id}`)
+
+		setSetting(setting)
+	}
+
+	useEffect(() => {
+		if (!props.id) return
+
+		getData()
+	}, [props.id])
+
+	useEffect(() => {
+		if (!props.value) return
+
+		setData(props.value)
+	}, [props.value])
+
+	const onChange = (index: number, v: any) => {
+		const _data = cloneDeep(data)
+
+		_data[index] = v
+
+		setData(_data)
+
+		props.onChange(_data)
+	}
+
 	return (
 		<div className={clsx([styles._local, 'w_100 border_box'])}>
 			{setting.map((item, index) => {
-				const props_input = { item }
+				const props_input = { item, index, value: data[index], onChange }
 
 				return (
 					<div

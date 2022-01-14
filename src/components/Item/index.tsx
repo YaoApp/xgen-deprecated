@@ -9,6 +9,7 @@ interface IProps extends FormItemProps {
 	name?: string
 	label?: string
 	rules?: Array<any>
+	hide_label?: boolean
 }
 
 const Index = (props: IProps) => {
@@ -17,7 +18,9 @@ const Index = (props: IProps) => {
 	const valuePropName = props.valuePropName ? { valuePropName: props.valuePropName } : {}
 
 	const props_item = {
-		label: (
+		label: props?.hide_label ? (
+			''
+		) : (
 			<a id={props.label} className='disabled' href={`#${props.label}`}>
 				<label>{props.label}</label>
 			</a>

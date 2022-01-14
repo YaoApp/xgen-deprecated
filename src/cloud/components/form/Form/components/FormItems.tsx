@@ -18,7 +18,7 @@ export interface IProps {
 	searchFormData: () => void
 }
 
-const custom_components = ['dynamicList', 'conditionList']
+const custom_components = ['dynamicList', 'conditionList', 'conditionForm']
 
 const Index = (props: IProps) => {
 	const { fieldset, params, type, data, searchFormData } = props
@@ -57,13 +57,15 @@ const Index = (props: IProps) => {
 
 			return (
 				<Col span={it.span} key={idx}>
-					<a
-						id={it.label}
-						className='table_item_title inline_block disabled'
-						href={`#${it.label}`}
-					>
-						{it.label}
-					</a>
+					{!it.edit.props?.hide_label && (
+						<a
+							id={it.label}
+							className='table_item_title inline_block disabled'
+							href={`#${it.label}`}
+						>
+							{it.label}
+						</a>
+					)}
 					<Card>
 						<Dynamic
 							type='chart'
@@ -84,6 +86,10 @@ const Index = (props: IProps) => {
 
 		if (custom_components.includes(it.edit.type)) {
 			other_props['value'] = getDeepValueByText(it.edit.props.value, data)
+		}
+
+		if (it.edit.type === 'conditionForm') {
+			other_props['id'] = getDeepValueByText(it.edit.props.id, data)
 		}
 
 		if (it.edit.type === 'extend') {
