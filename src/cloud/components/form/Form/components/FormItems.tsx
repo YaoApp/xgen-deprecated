@@ -93,10 +93,10 @@ const Index = (props: IProps) => {
 
 		if (custom_components.includes(it.edit.type)) {
 			other_props['value'] = getDeepValueByText(it.edit.props.value, data)
-		}
 
-		if (it.edit.type === 'conditionForm') {
-			other_props['id'] = getDeepValueByText(it.edit.props.id, data)
+			if (it.edit.type === 'conditionForm') {
+				other_props['queryDataSource'] = data
+			}
 		}
 
 		if (it.edit.type === 'extend') {

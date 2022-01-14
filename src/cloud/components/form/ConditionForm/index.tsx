@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { request } from 'umi'
 
 import { Item } from '@/components'
+import { getDeepValueByText } from '@/utils/helpers/filters'
 
 import Multiple from './components/Multiple'
 import Number from './components/Number'
@@ -19,14 +20,17 @@ interface IProps {
 	label: string
 	value: any
 	onChange: any
+	queryDataSource: any
 }
 
 const Component = (props: IProps) => {
 	const [setting, setSetting] = useState<Array<any>>([])
 	const [data, setData] = useState<Array<any>>([])
 
+	const id = getDeepValueByText(props.id, props.queryDataSource)
+
 	const getData = async () => {
-		const setting = await request(`/api/survey/setting/${props.id}`)
+		const setting = await request(`/api/survey/setting/${id}`)
 
 		setSetting(setting)
 	}
