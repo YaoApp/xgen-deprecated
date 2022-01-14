@@ -55,6 +55,12 @@ const Index = (props: IProps) => {
 		if (it.edit.type === 'chart') {
 			const value = getDeepValueByText(it.edit.props.value, data)
 
+			const other_props: any = {}
+
+			if (it.edit.props.type === 'indicator') {
+				other_props['queryDataSource'] = data
+			}
+
 			return (
 				<Col span={it.span} key={idx}>
 					{!it.edit.props?.hide_label && (
@@ -71,9 +77,10 @@ const Index = (props: IProps) => {
 							type='chart'
 							name={it.edit.props.type}
 							props={{
+								...it.edit.props.chart_props,
+								...other_props,
 								name: it.label,
-								data: value,
-								...it.edit.props.chart_props
+								data: value
 							}}
 							key={idx}
 						></Dynamic>

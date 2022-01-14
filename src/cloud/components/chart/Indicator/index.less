@@ -1,4 +1,81 @@
 ._local {
 	:global {
+		.title_wrap {
+			margin-bottom: 15px;
+
+			.title {
+				color: var(--color_title);
+				font-weight: 500;
+				font-size: 16px;
+				line-height: 1;
+			}
+
+			.icon_history {
+				&:hover {
+					color: var(--color_main) !important;
+				}
+			}
+		}
+
+		.indicator_wrap {
+			padding: 0 30px;
+			padding-bottom: 24px;
+
+			.desc_items {
+				margin-bottom: 6px;
+				padding: 0 6px;
+				font-size: 12px;
+			}
+
+			.line_wrap {
+				.line {
+					height: 15px;
+					border-radius: 6px;
+					background: linear-gradient(
+						to right,
+						#7acbf4 0%,
+						#82ae81 49%,
+						#fe9253 100%
+					);
+
+					.value_item {
+						top: -2px;
+
+						&.value {
+							.scale {
+								background-color: var(--color_main);
+								box-shadow: 0 0 6px fade(black, 30%);
+							}
+
+							.number {
+								color: var(--color_main);
+								font-weight: 500;
+							}
+						}
+
+						&.ok {
+							.scale {
+								background-color: fade(white, 80%);
+							}
+
+							.number {
+								font-size: 12px;
+							}
+						}
+
+						.scale {
+							margin-bottom: 6px;
+							width: 4px;
+							height: 19px;
+							border-radius: 2px;
+						}
+
+						.number {
+							font-size: 12px;
+						}
+					}
+				}
+			}
+		}
 	}
 }
