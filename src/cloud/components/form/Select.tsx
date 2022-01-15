@@ -1,5 +1,6 @@
 import { Select } from 'antd'
 import { throttle } from 'lodash-es'
+import qs from 'query-string'
 import { useMemo, useState } from 'react'
 import { request } from 'umi'
 
@@ -33,14 +34,24 @@ const Index = (props: IProps) => {
 
 	const getData = async () => {
 		let v = ''
+		let select = ''
+		let query_string = ''
 
-		if (props.remote.query?.useValue) {
+		if (props.remote?.query) {
+			const { select, useValue, ...other_query } = props.remote.query
+
+			query_string = qs.stringify(other_query)
+		}
+
+		if (props.remote?.query?.useValue) {
 			v = `&value=${props.value}`
 		}
 
-		const data = await request(
-			`${props.remote.api}?select=${props.remote.query.select.join(',')}${v}`
-		)
+		if (props.remote?.query?.select) {
+			select = `select=${props.remote.query.select.join(',')}`
+		}
+
+		const data = await request(`${props.remote.api}?${select}${v}${query_string}`)
 
 		setData(data)
 	}
@@ -60,7 +71,7 @@ const Index = (props: IProps) => {
 			_props.filterOption = (input, option) => {
 				return (
 					(option?.children as any)
-						.toLowerCase()
+						?.toLowerCase()
 						.indexOf(input.toLowerCase()) >= 0
 				)
 			}

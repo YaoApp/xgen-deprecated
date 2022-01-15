@@ -72,6 +72,8 @@ const Index = (props: IProps) => {
 		onCancel: () => setVisibleForm(false)
 	}
 
+	if (!data?.desc) return null
+
 	return (
 		<div
 			className={clsx([styles._local, 'w_100 border_box flex flex_column'])}

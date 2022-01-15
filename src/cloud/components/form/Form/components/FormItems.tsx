@@ -18,7 +18,7 @@ export interface IProps {
 	searchFormData: () => void
 }
 
-const custom_components = ['dynamicList', 'conditionList', 'conditionForm']
+const custom_components = ['dynamicList', 'conditionList', 'conditionForm', 'schedule']
 
 const Index = (props: IProps) => {
 	const { fieldset, params, type, data, searchFormData } = props
@@ -99,7 +99,7 @@ const Index = (props: IProps) => {
 		if (custom_components.includes(it.edit.type)) {
 			other_props['value'] = getDeepValueByText(it.edit.props.value, data)
 
-			if (it.edit.type === 'conditionForm') {
+			if (it.edit.type === 'conditionForm' || it.edit.type === 'schedule') {
 				other_props['queryDataSource'] = data
 			}
 		}

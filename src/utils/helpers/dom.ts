@@ -3,5 +3,5 @@ export const hidePopover = (id?: string) => {
 
 	if (!td_popover) return
 
-	td_popover.style.display = 'none'
+	td_popover.parentElement?.remove()
 }

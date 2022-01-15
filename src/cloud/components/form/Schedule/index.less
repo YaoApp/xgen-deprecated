@@ -1,31 +1,75 @@
 ._local {
-	margin-bottom: 24px;
-	width: 100%;
+	border-radius: 6px;
+	background-color: var(--color_bg_nav);
 
 	:global {
 		.schedule_wrap {
-			.table {
-				border-spacing: 2px;
-				border-collapse: separate;
+			.left_wrap {
+				padding-top: 42px;
+				width: 120px;
 
-				thead {
-					tr {
-						th {
-							padding: 9px 0;
-							border-radius: 6px;
-							background-color: var(--color_bg_nav);
-							color: var(--color_title);
+				.left_item {
+					.time {
+						width: 50%;
+						border-top: 1px solid var(--color_bg_menu);
+						border-right: 1px solid var(--color_bg_menu);
+					}
+
+					.children {
+						width: 50%;
+
+						.tag {
+							border-top: 1px solid var(--color_bg_menu);
+							border-right: 1px solid var(--color_bg_menu);
+						}
+					}
+				}
+			}
+
+			.right_wrap {
+				width: calc(100% - 120px);
+
+				.th_wrap {
+					position: relative;
+
+					&::before {
+						position: absolute;
+						top: 0;
+						left: -1px;
+						width: 1px;
+						height: 100%;
+						background-color: var(--color_bg_menu);
+						content: '';
+					}
+
+					.th {
+						flex: 1;
+						height: 42px;
+						border-right: 1px solid var(--color_bg_menu);
+
+						&:last-child {
+							border-right: none;
 						}
 					}
 				}
 
-				tbody {
-					tr {
-						td {
-							padding: 9px 0;
-							border-radius: 6px;
-							background-color: var(--color_bg_nav);
-							text-align: center;
+				.td_wrap {
+					.td_row {
+						.td {
+							flex: 1;
+							height: 42px;
+							border-top: 1px solid var(--color_bg_menu);
+							border-right: 1px solid var(--color_bg_menu);
+							font-size: 12px;
+							line-height: 1;
+
+							&:last-child {
+								border-right: none;
+							}
+
+							.text {
+								margin-bottom: -1px;
+							}
 						}
 					}
 				}
