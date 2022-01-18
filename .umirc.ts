@@ -7,6 +7,7 @@ import OfflinePlugin from '@lcdp/offline-plugin'
 import config from './config'
 import theme from './src/theme'
 
+import type { BaseIConfig } from 'umi'
 const env = process.env.NODE_ENV as 'development' | 'production'
 
 const getLinks = () => {
@@ -28,6 +29,12 @@ const getScripts = () => {
 
 const links = getLinks()
 const scripts = getScripts()
+
+const other_config: BaseIConfig = {}
+
+if (process.env.APP_ENV === 'development') {
+	other_config['devtool'] = 'source-map'
+}
 
 export default defineConfig({
 	theme,
@@ -90,7 +97,8 @@ export default defineConfig({
 			target: 'http://local.iqka.com:5099',
 			changeOrigin: true
 		}
-	}
+	},
+	...other_config
 })
 
 const webpack_plugin_offline: any = {
