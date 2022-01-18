@@ -17,7 +17,7 @@ interface IProps {
 	id: string
 	data: {
 		max: number
-		ok: number
+		ok?: number
 		value: number
 		desc: Array<string>
 		table_name: string
@@ -112,13 +112,15 @@ const Index = (props: IProps) => {
 							<span className='scale'></span>
 							<span className='number'>{data.value}</span>
 						</div>
-						<div
-							className='value_item ok flex flex_column align_center absolute'
-							style={{ left: `${(data.ok * 100) / data.max}%` }}
-						>
-							<span className='scale'></span>
-							<span className='number'>{data.ok}</span>
-						</div>
+						{data?.ok && (
+							<div
+								className='value_item ok flex flex_column align_center absolute'
+								style={{ left: `${(data.ok * 100) / data.max}%` }}
+							>
+								<span className='scale'></span>
+								<span className='number'>{data.ok}</span>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
