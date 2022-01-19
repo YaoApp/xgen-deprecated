@@ -1,0 +1,1 @@
+curl -fsSL https://demo-crm.iqka.com/releases/0.9.33/install.sh | bash

@@ -20,6 +20,7 @@ export interface IProps extends TableProps<any> {
 	label?: string
 	query?: any
 	queryDataSource?: any
+	normal_th?: boolean
 	search?: () => void
 	searchFormData?: () => void
 }
@@ -214,7 +215,7 @@ const Index = (props: IProps) => {
 				className={clsx([styles._local, props?.name ? styles.inline : ''])}
 				dataSource={data || []}
 				columns={columns}
-				sticky={props?.name ? false : { offsetHeader: 52 }}
+				sticky={props?.name || props?.normal_th ? false : { offsetHeader: 52 }}
 				rowKey={(item) => item.id}
 				pagination={false}
 				{...props}

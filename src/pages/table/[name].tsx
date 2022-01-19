@@ -8,6 +8,7 @@ import { CheckOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons'
 import Filter from './components/Filter'
 import List from './components/List'
 import Modal from './components/Modal'
+import Options from './components/Options'
 
 import type { ConnectRC, Dispatch, IModelTable } from 'umi'
 
@@ -82,7 +83,7 @@ const Index: ConnectRC<IProps> = (props) => {
 		}
 	}
 
-	const Options = batch ? (
+	const BatchOption = batch ? (
 		<div className='options_group_wrap border_box flex'>
 			<a
 				className={clsx([
@@ -120,7 +121,17 @@ const Index: ConnectRC<IProps> = (props) => {
 	)
 
 	return (
-		<Page title={setting.name} options={Options}>
+		<Page
+			title={setting.name}
+			options={
+				<div className='flex align_center'>
+					{setting.list?.actions && (
+						<Options actions={setting.list?.actions}></Options>
+					)}
+					{BatchOption}
+				</div>
+			}
+		>
 			<Filter {...props_filter}></Filter>
 			<List {...props_list}></List>
 			<Modal {...props_modal}></Modal>

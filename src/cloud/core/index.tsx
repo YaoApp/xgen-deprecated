@@ -1,6 +1,6 @@
 import { lazy, Suspense, useCallback } from 'react'
 
-type ComponentsType = 'base' | 'form' | 'chart' | 'group'
+type ComponentsType = 'base' | 'form' | 'chart' | 'group' | 'option'
 
 interface IProps {
 	type: ComponentsType

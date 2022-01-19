@@ -11,6 +11,7 @@ import type { UploadProps } from 'antd'
 interface IProps extends UploadProps {
 	value: Array<string>
 	filetype: 'image' | 'file' | 'video'
+	desc?: string
 }
 
 const map_filetype = {
@@ -124,11 +125,14 @@ const CustomUpload = window.$app.memo((props: IProps) => {
 					className={clsx([
 						'btn_upload_wrap flex align_center cursor_point',
 						props.filetype,
-						list.length ? 'has_data' : ''
+						list.length ? 'has_data' : '',
+						props.filetype === 'file' && props.maxCount === 1 && 'one_file'
 					])}
 				>
 					<CloudUploadOutlined style={{ fontSize: 24 }} />
-					<span className='desc'>{map_filetype[props.filetype].desc}</span>
+					<span className='desc'>
+						{props?.desc ?? map_filetype[props.filetype].desc}
+					</span>
 				</div>
 			)}
 		</Upload>

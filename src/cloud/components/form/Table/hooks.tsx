@@ -228,6 +228,8 @@ export const useColumns = (
 			return total
 		}, [])
 
+		console.log(_operation)
+
 		if (_operation?.width !== 0) {
 			columns.push(Options({ _operation, options, params, save: onFinish }))
 		}
