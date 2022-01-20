@@ -12,7 +12,7 @@ const Index = (props: IPropsSteps) => {
 			<Step title='上传文件' />
 			<Step title='字段映射' />
 			<Step title='数据预览' />
-			<Step title='确认导入' />
+			<Step title='导入完成' />
 		</Steps>
 	)
 }

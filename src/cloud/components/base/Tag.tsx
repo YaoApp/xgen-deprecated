@@ -17,7 +17,7 @@ const Index = (props: IProps) => {
 				{item.label}
 			</Tag>
 		)
-	} else if (Array.isArray(props.value)) {
+	} else if (Array.isArray(props.value) && props.value.length) {
 		return (
 			<div className='flex'>
 				{props.value.map((item, index) => (
@@ -27,7 +27,7 @@ const Index = (props: IProps) => {
 						style={{ margin: 3 }}
 						key={index}
 					>
-						{item.label}
+						{item.label || item}
 					</Tag>
 				))}
 			</div>

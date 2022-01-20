@@ -1,10 +1,10 @@
 export interface IProps {
 	api: {
 		setting: string
-		preview: string
-		preview_setting: string
 		mapping: string
 		mapping_setting: string
+		preview: string
+		preview_setting: string
 		import: string
 	}
 }
@@ -22,4 +22,15 @@ export interface IPropsStep1 {
 export interface IPropsStep2 {
 	api: IProps['api']
 	file_name: string
+	setPreviewPayload: (v: any) => void
+}
+
+export interface IPropsStep3 {
+	api: IProps['api']
+	preview_payload: any
+}
+
+export interface IPropsStep4 {
+	api: IProps['api']
+	preview_payload: any
 }

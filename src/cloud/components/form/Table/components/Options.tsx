@@ -102,8 +102,10 @@ const Index = ({ _operation, options, params, save }: any) => {
 		return {
 			title: '操作',
 			key: 'operation',
+			fixed: 'right',
+			className: _operation?.scroll ? 'scroll_table_options' : '',
 			width: options?.useInForm ? 110 : _operation?.width || 110,
-			render: (_: any, item: any) => (
+			render: (_: any, item: any, row_index: number) => (
 				<div className='unfold_table_option_items flex flex_wrap justify_end'>
 					{_operation?.checkbox?.map((it: any, index: number) => {
 						const checked =
@@ -117,7 +119,8 @@ const Index = ({ _operation, options, params, save }: any) => {
 								{
 									[it.value.replace(':', '')]: status_value
 								},
-								item.id
+								item.id,
+								row_index
 							)
 						}
 

@@ -17,7 +17,8 @@ export const useColumns = (
 	setting: any,
 	options: {
 		useInForm: boolean
-		save: (data: any) => void
+		custom: boolean
+		save: (data: any, row_index: number) => void
 		edit: (id: string, name?: string, type?: string) => void
 	}
 ) => {
@@ -30,9 +31,13 @@ export const useColumns = (
 		const _layouts = setting.list.layout.columns
 		const _operation = setting.list.option?.operation
 
-		const onFinish = async (v: any, id: number) => {
-			if (options?.useInForm) {
-				options.save({ id, ...v })
+		const onFinish = async (v: any, id: number, row_index: number) => {
+			if (options.useInForm || options.custom) {
+				if (options.custom) {
+					options.save(v, row_index)
+				} else {
+					options.save({ id, ...v }, row_index)
+				}
 			} else {
 				getDvaApp()._store.dispatch({
 					type: `${history.location.pathname}/save`,
@@ -52,7 +57,7 @@ export const useColumns = (
 
 			if (it.width) item['width'] = it.width
 
-			const getRender = (cfg: any, dataItem: any, value?: any) => {
+			const getRender = (cfg: any, dataItem: any, value: any, row_index: number) => {
 				const dataIndex = _columns[cfg.label].view.props.value.replace(':', '')
 				const v = value
 
@@ -87,7 +92,7 @@ export const useColumns = (
 										[key]: value
 									}}
 									onFinish={(v) => {
-										onFinish(v, dataItem.id)
+										onFinish(v, dataItem.id, row_index)
 									}}
 								>
 									<Dynamic
@@ -192,8 +197,8 @@ export const useColumns = (
 
 				item.dataIndex = deps
 
-				item.render = (_: any, dataItem: any) => (
-					<Block {...{ _columns, item, dataItem, getRender }}></Block>
+				item.render = (_: any, dataItem: any, index: number) => (
+					<Block {...{ _columns, item, dataItem, index, getRender }}></Block>
 				)
 
 				// 针对复合组件，提取依赖字段，手动管理是否更新
@@ -218,8 +223,8 @@ export const useColumns = (
 			} else {
 				item.dataIndex = _columns[item.label].view.props.value.replace(':', '')
 
-				item.render = (value: any, dataItem: any) => {
-					return getRender(item, dataItem, value)
+				item.render = (value: any, dataItem: any, index: number) => {
+					return getRender(item, dataItem, value, index)
 				}
 			}
 
@@ -228,14 +233,12 @@ export const useColumns = (
 			return total
 		}, [])
 
-		console.log(_operation)
-
 		if (_operation?.width !== 0) {
 			columns.push(Options({ _operation, options, params, save: onFinish }))
 		}
 
 		return columns
-	}, [setting])
+	}, [setting, options])
 
 	return columns
 }

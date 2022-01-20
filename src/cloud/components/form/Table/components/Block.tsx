@@ -4,11 +4,12 @@ interface IProps {
 	_columns: Array<any>
 	item: any
 	dataItem: any
+	index: number
 	getRender: any
 }
 
 const Index = (props: IProps) => {
-	const { _columns, item, dataItem, getRender } = props
+	const { _columns, item, dataItem, index, getRender } = props
 
 	const elements: any = {}
 
@@ -16,7 +17,7 @@ const Index = (props: IProps) => {
 		const config = _columns[item.view.components[key]]
 		const value = dataItem[config.view.props.value.replace(':', '')]
 
-		elements[key] = getRender(config, dataItem, value)
+		elements[key] = getRender(config, dataItem, value, index)
 	}
 
 	return <Dynamic type='group' name={item.view.type} props={elements}></Dynamic>

@@ -20,9 +20,11 @@ export interface IProps extends TableProps<any> {
 	label?: string
 	query?: any
 	queryDataSource?: any
-	normal_th?: boolean
+	custom?: boolean
 	search?: () => void
 	searchFormData?: () => void
+	/** custom table 编辑table字段为更新数据传入的方法 */
+	setTableData?: (v: any, index: number) => void
 }
 
 const Index = (props: IProps) => {
@@ -85,7 +87,13 @@ const Index = (props: IProps) => {
 		setSetting(data)
 	}
 
-	const save = async (data: any) => {
+	const save = async (data: any, row_index: number) => {
+		if (props.custom) {
+			props.setTableData?.(data, row_index)
+
+			return
+		}
+
 		const close = message.loading('loading', 0)
 
 		await request(api.save, { method: 'POST', data })
@@ -151,8 +159,10 @@ const Index = (props: IProps) => {
 
 	const columns = useColumns(setting || {}, {
 		useInForm: props?.name ? true : false,
+		custom: !!props?.custom,
 		save,
-		edit
+		edit,
+		...(props?.custom ? { data: props.data } : {})
 	})
 
 	const props_form = {
@@ -182,6 +192,12 @@ const Index = (props: IProps) => {
 			name: form_name || '',
 			type: ''
 		})
+	}
+
+	const other_props: TableProps<any> = {}
+
+	if (setting.list?.option?.operation?.scroll) {
+		other_props['scroll'] = setting.list.option?.operation?.scroll
 	}
 
 	return (
@@ -215,10 +231,11 @@ const Index = (props: IProps) => {
 				className={clsx([styles._local, props?.name ? styles.inline : ''])}
 				dataSource={data || []}
 				columns={columns}
-				sticky={props?.name || props?.normal_th ? false : { offsetHeader: 52 }}
+				sticky={props?.name || props?.custom ? false : { offsetHeader: 52 }}
 				rowKey={(item) => item.id}
 				pagination={false}
 				{...props}
+				{...other_props}
 			/>
 			<Modal {...props_modal}>
 				<Form {...props_form}></Form>

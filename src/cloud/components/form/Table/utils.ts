@@ -6,9 +6,11 @@ export const getText = (dataIndex: string, dataItem: any, v: any, item: any, _co
 	let text = v
 
 	if (dataIndex.indexOf('.') !== -1) {
-		const indexs = dataIndex.split('.')
-
-		text = getDeepValue(indexs, dataItem)
+		if (dataIndex in dataItem) {
+			text = dataItem[dataIndex]
+		} else {
+			text = getDeepValue(dataIndex.split('.'), dataItem)
+		}
 	}
 
 	if (item.title && _columns[item.title].view.props['format']) {
@@ -27,8 +29,12 @@ export const getTargetValue = (v: string, key: string, dataItem: any) => {
 		const _v = v.replace(':', '')
 
 		if (_v.indexOf('.') !== -1) {
-			return {
-				[key]: getDeepValue(_v.split('.'), dataItem)
+			if (key in dataItem) {
+				return { [key]: dataItem[_v] }
+			} else {
+				return {
+					[key]: getDeepValue(_v.split('.'), dataItem)
+				}
 			}
 		} else {
 			return {
