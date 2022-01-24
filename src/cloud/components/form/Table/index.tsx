@@ -196,7 +196,7 @@ const Index = (props: IProps) => {
 
 	const other_props: TableProps<any> = {}
 
-	if (setting.list?.option?.operation?.scroll) {
+	if (setting?.list?.option?.operation?.scroll) {
 		other_props['scroll'] = setting.list.option?.operation?.scroll
 	}
 

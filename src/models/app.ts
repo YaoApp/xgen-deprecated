@@ -23,11 +23,15 @@ export interface IModelApp {
 			nav_menu: string
 			hide_user?: boolean
 			hide_menu?: boolean
-			login_images?: {
-				admin?: string
-				user?: string
-			}
 			login: {
+				image?: {
+					admin?: string
+					user?: string
+				}
+				entry: {
+					admin?: string
+					user?: string
+				}
 				password: {
 					captcha: string
 					login: string

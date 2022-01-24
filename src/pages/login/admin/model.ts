@@ -75,7 +75,7 @@ export default modelExtend(pageModel, {
 
 			yield window.$app.sleep(600)
 
-			const index = store.get('app_info')?.option?.index
+			const index = store.get('app_info')?.option?.login?.entry?.admin
 
 			if (index) {
 				history.push(index)

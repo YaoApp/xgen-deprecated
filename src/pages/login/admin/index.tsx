@@ -24,7 +24,7 @@ const Index: ConnectRC<IProps> = (props) => {
 	const { captcha } = page_data
 	const [form] = useForm()
 	const { getFieldValue } = form
-	const login_images = app_info.option?.login_images
+	const login_image = app_info.option?.login?.image?.admin
 
 	const onFinish = (v: any) => {
 		const is_email = v.mobile.indexOf('@') !== -1
@@ -67,7 +67,7 @@ const Index: ConnectRC<IProps> = (props) => {
 				/>
 			</Helmet>
 			<div className='bg_wrap flex justify_center align_center'>
-				<img className='bg' src={login_images?.admin ?? bg_login} alt='bg_login' />
+				<img className='bg' src={login_image ?? bg_login} alt='bg_login' />
 			</div>
 			<div className='login_wrap relative'>
 				<div className='login h_100 flex flex_column justify_center'>
