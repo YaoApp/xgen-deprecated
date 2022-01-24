@@ -4,7 +4,7 @@ import { find } from 'lodash-es'
 import type { TagProps } from 'antd'
 
 interface IProps extends TagProps {
-	value: string | Array<{ label: string; color: string }>
+	value: string | Array<{ label: string; color?: string }>
 	options: Array<any>
 }
 
