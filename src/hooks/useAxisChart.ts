@@ -89,7 +89,7 @@ export default (ref: any, props: IProps) => {
 				borderRadius: 6
 			},
 			grid: {
-				top: '8%',
+				top: props.hide_label ? '16%' : '8%',
 				bottom: '4%',
 				left: '2%',
 				right: '2%',
