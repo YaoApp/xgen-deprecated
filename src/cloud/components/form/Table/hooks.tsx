@@ -81,7 +81,9 @@ export const useColumns = (
 								'td_popover',
 								cfg.edit.type === 'upload' ? 'upload' : ''
 							])}
-							placement={cfg.edit.type === 'upload' ? 'bottom' : 'top'}
+							placement={
+								cfg.edit.type === 'upload' ? 'bottom' : 'topLeft'
+							}
 							trigger='click'
 							destroyTooltipOnHide={{ keepParent: false }}
 							content={

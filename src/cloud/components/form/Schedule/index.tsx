@@ -14,9 +14,6 @@ import styles from './index.less'
 interface IProps {
 	api: string
 	id: string
-	name: string
-	setting: string
-	label: string
 	value: any
 	onChange: any
 	queryDataSource: any

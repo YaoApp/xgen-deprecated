@@ -18,7 +18,6 @@ type Option = echarts.ComposeOption<
 >
 
 export interface IProps {
-	type: 'pie' | 'bar'
 	name: string
 	height: number
 	tooltip: TooltipComponentOption

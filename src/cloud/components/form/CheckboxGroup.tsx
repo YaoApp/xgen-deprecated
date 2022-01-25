@@ -9,10 +9,7 @@ const { Group } = Checkbox
 type TGroup = typeof Group
 
 type IProps = TGroup & {
-	name: string
-	value: any
-	label?: string
-	rules: Array<any>
+	options: Array<any>
 	remote: {
 		api: string
 		query: {
@@ -20,7 +17,6 @@ type IProps = TGroup & {
 			select: Array<string>
 		}
 	}
-	options: Array<any>
 }
 
 const Index = (props: IProps) => {

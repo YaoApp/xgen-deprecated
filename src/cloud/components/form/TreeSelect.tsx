@@ -7,19 +7,14 @@ import { Item } from '@/components'
 import type { TreeSelectProps } from 'antd'
 
 interface IProps extends TreeSelectProps<any> {
-	name: string
-	bind?: string
 	label?: string
-	string?: '1' | '0' | undefined
-	rules: Array<any>
+	options: Array<any>
 	remote: {
 		api: string
 		query: {
-			keyword: string
 			select: Array<string>
 		}
 	}
-	options: Array<any>
 }
 
 const Index = (props: IProps) => {

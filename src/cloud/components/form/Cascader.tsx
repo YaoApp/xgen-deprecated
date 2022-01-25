@@ -7,18 +7,14 @@ import { Item } from '@/components'
 import type { CascaderProps } from 'antd'
 
 interface IProps extends CascaderProps<any> {
-	name: string
-	bind?: string
 	label?: string
-	rules: Array<any>
+	options: Array<any>
 	remote: {
 		api: string
 		query: {
-			keyword: string
 			select: Array<string>
 		}
 	}
-	options: Array<any>
 }
 
 const Index = (props: IProps) => {

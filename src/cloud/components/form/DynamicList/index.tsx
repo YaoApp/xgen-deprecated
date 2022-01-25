@@ -8,7 +8,6 @@ import List from './components/List'
 import styles from './index.less'
 
 interface IProps {
-	name: string
 	setting: string
 	type: string
 	label: string

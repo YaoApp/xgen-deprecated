@@ -7,11 +7,7 @@ import { Item } from '@/components'
 import type { TreeProps } from 'antd'
 
 interface IProps extends TreeProps {
-	name: string
-	bind?: string
-	label?: string
-	string?: '1' | '0' | undefined
-	rules: Array<any>
+	options: Array<any>
 	remote: {
 		api: string
 		query: {
@@ -19,7 +15,6 @@ interface IProps extends TreeProps {
 			select: Array<string>
 		}
 	}
-	options: Array<any>
 }
 
 type Keys = Array<React.Key> | { checked: Array<React.Key>; halfChecked: Array<React.Key> }
