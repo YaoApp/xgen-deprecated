@@ -29,6 +29,10 @@ const Index = (props: IProps) => {
 
 			return () => clearTimeout(timer)
 		}
+
+		return () => {
+			setTimeout(() => setVisible(false), 1200)
+		}
 	}, [loading])
 
 	useUpdateEffect(() => {
