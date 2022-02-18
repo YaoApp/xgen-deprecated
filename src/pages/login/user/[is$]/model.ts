@@ -6,7 +6,7 @@ import { history } from 'umi'
 import { inspect } from '@/services/app'
 import pageModel from '@/utils/model'
 
-import { getCaptcha, login, loginByFeishu } from './service'
+import { autoLogin, getCaptcha, login, loginByFeishu } from './service'
 
 import type { IModelApp } from 'umi'
 
@@ -42,6 +42,10 @@ export default modelExtend(pageModel, {
 					}
 
 					return
+				}
+
+				if (location?.query?.autoLogin) {
+					dispatch({ type: 'autoLogin' })
 				}
 
 				dispatch({ type: 'getCaptcha' })
@@ -113,6 +117,13 @@ export default modelExtend(pageModel, {
 		},
 		*loginByFeishu({ payload }, { call, put }) {
 			const res = yield call(loginByFeishu, payload)
+
+			if (!res) return
+
+			yield put({ type: 'handleLogin', payload: { res } })
+		},
+		*autoLogin({}, { call, put }) {
+			const res = yield call(autoLogin)
 
 			if (!res) return
 

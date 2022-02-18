@@ -21,6 +21,7 @@ interface IProps {
 
 const Index: ConnectRC<IProps> = (props) => {
 	const { loading, app_data, page_data, dispatch } = props
+	const { is } = useParams<{ is: string | undefined }>()
 	const { app_info } = app_data
 	const { captcha } = page_data
 	const [form] = useForm()
@@ -28,7 +29,6 @@ const Index: ConnectRC<IProps> = (props) => {
 	const login = app_info?.option?.login
 	const third_login = app_info?.option?.login?.feishu
 	const login_image = app_info.option?.login?.image?.user
-	const { is } = useParams<{ is: string | undefined }>()
 
 	const onFinish = (v: any) => {
 		const is_email = v.mobile.indexOf('@') !== -1

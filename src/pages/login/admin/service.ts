@@ -19,3 +19,7 @@ export const login = (data: {
 		data
 	})
 }
+
+export const autoLogin = () => {
+	return request('/api/demo/admin')
+}

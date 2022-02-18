@@ -5,7 +5,7 @@ import { history } from 'umi'
 
 import pageModel from '@/utils/model'
 
-import { getCaptcha, login } from './service'
+import { autoLogin, getCaptcha, login } from './service'
 
 import type { IModelApp } from 'umi'
 
@@ -15,8 +15,6 @@ export interface IModelLoginAdmin {
 		content: string
 	}
 }
-
-console.log()
 
 export default modelExtend(pageModel, {
 	namespace: 'login_admin',
@@ -29,6 +27,10 @@ export default modelExtend(pageModel, {
 		setup({ history, dispatch }) {
 			history.listen((location) => {
 				if (location.pathname !== '/login/admin') return
+
+				if (location?.query?.autoLogin) {
+					dispatch({ type: 'autoLogin' })
+				}
 
 				dispatch({ type: 'getCaptcha' })
 				dispatch({ type: 'app/updateState', payload: { visible_menu: false } })
@@ -45,15 +47,7 @@ export default modelExtend(pageModel, {
 				payload: { captcha }
 			})
 		},
-		*login({ payload }, { call, put }) {
-			const res = yield call(login, payload)
-
-			if (!res.token) {
-				yield put({ type: 'getCaptcha' })
-
-				return
-			}
-
+		*handleLogin({ payload: { res } }, { put }) {
 			if (!store.get('app_info')) {
 				yield put({ type: 'app/inspect' })
 			}
@@ -82,6 +76,24 @@ export default modelExtend(pageModel, {
 			} else {
 				message.success('应用未设置首页，请联系管理员')
 			}
+		},
+		*login({ payload }, { call, put }) {
+			const res = yield call(login, payload)
+
+			if (!res.token) {
+				yield put({ type: 'getCaptcha' })
+
+				return
+			}
+
+			yield put({ type: 'handleLogin', payload: { res } })
+		},
+		*autoLogin({}, { call, put }) {
+			const res = yield call(autoLogin)
+
+			if (!res) return
+
+			yield put({ type: 'handleLogin', payload: { res } })
 		}
 	}
 })

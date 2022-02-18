@@ -26,3 +26,7 @@ export const loginByFeishu = (params: { code: string; state: string }) => {
 		params
 	})
 }
+
+export const autoLogin = () => {
+	return request('/api/demo/user')
+}
