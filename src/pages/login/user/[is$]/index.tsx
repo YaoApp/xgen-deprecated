@@ -1,6 +1,6 @@
 import { Button, Form, Input, message } from 'antd'
 import clsx from 'clsx'
-import { connect, Helmet, request, useParams } from 'umi'
+import { connect, Helmet, request, useIntl, useParams } from 'umi'
 
 import { Icon } from '@/components'
 import bg_login from '@/images/bg_login_user.svg'
@@ -22,6 +22,7 @@ interface IProps {
 const Index: ConnectRC<IProps> = (props) => {
 	const { loading, app_data, page_data, dispatch } = props
 	const { is } = useParams<{ is: string | undefined }>()
+	const { locale, messages } = useIntl()
 	const { app_info } = app_data
 	const { captcha } = page_data
 	const [form] = useForm()
@@ -29,6 +30,8 @@ const Index: ConnectRC<IProps> = (props) => {
 	const login = app_info?.option?.login
 	const third_login = app_info?.option?.login?.feishu
 	const login_image = app_info.option?.login?.image?.user
+	const is_cn = locale === 'zh-CN'
+	const login_messages: any = messages.login
 
 	const onFinish = (v: any) => {
 		const is_email = v.mobile.indexOf('@') !== -1
@@ -39,11 +42,11 @@ const Index: ConnectRC<IProps> = (props) => {
 					v.mobile
 				)
 			) {
-				return message.warning('邮箱格式错误')
+				return message.warning(login_messages.form.validate.email)
 			}
 		} else {
 			if (!/^1[3|4|5|8|9][0-9]\d{4,8}$/.test(v.mobile)) {
-				return message.warning('手机号格式错误')
+				return message.warning(login_messages.form.validate.mobile)
 			}
 		}
 
@@ -91,8 +94,8 @@ const Index: ConnectRC<IProps> = (props) => {
 						/>
 					</div>
 					<div className='title_wrap w_100 border_box flex flex_column'>
-						<span className='title'>登录系统</span>
-						<span className='desc'>请使用用户账号和登录密码登录系统</span>
+						<span className='title'>{login_messages.title}</span>
+						<span className='desc'>{login_messages.desc}</span>
 					</div>
 					<Form
 						className='form_wrap flex flex_column'
@@ -109,7 +112,8 @@ const Index: ConnectRC<IProps> = (props) => {
 												'input input_mobile',
 												getFieldValue('mobile')
 													? 'has_value'
-													: ''
+													: '',
+												!is_cn && 'en'
 											])}
 											type='text'
 											maxLength={30}
@@ -133,7 +137,8 @@ const Index: ConnectRC<IProps> = (props) => {
 												'input input_password',
 												getFieldValue('password')
 													? 'has_value'
-													: ''
+													: '',
+												!is_cn && 'en'
 											])}
 											type='password'
 											maxLength={23}
@@ -159,7 +164,8 @@ const Index: ConnectRC<IProps> = (props) => {
 													'captcha_code'
 												)
 													? 'has_value'
-													: ''
+													: '',
+												!is_cn && 'en'
 											])}
 											autoComplete='off'
 											type='text'
@@ -199,7 +205,7 @@ const Index: ConnectRC<IProps> = (props) => {
 									}
 									loading={loading}
 								>
-									立即登录
+									{login_messages.form.btn_login_text}
 								</Button>
 							)}
 						</Item>

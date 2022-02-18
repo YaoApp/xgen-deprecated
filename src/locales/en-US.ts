@@ -1,4 +1,16 @@
 export default {
+	login: {
+		title: 'Login System',
+		desc: 'Please use the administrator account and login password to log in to the system',
+		form: {
+			btn_login_text: 'Login',
+			btn_user_text: 'Ordinary user login',
+			validate: {
+				email: 'The email format is incorrect',
+				mobile: 'Mobile phone number format error'
+			}
+		}
+	},
 	table: {
 		filter: {
 			search: 'Search',

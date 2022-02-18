@@ -89,12 +89,24 @@
 					}
 
 					&.input_mobile {
+						&.en {
+							&::after {
+								content: 'Account';
+							}
+						}
+
 						&::after {
 							content: '账号';
 						}
 					}
 
 					&.input_password {
+						&.en {
+							&::after {
+								content: 'Password';
+							}
+						}
+
 						&::after {
 							content: '密码';
 						}
@@ -102,6 +114,12 @@
 
 					&.input_captcha_code {
 						width: 64%;
+
+						&.en {
+							&::after {
+								content: 'Code';
+							}
+						}
 
 						&::after {
 							content: '验证码';

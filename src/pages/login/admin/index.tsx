@@ -1,6 +1,6 @@
 import { Button, Form, Input, message } from 'antd'
 import clsx from 'clsx'
-import { connect, Helmet, Link } from 'umi'
+import { connect, Helmet, Link, useIntl } from 'umi'
 
 import { Icon } from '@/components'
 import bg_login from '@/images/bg_login_admin.svg'
@@ -25,6 +25,9 @@ const Index: ConnectRC<IProps> = (props) => {
 	const [form] = useForm()
 	const { getFieldValue } = form
 	const login_image = app_info.option?.login?.image?.admin
+	const { locale, messages } = useIntl()
+	const is_cn = locale === 'zh-CN'
+	const login_messages: any = messages.login
 
 	const onFinish = (v: any) => {
 		const is_email = v.mobile.indexOf('@') !== -1
@@ -35,11 +38,11 @@ const Index: ConnectRC<IProps> = (props) => {
 					v.mobile
 				)
 			) {
-				return message.warning('邮箱格式错误')
+				return message.warning(login_messages.form.validate.email)
 			}
 		} else {
 			if (!/^1[3|4|5|8|9][0-9]\d{4,8}$/.test(v.mobile)) {
-				return message.warning('手机号格式错误')
+				return message.warning(login_messages.form.validate.mobile)
 			}
 		}
 
@@ -80,8 +83,8 @@ const Index: ConnectRC<IProps> = (props) => {
 						/>
 					</div>
 					<div className='title_wrap w_100 border_box flex flex_column'>
-						<span className='title'>登录系统</span>
-						<span className='desc'>请使用管理员账号和登录密码登录系统</span>
+						<span className='title'>{login_messages.title}</span>
+						<span className='desc'>{login_messages.desc}</span>
 					</div>
 					<Form
 						className='form_wrap flex flex_column'
@@ -98,7 +101,8 @@ const Index: ConnectRC<IProps> = (props) => {
 												'input input_mobile',
 												getFieldValue('mobile')
 													? 'has_value'
-													: ''
+													: '',
+												!is_cn && 'en'
 											])}
 											type='text'
 											maxLength={30}
@@ -122,7 +126,8 @@ const Index: ConnectRC<IProps> = (props) => {
 												'input input_password',
 												getFieldValue('password')
 													? 'has_value'
-													: ''
+													: '',
+												!is_cn && 'en'
 											])}
 											type='password'
 											maxLength={23}
@@ -148,7 +153,8 @@ const Index: ConnectRC<IProps> = (props) => {
 													'captcha_code'
 												)
 													? 'has_value'
-													: ''
+													: '',
+												!is_cn && 'en'
 											])}
 											autoComplete='off'
 											type='text'
@@ -188,21 +194,23 @@ const Index: ConnectRC<IProps> = (props) => {
 									}
 									loading={loading}
 								>
-									立即登录
+									{login_messages.form.btn_login_text}
 								</Button>
 							)}
 						</Item>
 						<Link className='btn_link w_100 text_center' to='/login/user'>
-							普通用户登录
+							{login_messages.form.btn_user_text}
 						</Link>
 					</Form>
-					<div className='copyright w_100 absolute flex justify_center'>
-						<span>由</span>
-						<a href='https://www.iqka.com/' target='_blank'>
-							象传智慧
-						</a>
-						<span>提供技术支持</span>
-					</div>
+					{is_cn && (
+						<div className='copyright w_100 absolute flex justify_center'>
+							<span>由</span>
+							<a href='https://www.iqka.com/' target='_blank'>
+								象传智慧
+							</a>
+							<span>提供技术支持</span>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

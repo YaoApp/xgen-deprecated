@@ -54,7 +54,7 @@ export default defineConfig({
 	nodeModulesTransform: { type: 'none' },
 	alias: { R: resolve(__dirname, './') },
 	dynamicImport: { loading: '@/components/Loader/index' },
-	locale: { default: 'zh-CN', antd: true, baseNavigator: false },
+	locale: { default: 'zh-CN', antd: true, baseNavigator: true },
 	chainWebpack(cfg: any) {
 		cfg.resolve.alias.set('moment$', resolve(__dirname, 'node_modules/moment/moment.js'))
 		cfg.module.rule('mjs-rule').test(/.m?js/).resolve.set('fullySpecified', false)

@@ -2,7 +2,7 @@ import NProgress from 'nprogress'
 import config from 'R/config'
 import { Fragment, useEffect } from 'react'
 import store from 'store'
-import { connect, Helmet, history } from 'umi'
+import { connect, getLocale, Helmet, history, setLocale, useIntl } from 'umi'
 
 import { Loader } from '@/components'
 import { login_url } from '@/entry'
@@ -21,6 +21,8 @@ let path: any
 
 const Index = (props: IProps) => {
 	const { dispatch, children, loading, app_data } = props
+	const { locale } = useIntl()
+	const browser_locale: string = getLocale()
 	const {
 		app_info,
 		user,
@@ -31,6 +33,14 @@ const Index = (props: IProps) => {
 		visible_menu
 	} = app_data
 	const global_loading = loading.global
+
+	useEffect(() => {
+		if (locale === browser_locale) return
+
+		if (browser_locale.indexOf('en') !== -1) {
+			setLocale('en-US', false)
+		}
+	}, [locale, browser_locale])
 
 	useEffect(() => {
 		if (path === history.location.pathname) return

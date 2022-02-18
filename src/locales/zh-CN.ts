@@ -1,4 +1,16 @@
 export default {
+	login: {
+		title: '登录系统',
+		desc: '请使用管理员账号和登录密码登录系统',
+		form: {
+			btn_login_text: '立即登录',
+			btn_user_text: '普通用户登录',
+			validate: {
+				email: '邮箱格式错误',
+				mobile: '手机号格式错误'
+			}
+		}
+	},
 	table: {
 		filter: {
 			search: '搜索',
