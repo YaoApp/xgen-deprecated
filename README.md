@@ -1,1 +1,3 @@
-curl -fsSL https://demo-crm.iqka.com/releases/0.9.36/install.sh | bash
+## Xgen
+
+The user interface of Yao.
