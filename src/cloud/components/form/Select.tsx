@@ -8,6 +8,8 @@ import { Item } from '@/components'
 
 import type { SelectProps } from 'antd'
 
+const { Option } = Select
+
 interface IProps extends SelectProps<any> {
 	name: string
 	bind?: string
@@ -40,7 +42,7 @@ const Index = (props: IProps) => {
 		if (props.remote?.query) {
 			const { select, useValue, ...other_query } = props.remote.query
 
-			query_string = qs.stringify(other_query)
+			query_string = '&' + qs.stringify(other_query)
 		}
 
 		if (props.remote?.query?.useValue) {
@@ -96,30 +98,28 @@ const Index = (props: IProps) => {
 		return _props
 	}, [props])
 
-	const options = useMemo(() => {
-		if (!data.length) return []
-
-		return data.reduce((total, item) => {
-			total.push({
-				label: item.name || item.label,
-				value:
-					props.string === '1'
-						? String(item.id || item.value)
-						: item.id || item.value
-			})
-
-			return total
-		}, [])
-	}, [data, props.string])
-
 	return (
 		<Item {...(props as any)}>
 			<Select
 				{...real_props}
 				placeholder={props.placeholder || `请选择${props.label}`}
 				allowClear
-				options={options}
-			></Select>
+			>
+				{data.map(
+					(item: { id: number; name: string; label?: string; value?: any }) => (
+						<Option
+							key={item.id || item.value}
+							value={
+								props.string === '1'
+									? String(item.id || item.value)
+									: item.id || item.value
+							}
+						>
+							{item.name || item.label}
+						</Option>
+					)
+				)}
+			</Select>
 		</Item>
 	)
 }

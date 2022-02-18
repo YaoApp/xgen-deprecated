@@ -1,7 +1,7 @@
 import { Affix, Button } from 'antd'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { history } from 'umi'
+import { history, useIntl } from 'umi'
 
 import { Icon } from '@/components'
 import { getDeepValueByText } from '@/utils/helpers/filters'
@@ -18,6 +18,7 @@ interface IProps {
 const Index = (props: IProps) => {
 	const { setting, type, data, pathname, onItem, onCancel } = props
 	const [stick, setStick] = useState<boolean | undefined>(false)
+	const { messages } = useIntl()
 
 	return (
 		<Affix offsetTop={11} style={{ zIndex: 101 }} onChange={(v) => setStick(v)}>
@@ -67,7 +68,9 @@ const Index = (props: IProps) => {
 					icon={<Icon name='icon-arrow-left' size={15}></Icon>}
 					onClick={pathname ? () => history.goBack() : onCancel}
 				>
-					{pathname ? '返回' : '取消'}
+					{pathname
+						? (messages as any).form.actions.back
+						: (messages as any).form.actions.cancel}
 				</Button>
 				{type !== 'view' && (
 					<Button
@@ -75,7 +78,7 @@ const Index = (props: IProps) => {
 						type='primary'
 						htmlType='submit'
 					>
-						保存
+						{(messages as any).form.actions.save}
 					</Button>
 				)}
 			</div>

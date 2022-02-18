@@ -1,7 +1,7 @@
 import { Affix, Breadcrumb } from 'antd'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { history, Link } from 'umi'
+import { history, Link, useIntl } from 'umi'
 
 import styles from './index.less'
 
@@ -19,6 +19,7 @@ const Index = (props: IProps) => {
 	const { setting, params } = props
 	const [stick, setStick] = useState<boolean | undefined>(false)
 	const { query } = history.location
+	const { messages } = useIntl()
 
 	return (
 		<div className={styles._local}>
@@ -29,10 +30,10 @@ const Index = (props: IProps) => {
 					</Item>
 					<Item>
 						{params.id === '0'
-							? '添加'
+							? (messages as any).form.title.add
 							: query?.type === 'view'
-							? '查看'
-							: '编辑'}
+							? (messages as any).form.title.view
+							: (messages as any).form.title.edit}
 						{setting.name}
 					</Item>
 				</Breadcrumb>

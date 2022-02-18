@@ -1,7 +1,7 @@
 import { Button, Col, Form, Row, Tooltip } from 'antd'
 import clsx from 'clsx'
 import { useEffect } from 'react'
-import { history, useParams } from 'umi'
+import { getLocale, history, useIntl, useParams } from 'umi'
 
 import Dynamic from '@/cloud/core'
 import { Icon } from '@/components'
@@ -19,6 +19,7 @@ const Index = ({ setting }: any) => {
 	const { display_more, opacity_more, visible_more, setVisibleMore } = useVisibleMore()
 	const filters = useFilters(setting)
 	const query = history.location.query
+	const { messages } = useIntl()
 
 	const { base, more, visible_btn_more } = useCalcLayout(filters, setting)
 
@@ -78,7 +79,7 @@ const Index = ({ setting }: any) => {
 						type='primary'
 						htmlType='submit'
 					>
-						搜索
+						{(messages as any).table.filter.search}
 					</Button>
 				</Col>
 				<Col span={2}>
@@ -86,7 +87,7 @@ const Index = ({ setting }: any) => {
 						className='w_100 flex justify_center align_center'
 						htmlType='reset'
 					>
-						重置
+						{(messages as any).table.filter.reset}
 					</Button>
 				</Col>
 				<Col flex='auto'>

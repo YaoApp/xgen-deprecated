@@ -1,7 +1,7 @@
 import { Button, Form, message, Modal } from 'antd'
 import qs from 'query-string'
 import { useEffect, useMemo, useState } from 'react'
-import { history, request } from 'umi'
+import { history, request, useIntl } from 'umi'
 
 import { getGroupValue } from '@/utils/helpers/filters'
 
@@ -38,6 +38,7 @@ const Index = (props: IProps) => {
 	const fieldset = useFieldset(setting)
 	const { setFieldsValue, resetFields } = form
 	const { query } = history.location
+	const { messages } = useIntl()
 
 	useEffect(() => {
 		if (params.id === '0' || !Object.keys(data).length) {
@@ -208,7 +209,11 @@ const Index = (props: IProps) => {
 		>
 			<div className='form_title_wrap w_100 border_box flex justify_between align_center'>
 				<span className='title'>
-					{params.id === '0' ? '创建' : type === 'view' ? '查看' : '编辑'}
+					{params.id === '0'
+						? (messages as any).form.title.add
+						: type === 'view'
+						? (messages as any).form.title.view
+						: (messages as any).form.title.edit}
 				</span>
 				<Options {...props_options}></Options>
 			</div>
@@ -217,24 +222,42 @@ const Index = (props: IProps) => {
 				{params.id !== '0' && type !== 'view' && setting.edit.actions.delete.type && (
 					<div className='actions_wrap danger w_100 border_box flex flex_column'>
 						<div className='form_item_title_wrap flex flex_column'>
-							<span className='section_title'>危险操作</span>
-							<span className='desc'>请谨慎使用下列功能</span>
+							<span className='section_title'>
+								{
+									(messages as any).form.more_actions.delete
+										.action_title
+								}
+							</span>
+							<span className='desc'>
+								{(messages as any).form.more_actions.delete.tip}
+							</span>
 						</div>
 						<div className='action_items flex flex_column'>
 							<div className='action_item w_100 border_box flex justify_between'>
 								<div className='left_wrap flex flex_column'>
-									<span className='title'>删除数据</span>
+									<span className='title'>
+										{
+											(messages as any).form
+												.more_actions.delete.title
+										}
+									</span>
 									<span className='desc'>
-										此操作将删除本条数据，这可能会影响关联数据分析结果。
+										{
+											(messages as any).form
+												.more_actions.delete.desc
+										}
 									</span>
 								</div>
 								<Button
 									className='btn_normal'
 									onClick={() =>
 										confirm({
-											title: '确认删除',
-											content:
-												'删除之后数据不可恢复，请谨慎操作！',
+											title: (messages as any).form
+												.more_actions.delete.confirm
+												.title,
+											content: (messages as any).form
+												.more_actions.delete.confirm
+												.content,
 											centered: true,
 											onOk() {
 												onDel()
@@ -242,7 +265,10 @@ const Index = (props: IProps) => {
 										})
 									}
 								>
-									删除
+									{
+										(messages as any).form.more_actions
+											.delete.btn_text
+									}
 								</Button>
 							</div>
 						</div>

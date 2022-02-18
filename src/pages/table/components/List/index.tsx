@@ -1,4 +1,4 @@
-import { history } from 'umi'
+import { history, useIntl } from 'umi'
 
 import Table from '@/cloud/components/form/Table'
 
@@ -7,12 +7,14 @@ import styles from './index.less'
 import type { IProps as ITableProps } from '@/cloud/components/form/Table'
 
 const Index = ({ setting, table, pagination, batch, setSelected, search }: any) => {
+	const { formatMessage } = useIntl()
+
 	const onChangeSelected = (v: any) => {
 		setSelected(v)
 	}
 
 	const total = setting.list?.actions?.pagination?.props?.showTotal
-		? { showTotal: (total: number) => `共查询到${total}条记录` }
+		? { showTotal: (total: number) => formatMessage({ id: 'table.list.total' }, { total }) }
 		: {}
 
 	const props_table: ITableProps = {
