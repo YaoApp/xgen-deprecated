@@ -11,6 +11,11 @@ export default {
 			}
 		}
 	},
+	layout: {
+		logout: '退出登录',
+		account: '用户管理',
+		menu: '菜单设置'
+	},
 	table: {
 		filter: {
 			search: '搜索',

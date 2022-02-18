@@ -9,6 +9,9 @@ import pageModel from '@/utils/model'
 
 import type { IModelTable } from 'umi'
 
+const is_en = localStorage.getItem('umi_locale') === 'en-US'
+const success_text = is_en ? 'Successful operation' : '操作成功'
+
 export default modelExtend(pageModel, {
 	state: {
 		setting: {},
@@ -90,7 +93,9 @@ export default modelExtend(pageModel, {
 
 			if (res === false) return
 
-			message.success('操作成功')
+			console.log(123)
+
+			message.success(success_text)
 
 			yield put({
 				type: 'search',
@@ -102,7 +107,7 @@ export default modelExtend(pageModel, {
 
 			if (res === false) return
 
-			message.success('操作成功')
+			message.success(success_text)
 
 			yield put({
 				type: 'search',
@@ -114,7 +119,7 @@ export default modelExtend(pageModel, {
 
 			if (res === false) return
 
-			message.success('操作成功')
+			message.success(success_text)
 
 			yield put({
 				type: 'updateState',

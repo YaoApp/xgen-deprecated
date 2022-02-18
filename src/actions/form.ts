@@ -7,6 +7,10 @@ import { getSetting } from '@/services/app'
 import { del, find, save } from '@/services/table'
 import pageModel from '@/utils/model'
 
+const is_en = localStorage.getItem('umi_locale') === 'en-US'
+const success_text = is_en ? 'Successful operation' : '操作成功'
+const delete_text = is_en ? 'Deleted' : '删除成功'
+
 export default modelExtend(pageModel, {
 	state: {
 		setting: {},
@@ -71,7 +75,7 @@ export default modelExtend(pageModel, {
 
 			if (res === false) return
 
-			message.success('操作成功')
+			message.success(success_text)
 
 			if (!dev) history.goBack()
 		},
@@ -80,7 +84,7 @@ export default modelExtend(pageModel, {
 
 			if (res === false) return
 
-			message.success('删除成功')
+			message.success(delete_text)
 
 			history.goBack()
 		}

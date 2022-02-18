@@ -1,6 +1,6 @@
 import { Avatar, Badge, Button, Popover, Tooltip } from 'antd'
 import store from 'store'
-import { history, NavLink } from 'umi'
+import { history, NavLink, useIntl } from 'umi'
 
 import { Icon } from '@/components'
 import { login_url } from '@/entry'
@@ -11,6 +11,8 @@ import type { IPropsOptions } from '@/layouts/type'
 
 const Index = (props: IPropsOptions) => {
 	const { app_info, user, setCurrentNav, getUserMenu } = props
+	const { messages } = useIntl()
+	const layout_messages: any = messages.layout
 
 	const User = (
 		<div className='user_wrap flex flex_column relative'>
@@ -54,7 +56,7 @@ const Index = (props: IPropsOptions) => {
 					}}
 				>
 					<Icon name='icon-log-out' size={15} color='white'></Icon>
-					<span className='text'>退出登录</span>
+					<span className='text'>{layout_messages.logout}</span>
 				</Button>
 			</div>
 		</div>
@@ -63,7 +65,7 @@ const Index = (props: IPropsOptions) => {
 	return (
 		<div className={styles._local}>
 			{!app_info?.option?.hide_user && (
-				<Tooltip title='账号管理' placement='right'>
+				<Tooltip title={layout_messages.account} placement='right'>
 					<NavLink
 						className='nav_item w_100 flex justify_center align_center clickable'
 						to={`/table/${app_info?.option?.nav_user || 'xiang.user'}`}
@@ -74,7 +76,7 @@ const Index = (props: IPropsOptions) => {
 				</Tooltip>
 			)}
 			{!app_info?.option?.hide_menu && (
-				<Tooltip title='系统设置' placement='right'>
+				<Tooltip title={layout_messages.menu} placement='right'>
 					<NavLink
 						className='nav_item w_100 flex justify_center align_center clickable'
 						to={`/table/${app_info?.option?.nav_menu || 'xiang.menu'}`}

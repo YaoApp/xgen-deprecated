@@ -11,6 +11,11 @@ export default {
 			}
 		}
 	},
+	layout: {
+		logout: 'Log out',
+		account: 'User management',
+		menu: 'Menu settings'
+	},
 	table: {
 		filter: {
 			search: 'Search',

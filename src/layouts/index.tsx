@@ -35,10 +35,32 @@ const Index = (props: IProps) => {
 	const global_loading = loading.global
 
 	useEffect(() => {
-		if (locale === browser_locale) return
+		const umi_locale = localStorage.getItem('umi_locale')
 
-		if (browser_locale.indexOf('en') !== -1) {
-			setLocale('en-US', false)
+		if (umi_locale) {
+			const lang = navigator.language
+
+			if (umi_locale.indexOf(lang) === -1) {
+				localStorage.removeItem('umi_locale')
+
+				if (lang.indexOf('en') !== -1) {
+					setLocale('en-US', true)
+				}
+
+				if (lang.indexOf('zh-CN') !== -1) {
+					setLocale('zh-CN', true)
+				}
+			}
+		} else {
+			if (locale === browser_locale) return
+
+			if (browser_locale.indexOf('en') !== -1) {
+				setLocale('en-US', false)
+			}
+
+			if (browser_locale.indexOf('zh-CN') !== -1) {
+				setLocale('zh-CN', false)
+			}
 		}
 	}, [locale, browser_locale])
 
