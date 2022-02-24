@@ -1,10 +1,10 @@
 {
-      "version": "1.0.0",
-      "name": "xiang-ui",
-      "author": "Wendao",
-      "private": true,
+      "version": "0.9.1",
+      "name": "xgen",
+      "author": "wendao",
+      "private": false,
       "main": "src/pages/index.tsx",
-      "description": "象传引擎后台.",
+      "description": "Next-generation low-code dashboard.",
       "scripts": {
             "start": "umi dev",
             "build": "umi build",
