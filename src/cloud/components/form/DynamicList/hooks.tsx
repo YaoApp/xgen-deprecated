@@ -79,29 +79,59 @@ export const useItemText = (it: any, item: any) => {
 	const options = useMemo(() => {
 		if (!data.length) return []
 
-		return data.reduce((total, item) => {
-			total.push({
-				label: item.name || item.label,
-				value:
-					props.string === '1'
-						? String(item.id || item.value)
-						: item.id || item.value
-			})
+		if (it.edit.type === 'select') {
+			return data.reduce((total, item) => {
+				total.push({
+					label: item.name || item.label,
+					value:
+						props.string === '1'
+							? String(item.id || item.value)
+							: item.id || item.value
+				})
 
-			return total
-		}, [])
-	}, [data, props.string])
+				return total
+			}, [])
+		}
+
+		return data
+	}, [data, props.string, it.edit.type])
 
 	const text = useMemo(() => {
-		if (it.edit.type !== 'select') {
-			return item[it.key] !== undefined ? item[it.key] : it.title
-		} else {
-			if (item[it.key] === undefined) return it.title
+		if (item[it.key] === undefined) return it.title
 
+		if (it.edit.type === 'select') {
 			const target = find(options, (option) => option.value === item[it.key])
 
 			return target?.label || it.title
 		}
+
+		if (it.edit.type === 'cascader') {
+			if (Array.isArray(item[it.key])) {
+				const target_label = item[it.key].reduce(
+					(total: { arr: Array<string>; target: any }, item: string) => {
+						const _target = find(
+							total.target,
+							(option) => option.value === item
+						)
+
+						total.arr.push(_target?.label || it.title)
+						total.target = _target?.children || []
+
+						return total
+					},
+					{ arr: [], target: options }
+				)
+
+				return target_label.arr.join('/')
+			}
+		}
+
+		if (it.edit.type === 'treeSelect') {
+			console.log(options)
+			console.log(item[it.key])
+		}
+
+		return item[it.key] !== undefined ? item[it.key] : it.title
 	}, [item, it, options])
 
 	return text
