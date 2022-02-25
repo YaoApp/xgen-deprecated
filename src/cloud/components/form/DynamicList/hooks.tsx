@@ -127,8 +127,18 @@ export const useItemText = (it: any, item: any) => {
 		}
 
 		if (it.edit.type === 'treeSelect') {
-			console.log(options)
-			console.log(item[it.key])
+			if (Array.isArray(item[it.key])) {
+				const target_label = item[it.key].reduce(
+					(total: Array<string>, item: string) => {
+						total.push(item.split(':')[0])
+
+						return total
+					},
+					[]
+				)
+
+				return target_label.join(' & ')
+			}
 		}
 
 		return item[it.key] !== undefined ? item[it.key] : it.title

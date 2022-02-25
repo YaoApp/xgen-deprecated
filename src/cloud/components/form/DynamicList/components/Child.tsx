@@ -19,10 +19,22 @@ const Index = (props: IPropsItem) => {
 	const { item, it, item_key, col_key, onChange } = props
 	const text = useItemText(it, item)
 	const v_key = it.edit.props.value.replace(':', '')
-	const form_value =
-		it.type === 'datePicker' && item[v_key]
-			? moment(item[v_key], it.edit?.format || 'YYYY年MM月DD日 hh:mm:ss')
-			: item[v_key]
+
+	const getFormValue = () => {
+		if (it.type === 'datePicker' && item[v_key]) {
+			return moment(item[v_key], it.edit?.format || 'YYYY年MM月DD日 hh:mm:ss')
+		}
+
+		if (it.edit.type === 'treeSelect' && Array.isArray(item[v_key])) {
+			return item[v_key].reduce((total: Array<string>, item: string) => {
+				total.push(item.split(':')[1])
+
+				return total
+			}, [])
+		}
+
+		return item[v_key]
+	}
 
 	const change = (v: any) => {
 		if (it.type === 'datePicker') {
@@ -32,6 +44,18 @@ const Index = (props: IPropsItem) => {
 				: v
 
 			onChange(item_key, { [v_key]: filter_value })
+		}
+		if (it.edit.type === 'treeSelect' && Array.isArray(v[v_key])) {
+			const value = v[v_key].reduce(
+				(total: Array<string>, item: { label: string; value: string }) => {
+					total.push(`${item.label}:${item.value}`)
+
+					return total
+				},
+				[]
+			)
+
+			onChange(item_key, { [v_key]: value })
 		} else {
 			onChange(item_key, v)
 		}
@@ -50,7 +74,7 @@ const Index = (props: IPropsItem) => {
 						className='w_100 flex'
 						name={`quick_table_td_${item_key}_${col_key}`}
 						initialValues={{
-							[v_key]: form_value
+							[v_key]: getFormValue()
 						}}
 						onFinish={(v) => change(v)}
 					>
@@ -61,7 +85,7 @@ const Index = (props: IPropsItem) => {
 								...it.edit.props,
 								name: v_key,
 								label: it.title,
-								value: form_value,
+								value: getFormValue(),
 								style: { width: 240 }
 							}}
 						></Dynamic>
