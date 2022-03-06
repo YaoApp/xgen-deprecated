@@ -10,6 +10,7 @@ import { getDeepValueByText } from '@/utils/helpers/filters'
 import styles from './index.less'
 
 import type { ModalProps } from 'antd'
+import { bindDataItem } from '../../form/Table/utils'
 
 interface IProps {
 	title: string
@@ -31,7 +32,8 @@ const Index = (props: IProps) => {
 	const [form_setting, setFormSetting] = useState({})
 	const [form_data, setFormData] = useState({})
 	const [visible_form, setVisibleForm] = useState(false)
-	const form_id = getDeepValueByText(id, queryDataSource)
+	// const form_id = getDeepValueByText(id, queryDataSource)
+	const form_id = bindDataItem(id, queryDataSource)
 
 	const getFormSetting = async () => {
 		const setting = await request(`/api/xiang/table/${table}/setting`)

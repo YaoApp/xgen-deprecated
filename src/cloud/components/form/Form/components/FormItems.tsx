@@ -4,6 +4,7 @@ import { Fragment } from 'react'
 import Dynamic from '@/cloud/core'
 import { Card } from '@/components'
 import { getDeepValueByText } from '@/utils/helpers/filters'
+import { bindDataItem } from '../../Table/utils'
 
 const { TabPane } = Tabs
 
@@ -57,8 +58,7 @@ const Index = (props: IProps) => {
 		}
 
 		if (it.edit.type === 'chart') {
-			const value = getDeepValueByText(it.edit.props.value, data)
-
+			const value = bindDataItem(it.edit.props.value, data)
 			const other_props: any = {}
 
 			if (it.edit.props.type === 'indicator') {
