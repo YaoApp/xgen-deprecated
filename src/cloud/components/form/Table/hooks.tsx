@@ -11,7 +11,7 @@ import { CheckOutlined } from '@ant-design/icons'
 
 import Block from './components/Block'
 import Options from './components/Options'
-import { getTargetValue, getText } from './utils'
+import { bindDataItem, getTargetValue, getText } from './utils'
 
 export const useColumns = (
 	setting: any,
@@ -160,6 +160,15 @@ export const useColumns = (
 								),
 								edit: options.edit
 							}
+						}
+
+						// chartModal
+						if (cfg.view.type === 'chartModal') {
+							var query = bindDataItem(
+								cfg.view.props?.query || {},
+								dataItem
+							)
+							return { query: query }
 						}
 
 						return {}

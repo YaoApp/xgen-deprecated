@@ -18,6 +18,9 @@ const Index = ({ _operation, options, params, save }: any) => {
 			if (it?.useModal) {
 				if (it?.type === 'view') {
 					options.edit(form_id, form_name, 'view')
+				} else if (it?.type === 'chartModal') {
+					// console.log('chartModal')
+					options.edit(form_id, form_name) // should be open chartModal
 				} else {
 					options.edit(form_id, form_name)
 				}

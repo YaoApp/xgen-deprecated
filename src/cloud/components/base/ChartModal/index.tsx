@@ -12,6 +12,7 @@ import type { ModalProps } from 'antd'
 interface IProps {
 	value: string
 	name: string
+	query: { [key: string]: any }
 }
 
 const Index = (props: IProps) => {
@@ -55,13 +56,12 @@ const Index = (props: IProps) => {
 
 	const getData = async () => {
 		let query_string = ''
-
-		if (Object.keys(query).length) {
-			query_string = `?${qs.stringify(query)}`
+		let params = { ...props.query, ...query }
+		if (Object.keys(params).length) {
+			query_string = `?${qs.stringify(params)}`
 		}
 
 		const { data } = await request(api.data + query_string)
-
 		setData(data || [])
 	}
 

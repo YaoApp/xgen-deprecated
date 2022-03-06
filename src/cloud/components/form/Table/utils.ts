@@ -45,3 +45,39 @@ export const getTargetValue = (v: string, key: string, dataItem: any) => {
 
 	return {}
 }
+
+// bind vars :xxx
+export const bindDataItem = (value: any, dataItem: any) => {
+	var flattenItem: { [key: string]: any } = {}
+	dot(flattenItem, dataItem)
+	var type = typeof value
+	if (type == 'string' && value.indexOf(':') === 0) {
+		var key = value.slice(1)
+		var res = flattenItem[key] || ''
+		return res
+	} else if (type == 'object') {
+		var res: any = {}
+		for (var k in value) {
+			res[k] = bindDataItem(value[k], dataItem)
+		}
+		return res
+	}
+	return value
+}
+
+// {"foo":"bar", "item":{"hello":"world"}} =>  {"foo":"bar", "item":{"hello":"world"}, "item.hello":"world"}
+export const dot = (
+	flatten: { [key: string]: any },
+	object: { [key: string]: any },
+	prefix: string = ''
+) => {
+	flatten = flatten || {}
+	for (var key in object) {
+		var value = object[key]
+		var type = typeof value
+		flatten[`${prefix}${key}`] = object[key]
+		if (typeof value == 'object') {
+			dot(flatten, object[key], `${prefix}${key}.`)
+		}
+	}
+}
