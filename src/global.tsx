@@ -1,3 +1,4 @@
+import mitt from 'mitt'
 import config from 'R/config'
 
 import { getOSSClient } from '@/utils/helpers/init'
@@ -7,6 +8,7 @@ window.$app = {
 	memo,
 	nextTick,
 	sleep,
+	emitter: mitt(),
 	oss: config.oss ? await getOSSClient() : null
 }
 
