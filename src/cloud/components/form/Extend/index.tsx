@@ -8,10 +8,11 @@ interface IProps {
 	link: string
 	value: any
 	max_height: number
+	useJs?: boolean
 }
 
 const Index = (props: IProps) => {
-	const { link, value, max_height } = props
+	const { link, value, max_height, useJs } = props
 	const [css, setCss] = useState('')
 	const [html, setHtml] = useState('')
 
@@ -31,6 +32,18 @@ const Index = (props: IProps) => {
 		getCss()
 		getHTML()
 	}, [props])
+
+	useEffect(() => {
+		if (!html) return
+		if (!useJs) return
+
+		const script = document.createElement('script')
+
+		script.type = 'text/javascript'
+		script.src = `${link}/index.js`
+
+		document.body.appendChild(script)
+	}, [html, useJs])
 
 	return (
 		<Fragment>

@@ -38,6 +38,26 @@ const Index = (props: IProps) => {
 
 	useEffect(() => setFormName(props.name || ''), [props.name])
 
+	useEffect(() => {
+		if (!form_params.name) return
+
+		const getFormModalData = async (params: any) => {
+			const data = await request(
+				`/api/xiang/table/${form_params.name}/find/${form_params.id}?${qs.stringify(
+					params
+				)}`
+			)
+
+			setFormData(data)
+		}
+
+		window.$app.emitter.on(`${form_params.name}:getFormModalData`, getFormModalData)
+
+		return () => {
+			window.$app.emitter.off(`${form_params.name}:getFormModalData`, getFormModalData)
+		}
+	}, [form_params])
+
 	const api = {
 		setting: `/api/xiang/table/${props.name || form_name}/setting`,
 		data: `/api/xiang/table/${props.name || form_name}/search`,
