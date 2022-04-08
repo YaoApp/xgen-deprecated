@@ -20,6 +20,6 @@ export const login = (data: {
 	})
 }
 
-export const autoLogin = () => {
-	return request('/api/demo/admin')
+export const autoLogin = (query: any) => {
+	return request('/api/demo/admin', { params: query })
 }
