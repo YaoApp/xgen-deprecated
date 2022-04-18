@@ -1,3 +1,4 @@
+import store from 'store'
 import { request } from 'umi'
 
 import type { IModelLoginAdmin } from 'umi'
@@ -11,7 +12,7 @@ export const login = (data: {
 	password: string
 	captcha: IModelLoginAdmin['captcha']
 }) => {
-	return request(`/api/xiang/user/login`, {
+	return request(`${store.get('app_info')?.option?.login?.admin ?? '/api/xiang/user/login'}`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
