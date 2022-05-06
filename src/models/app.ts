@@ -42,6 +42,15 @@ export interface IModelApp {
 					login: string
 				}
 			}
+			user?: {
+				reset_password?: string
+				register_new?: string
+				third_login?: Array<{
+					icon: string
+					name: string
+					link: string
+				}>
+			}
 		}
 	}
 	user: any

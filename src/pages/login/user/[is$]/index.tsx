@@ -1,6 +1,6 @@
 import { Button, Form, Input, message } from 'antd'
 import clsx from 'clsx'
-import { connect, Helmet, request, useIntl, useParams } from 'umi'
+import { connect, Helmet, history, request, useIntl, useParams } from 'umi'
 
 import { Icon } from '@/components'
 import bg_login from '@/images/bg_login_user.svg'
@@ -28,6 +28,7 @@ const Index: ConnectRC<IProps> = (props) => {
 	const [form] = useForm()
 	const { getFieldValue } = form
 	const login = app_info?.option?.login
+	const user = app_info?.option?.user
 	const third_login = app_info?.option?.login?.feishu
 	const login_image = app_info.option?.login?.image?.user
 	const is_cn = locale === 'zh-CN'
@@ -210,31 +211,73 @@ const Index: ConnectRC<IProps> = (props) => {
 							)}
 						</Item>
 					</Form>
+					{user?.reset_password && user?.register_new && (
+						<div className='flex justify_between mt_12'>
+							{user?.reset_password && (
+								<a
+									href={user?.reset_password}
+									style={{ color: 'var(--color_text)' }}
+								>
+									找回密码
+								</a>
+							)}
+							{user?.register_new && (
+								<a
+									href={user?.register_new}
+									style={{ color: 'var(--color_text)' }}
+								>
+									注册新用户
+								</a>
+							)}
+						</div>
+					)}
+					{(third_login || user?.third_login) && (
+						<div className='or_wrap flex justify_between align_center'>
+							<span className='line'></span>
+							<span className='text'>or</span>
+							<span className='line'></span>
+						</div>
+					)}
 					{third_login && (
-						<>
-							<div className='or_wrap flex justify_between align_center'>
-								<span className='line'></span>
-								<span className='text'>or</span>
-								<span className='line'></span>
-							</div>
-							<div className='third_wrap w_100 flex flex_column'>
+						<div className='third_wrap w_100 flex flex_column'>
+							<Button
+								className='btn_third relative'
+								shape='round'
+								icon={
+									<img
+										className='logo_third absolute'
+										src={logo_feishu}
+										alt='feishu'
+									/>
+								}
+								onClick={onFeishu}
+							>
+								使用飞书进行登录
+							</Button>
+						</div>
+					)}
+					{user?.third_login &&
+						user?.third_login.map((item, index) => (
+							<div
+								className='third_wrap w_100 flex flex_column mb_12'
+								key={index}
+							>
 								<Button
 									className='btn_third relative'
 									shape='round'
 									icon={
 										<img
 											className='logo_third absolute'
-											src={logo_feishu}
+											src={item.icon}
 											alt='feishu'
 										/>
 									}
-									onClick={onFeishu}
+									onClick={() => history.push(item.link)}
 								>
-									使用飞书进行登录
+									{item.name}
 								</Button>
 							</div>
-						</>
-					)}
+						))}
 					<div className='copyright w_100 absolute flex justify_center'>
 						<span>由</span>
 						<a href='https://www.iqka.com/' target='_blank'>

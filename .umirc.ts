@@ -96,6 +96,10 @@ export default defineConfig({
 		'/extend': {
 			target: 'http://local.iqka.com:5099',
 			changeOrigin: true
+		},
+		'/assets': {
+			target: 'http://local.iqka.com:5099',
+			changeOrigin: true
 		}
 	},
 	...other_config

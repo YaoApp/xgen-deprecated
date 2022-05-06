@@ -27,6 +27,6 @@ export const loginByFeishu = (params: { code: string; state: string }) => {
 	})
 }
 
-export const autoLogin = () => {
-	return request('/api/demo/user')
+export const autoLogin = (query: any) => {
+	return request('/api/demo/user', { params: query })
 }
