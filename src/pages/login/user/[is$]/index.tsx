@@ -272,7 +272,9 @@ const Index: ConnectRC<IProps> = (props) => {
 											alt='feishu'
 										/>
 									}
-									onClick={() => history.push(item.link)}
+									onClick={() =>
+										(window.location.href = item.link)
+									}
 								>
 									{item.name}
 								</Button>
