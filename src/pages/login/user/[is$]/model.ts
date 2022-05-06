@@ -45,7 +45,9 @@ export default modelExtend(pageModel, {
 				}
 
 				if (location?.query?.autoLogin) {
-					dispatch({ type: 'autoLogin' })
+					const { autoLogin, ...rest_query } = location?.query
+
+					dispatch({ type: 'autoLogin', payload: { query: rest_query || {} } })
 				}
 
 				dispatch({ type: 'getCaptcha' })
@@ -122,8 +124,8 @@ export default modelExtend(pageModel, {
 
 			yield put({ type: 'handleLogin', payload: { res } })
 		},
-		*autoLogin({}, { call, put }) {
-			const res = yield call(autoLogin)
+		*autoLogin({ payload: { query } }, { call, put }) {
+			const res = yield call(autoLogin, query)
 
 			if (!res) return
 
