@@ -513,5 +513,31 @@
 	.ant-form-item-control-input {
 		border-radius: 6px;
 		background-color: var(--color_bg_nav);
+
+		.ant-checkbox-group {
+			padding: 0 11px;
+
+			.ant-checkbox-inner {
+				background-color: var(--color_bg);
+			}
+
+			.ant-checkbox-checked .ant-checkbox-inner {
+				border-color: var(--color_main);
+				background-color: var(--color_main);
+			}
+		}
+
+		.ant-radio-group {
+			padding: 0 11px;
+
+			.ant-radio-inner {
+				background-color: var(--color_bg);
+			}
+
+			.ant-radio-inner.ant-radio-checked {
+				border-color: var(--color_main);
+				background-color: var(--color_main);
+			}
+		}
 	}
 }
