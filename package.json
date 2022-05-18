@@ -39,6 +39,7 @@
             "nprogress": "0.2.0",
             "query-string": "^7.0.1",
             "react": "17.0.2",
+            "react-color-palette": "^6.2.0",
             "react-countup": "^6.0.0",
             "react-dom": "17.0.2",
             "react-slick": "^0.28.1",
