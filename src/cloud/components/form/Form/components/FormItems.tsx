@@ -4,6 +4,7 @@ import { Fragment } from 'react'
 import Dynamic from '@/cloud/core'
 import { Card } from '@/components'
 import { getDeepValueByText } from '@/utils/helpers/filters'
+
 import { bindDataItem } from '../../Table/utils'
 
 const { TabPane } = Tabs
@@ -114,12 +115,12 @@ const Index = (props: IProps) => {
 					type='form'
 					name={it.edit.type}
 					props={{
+						disabled: type === 'view',
 						...it.edit.props,
 						...other_props,
 						name: it.edit.props.value,
 						label: it.label,
-						rules: type === 'view' ? [] : it.rules,
-						disabled: type === 'view'
+						rules: type === 'view' ? [] : it.rules
 					}}
 				></Dynamic>
 			</Col>
