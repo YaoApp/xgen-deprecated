@@ -13,7 +13,7 @@ const Index = (props: IProps) => {
 				<Dynamic
 					type='option'
 					name='Import'
-					props={{ api: actions?.import?.props?.api }}
+					props={{ ...actions?.import?.props }}
 				></Dynamic>
 			)}
 		</div>

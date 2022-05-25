@@ -1,4 +1,4 @@
-import { Button, Modal, Tabs, Tooltip } from 'antd'
+import { Button, message, Modal, Tabs, Tooltip } from 'antd'
 import clsx from 'clsx'
 import { Fragment, useEffect, useState } from 'react'
 import { getDvaApp, history, request, useParams } from 'umi'
@@ -21,7 +21,7 @@ import type { ModalProps } from 'antd'
 import type { IProps } from './types'
 
 const Index = (props: IProps) => {
-	const { api } = props
+	const { api, operation } = props
 	const [visible_modal, setVisibleModal] = useState(false)
 	const [setting, setSetting] = useState<any>({})
 	const [step, setStep] = useState(0)
@@ -75,6 +75,36 @@ const Index = (props: IProps) => {
 		}
 	}
 
+	const onItem = (it: any) => {
+		if (it?.link) {
+			window.open(it.link)
+
+			return
+		}
+
+		const postAction = async () => {
+			const res = await request(it.api, {
+				method: 'POST'
+			})
+
+			if (!res) return
+
+			message.success('操作成功！')
+		}
+
+		if (it?.confirm) {
+			confirm({
+				title: '操作提示',
+				content: `确认${it.title}？`,
+				onOk() {
+					postAction()
+				}
+			})
+		} else {
+			postAction()
+		}
+	}
+
 	return (
 		<Fragment>
 			<Tooltip title={setting.title ?? '导入'} placement='bottom'>
@@ -89,6 +119,19 @@ const Index = (props: IProps) => {
 				<div className='header_wrap w_100 border_box flex justify_between align_center'>
 					<span className='title'>{setting.title ?? '导入'}</span>
 					<div className='action_items flex'>
+						{operation && (
+							<div className='operation_wrap flex align_center'>
+								{operation.map((item: any, index: number) => (
+									<Button
+										className='btn_action mr_12'
+										key={index}
+										onClick={() => onItem(item)}
+									>
+										{item.title}
+									</Button>
+								))}
+							</div>
+						)}
 						{step < 3 && (
 							<Button
 								className='btn btn_close'

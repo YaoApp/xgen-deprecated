@@ -7,6 +7,7 @@ export interface IProps {
 		preview_setting: string
 		import: string
 	}
+	operation: Array<any>
 }
 
 export interface IPropsSteps {
