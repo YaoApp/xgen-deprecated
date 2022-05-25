@@ -101,6 +101,25 @@ const Index = ({ _operation, options, params, save }: any) => {
 		}
 	}
 
+	const getDisabled = (
+		disabled: { key: string; value: string | number | Array<string | number> },
+		item: any
+	) => {
+		if (!disabled) return false
+
+		const value = getDeepValueByText(disabled.key, item)
+
+		if (Array.isArray(disabled.value)) {
+			if (disabled.value.includes(value)) {
+				return true
+			}
+		} else {
+			if (disabled.value === value) return true
+		}
+
+		return false
+	}
+
 	if (_operation?.unfold) {
 		return {
 			title: '操作',
@@ -176,13 +195,8 @@ const Index = ({ _operation, options, params, save }: any) => {
 									className={clsx([
 										'icon_wrap border_box flex justify_center align_center clickable',
 										it?.danger ? 'danger' : '',
-										it?.disabled
-											? getDeepValueByText(
-													it.disabled,
-													item
-											  )
-												? 'disabled'
-												: ''
+										getDisabled(it?.disabled, item)
+											? 'disabled'
 											: ''
 									])}
 									onClick={() => onItem(it, item)}

@@ -28,7 +28,7 @@ const Index = (props: IProps) => {
 					stick ? 'stick' : ''
 				])}
 			>
-				{type === 'view' && setting.edit?.option?.operation && (
+				{setting.edit?.option?.operation && (
 					<div className='operation_wrap flex align_center'>
 						{setting.edit?.option?.operation?.map(
 							(item: any, index: number) => (
