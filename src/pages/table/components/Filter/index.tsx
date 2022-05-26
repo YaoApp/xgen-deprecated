@@ -1,7 +1,7 @@
 import { Button, Col, Form, Row, Tooltip } from 'antd'
 import clsx from 'clsx'
 import { useEffect } from 'react'
-import { getLocale, history, useIntl, useParams } from 'umi'
+import { history, useIntl, useParams } from 'umi'
 
 import Dynamic from '@/cloud/core'
 import { Icon } from '@/components'
@@ -90,6 +90,18 @@ const Index = ({ setting }: any) => {
 						{(messages as any).table.filter.reset}
 					</Button>
 				</Col>
+				{setting.list?.option?.actions &&
+					setting.list?.option?.actions.map((item: any, index: number) => (
+						<Col span={item.width} key={index}>
+							<Button
+								className='w_100 flex justify_center align_center'
+								type='primary'
+								onClick={() => history.push(item.link)}
+							>
+								{item.title}
+							</Button>
+						</Col>
+					))}
 				<Col flex='auto'>
 					<div className='flex justify_end'>
 						{visible_btn_more && (

@@ -51,13 +51,19 @@ export const useCalcLayout = (filters: Array<any>, setting: any) => {
 		if (!filters.length) return { base: [], more: [], visible_btn_more: false }
 
 		const setting_cols = setting.list?.actions?.create ? 3 : 0
+		const custom_cols = setting.list?.option?.actions
+			? setting.list?.option?.actions.reduce(
+					(total: number, item: any) => (total += item.width),
+					0
+			  )
+			: 0
 		const base: Array<any> = []
 		const more: Array<any> = []
 
 		const filter_cols = filters.reduce((total: number, item: any) => {
 			total += item.span
 
-			if (total > 20 - setting_cols) {
+			if (total > 20 - setting_cols - custom_cols) {
 				more.push(item)
 			} else {
 				base.push(item)
@@ -66,6 +72,6 @@ export const useCalcLayout = (filters: Array<any>, setting: any) => {
 			return total
 		}, 0)
 
-		return { base, more, visible_btn_more: filter_cols > 20 - setting_cols }
+		return { base, more, visible_btn_more: filter_cols > 20 - setting_cols - custom_cols }
 	}, [filters, setting])
 }
