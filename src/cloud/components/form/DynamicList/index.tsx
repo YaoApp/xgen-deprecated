@@ -13,6 +13,7 @@ interface IProps {
 	label: string
 	value: any
 	query?: any
+	disabled?: boolean
 	onChange: any
 }
 
@@ -47,7 +48,8 @@ const Component = (props: IProps) => {
 			<div
 				className={clsx([
 					'quick_table_wrap w_100',
-					props?.type === 'view' && 'disabled'
+					props?.type === 'view' && 'disabled',
+					props?.disabled && 'disabled'
 				])}
 			>
 				{setting?.columns && (

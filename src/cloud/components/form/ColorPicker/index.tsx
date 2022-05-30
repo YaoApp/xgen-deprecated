@@ -14,52 +14,56 @@ import type { ColorPickerProps } from 'react-color-palette/lib/interfaces/ColorP
 
 interface IProps extends ColorPickerProps {
 	value: string
+	disabled?: boolean
 }
 
-const Custom = window.$app.memo((props: ColorPickerProps & { value: string }) => {
-	const [value, setValue] = useColor('hex', '#121212')
+const Custom = window.$app.memo(
+	(props: ColorPickerProps & { value: string; disabled?: boolean }) => {
+		const [value, setValue] = useColor('hex', '#121212')
 
-	useEffect(() => {
-		if (!props.value) return
+		useEffect(() => {
+			if (!props.value) return
 
-		setValue(toColor('hex', props.value))
-	}, [props.value])
+			setValue(toColor('hex', props.value))
+		}, [props.value])
 
-	const onChange = (v: Color) => {
-		if (!props.onChange) return
+		const onChange = (v: Color) => {
+			if (!props.onChange) return
+			if (props.disabled) return
 
-		// @ts-ignore
-		props.onChange(v.hex)
+			// @ts-ignore
+			props.onChange(v.hex)
 
-		setValue(v)
+			setValue(v)
+		}
+
+		return (
+			<Popover
+				className='relative'
+				overlayClassName={styles._local}
+				trigger={props.disabled ? '' : 'click'}
+				content={
+					<ColorPicker
+						width={240}
+						height={142}
+						color={value}
+						hideRGB
+						hideHSV
+						alpha
+						onChange={(v) => onChange(v)}
+						dark
+					></ColorPicker>
+				}
+			>
+				<Input value={value.hex} readOnly disabled={props.disabled}></Input>
+				<div
+					className={clsx([styles.indicator, 'absolute'])}
+					style={{ backgroundColor: value.hex }}
+				></div>
+			</Popover>
+		)
 	}
-
-	return (
-		<Popover
-			className='relative'
-			overlayClassName={styles._local}
-			trigger='click'
-			content={
-				<ColorPicker
-					width={240}
-					height={142}
-					color={value}
-					hideRGB
-					hideHSV
-					alpha
-					onChange={(v) => onChange(v)}
-					dark
-				></ColorPicker>
-			}
-		>
-			<Input value={value.hex} readOnly></Input>
-			<div
-				className={clsx([styles.indicator, 'absolute'])}
-				style={{ backgroundColor: value.hex }}
-			></div>
-		</Popover>
-	)
-})
+)
 
 const Index = (props: IProps) => {
 	return (
