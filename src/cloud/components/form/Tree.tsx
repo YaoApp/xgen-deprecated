@@ -1,5 +1,5 @@
 import { Tree } from 'antd'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { request } from 'umi'
 
 import { Item } from '@/components'
@@ -7,6 +7,8 @@ import { Item } from '@/components'
 import type { TreeProps } from 'antd'
 
 interface IProps extends TreeProps {
+	value: TreeProps['checkedKeys']
+
 	options: Array<any>
 	remote: {
 		api: string
@@ -22,6 +24,12 @@ type Keys = Array<React.Key> | { checked: Array<React.Key>; halfChecked: Array<R
 const CustomTree = (props: IProps) => {
 	const [keys, setKeys] = useState<Keys>()
 	const [data, setData] = useState<TreeProps['treeData']>([])
+
+	useEffect(() => {
+		if (!props.value) return
+
+		setKeys(props.value)
+	}, [props.value])
 
 	const getData = async () => {
 		const data = await request(
@@ -52,7 +60,15 @@ const CustomTree = (props: IProps) => {
 		setKeys(v)
 	}
 
-	return <Tree {...real_props} treeData={data} checkedKeys={keys} onCheck={onCheck}></Tree>
+	return (
+		<Tree
+			{...real_props}
+			treeData={data}
+			checkedKeys={keys}
+			checkable
+			onCheck={onCheck}
+		></Tree>
+	)
 }
 
 const Index = (props: IProps) => {
