@@ -126,21 +126,27 @@ const Index = (props: IProps) => {
 		props.searchFormData?.()
 	}
 
-	const find = async (id: string, name?: string) => {
+	const find = async (id: string, name?: string, settingApi?: string) => {
 		const data = await request(
 			`${!name ? api.find : `/api/xiang/table/${name}/find`}/${id}`
 		)
 
-		if (name) {
-			const setting = await request(`/api/xiang/table/${name}/setting`)
+		if (settingApi) {
+			const setting = await request(settingApi)
 
 			setFormSetting(setting)
+		} else {
+			if (name) {
+				const setting = await request(`/api/xiang/table/${name}/setting`)
+
+				setFormSetting(setting)
+			}
 		}
 
 		setFormData(data)
 	}
 
-	const edit = async (id: string, name?: string, type?: string) => {
+	const edit = async (id: string, name?: string, type?: string, settingApi?: string) => {
 		setFormData({})
 		setFormSetting({})
 
@@ -148,12 +154,12 @@ const Index = (props: IProps) => {
 
 		if (name) {
 			// 针对在 Table 页面中使用的 Table 上的 Form
-			await find(id, name)
+			await find(id, name, settingApi)
 
 			setFormParams({ id: id, name, type: type || '' })
 		} else {
 			// 针对在 Form 页面中使用的 Table 上的 Form
-			await find(id)
+			await find(id, undefined, settingApi)
 
 			setFormParams({ id: id, name: form_name, type: type || '' })
 		}
