@@ -7,10 +7,10 @@ import Form from '@/cloud/components/form/Form'
 import { Icon } from '@/components'
 import { getDeepValueByText } from '@/utils/helpers/filters'
 
+import { bindDataItem } from '../../form/Table/utils'
 import styles from './index.less'
 
 import type { ModalProps } from 'antd'
-import { bindDataItem } from '../../form/Table/utils'
 
 interface IProps {
 	title: string
@@ -24,11 +24,12 @@ interface IProps {
 		table_name: string
 	}
 	queryDataSource: any
+	hideHistory?: boolean
 	height?: number
 }
 
 const Index = (props: IProps) => {
-	const { title, table, id, data, queryDataSource } = props
+	const { title, table, id, data, queryDataSource, hideHistory } = props
 	const [form_setting, setFormSetting] = useState({})
 	const [form_data, setFormData] = useState({})
 	const [visible_form, setVisibleForm] = useState(false)
@@ -83,12 +84,14 @@ const Index = (props: IProps) => {
 		>
 			<div className='title_wrap flex justify_between align_center'>
 				<span className='title'>{title}</span>
-				<Icon
-					className='icon_history cursor_point'
-					name='icon-clock'
-					size={18}
-					onClick={() => showForm()}
-				></Icon>
+				{!hideHistory && (
+					<Icon
+						className='icon_history cursor_point'
+						name='icon-clock'
+						size={18}
+						onClick={() => showForm()}
+					></Icon>
+				)}
 			</div>
 			<div
 				className='indicator_wrap w_100 border_box flex flex_column justify_center'
