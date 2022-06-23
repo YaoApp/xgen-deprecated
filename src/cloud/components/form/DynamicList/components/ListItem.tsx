@@ -1,5 +1,6 @@
 import { Button, Col, Form, Popover } from 'antd'
 import clsx from 'clsx'
+import moment from 'moment'
 
 import Dynamic from '@/cloud/core'
 import { CheckOutlined } from '@ant-design/icons'
@@ -20,6 +21,17 @@ const Index = (props: IPropsItem) => {
 	const text = it.edit.type === 'label' ? it.edit.props.value : useItemText(it, item)
 
 	const change = (v: any) => {
+		const key = Object.keys(v)[0]
+		const value = v[key]
+
+		if (moment.isMoment(value)) {
+			onChange(item_key, {
+				[key]: moment(value).format(props_no_value?.format || 'YYYY-MM-DD hh:mm:ss')
+			})
+
+			return
+		}
+
 		onChange(item_key, v)
 	}
 
