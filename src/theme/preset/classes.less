@@ -137,6 +137,15 @@
 }
 
 .custom_modal {
+	&.chart {
+		.ant-modal-body {
+			.custom_wrap {
+				padding: 20px 12px;
+				padding-bottom: 8px;
+			}
+		}
+	}
+
 	.ant-modal-body {
 		margin: 60px 0;
 		border: 1px solid var(--color_border);
@@ -177,9 +186,14 @@
 		}
 
 		.custom_wrap {
-			padding: 20px 12px;
-			padding-bottom: 8px;
+			padding: 24px;
 			background-color: var(--color_bg);
+
+			thead {
+				.ant-table-cell {
+					background-color: transparent;
+				}
+			}
 		}
 	}
 }

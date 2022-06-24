@@ -15,6 +15,10 @@ interface IProps {
 	query?: any
 	disabled?: boolean
 	onChange: any
+	imports?: {
+		name: string
+		title: string
+	}
 }
 
 const Component = (props: IProps) => {
@@ -60,6 +64,7 @@ const Component = (props: IProps) => {
 						label={props.label}
 						query={props.query || {}}
 						trigger={props.onChange}
+						imports={props.imports}
 					></List>
 				)}
 			</div>

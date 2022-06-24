@@ -3,6 +3,7 @@ import { Empty, Row } from 'antd'
 import clsx from 'clsx'
 import { Fragment, useEffect, useState } from 'react'
 
+import Dynamic from '@/cloud/core'
 import { Icon } from '@/components'
 import { hidePopover } from '@/utils/helpers/dom'
 
@@ -17,11 +18,15 @@ interface IPropsList {
 	data: Array<any>
 	query: any
 	trigger: any
+	imports?: {
+		name: string
+		title: string
+	}
 }
 
 const Index = (props: IPropsList) => {
-	const { type, label, setting, data, query, trigger } = props
-	const { list, remove, getKey, getIndex, insert, replace } = useDynamicList(data)
+	const { type, label, setting, data, query, trigger, imports } = props
+	const { list, remove, getKey, getIndex, insert, replace, merge } = useDynamicList(data)
 	const [delete_ids, setDeleteIds] = useState<Array<number>>([])
 
 	const { columns, children_columns } = useColumns(setting)
@@ -30,8 +35,8 @@ const Index = (props: IPropsList) => {
 		trigger({ data: list, delete: delete_ids, query })
 	}, [list, delete_ids, query])
 
-	const add = (index: number) => {
-		const item: any = {}
+	const add = (index: number, data_item?: any) => {
+		const item: any = { ...data_item }
 
 		insert(index + 1, item)
 	}
@@ -63,16 +68,31 @@ const Index = (props: IPropsList) => {
 		<Fragment>
 			<div className='table_title_wrap flex justify_between align_center'>
 				<span className='table_title'>{label}</span>
-				<div className='flex'>
-					{type !== 'view' && (
+				{type !== 'view' && (
+					<div className='flex align_center'>
+						{imports && (
+							<Dynamic
+								type='base'
+								name='TableModal'
+								props={{
+									text: imports.title,
+									name: imports.name,
+									query: {},
+									queryDataSource: { __trigger: '' },
+									import: (items: Array<any>) => {
+										merge(list.length, items)
+									}
+								}}
+							></Dynamic>
+						)}
 						<a
 							className='btn_save cursor_point clickable'
 							onClick={() => add(-1)}
 						>
 							新增
 						</a>
-					)}
-				</div>
+					</div>
+				)}
 			</div>
 			{list.length !== 0 ? (
 				list.map((item: any, index) => (

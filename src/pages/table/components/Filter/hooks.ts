@@ -46,12 +46,14 @@ export const useFilters = (setting: any) => {
 	return filters
 }
 
-export const useCalcLayout = (filters: Array<any>, setting: any) => {
+export const useCalcLayout = (filters: Array<any>, setting: any, inModal?: boolean) => {
 	return useMemo(() => {
 		if (!filters.length) return { base: [], more: [], visible_btn_more: false }
 
-		const setting_cols = setting.list?.actions?.create ? 3 : 0
-		const custom_cols = setting.list?.option?.actions
+		const setting_cols = inModal ? 0 : setting.list?.actions?.create ? 3 : 0
+		const custom_cols = inModal
+			? 0
+			: setting.list?.option?.actions
 			? setting.list?.option?.actions.reduce(
 					(total: number, item: any) => (total += item.width),
 					0

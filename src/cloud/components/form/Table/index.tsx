@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { request } from 'umi'
 
 import Form from '@/cloud/components/form/Form'
+import Filter from '@/pages/table/components/Filter'
 import { getDeepValue } from '@/utils/helpers/filters'
 
 import { useColumns } from './hooks'
@@ -21,6 +22,8 @@ export interface IProps extends TableProps<any> {
 	query?: any
 	queryDataSource?: any
 	custom?: boolean
+	selectable?: boolean
+	setSelected?: React.Dispatch<React.SetStateAction<any[]>>
 	search?: () => void
 	searchFormData?: () => void
 	/** custom table 编辑table字段为更新数据传入的方法 */
@@ -35,6 +38,12 @@ const Index = (props: IProps) => {
 	const [form_setting, setFormSetting] = useState<any>({})
 	const [form_data, setFormData] = useState<any>({})
 	const [form_name, setFormName] = useState('')
+	const [pagination, setPagination] = useState({
+		current: 1,
+		pageSize: 0,
+		total: 0,
+		showSizeChanger: true
+	})
 
 	useEffect(() => setFormName(props.name || ''), [props.name])
 
@@ -75,7 +84,7 @@ const Index = (props: IProps) => {
 		})
 	}
 
-	const getData = async () => {
+	const getData = async (params?: any) => {
 		const query: any = {}
 
 		if (!props?.query) return
@@ -92,11 +101,17 @@ const Index = (props: IProps) => {
 			}
 		})
 
-		const { data } = await request(
-			`${api.data}${props.query ? `?${qs.stringify(query)}` : ''}`
-		)
+		const { data, page, pagesize, total } = await request(api.data, {
+			params: params ? { ...params, ...query } : { ...query }
+		})
 
 		setData(data || [])
+		setPagination({
+			current: page,
+			pageSize: pagesize,
+			total,
+			showSizeChanger: true
+		})
 
 		return
 	}
@@ -186,6 +201,7 @@ const Index = (props: IProps) => {
 	const columns = useColumns(setting || {}, {
 		useInForm: props?.name ? true : false,
 		custom: !!props?.custom,
+		selectable: props?.selectable,
 		save,
 		edit,
 		...(props?.custom ? { data: props.data } : {})
@@ -222,8 +238,16 @@ const Index = (props: IProps) => {
 
 	const other_props: TableProps<any> = {}
 
-	if (setting?.list?.option?.operation?.scroll) {
+	if (setting?.list?.option?.operation?.scroll && props.selectable !== true) {
 		other_props['scroll'] = setting.list.option?.operation?.scroll
+	}
+
+	const props_filter = {
+		inModal: true,
+		setting,
+		search: (v: any) => {
+			getData(v)
+		}
 	}
 
 	return (
@@ -253,13 +277,30 @@ const Index = (props: IProps) => {
 					)}
 				</div>
 			)}
+			{props.selectable && <Filter {...props_filter}></Filter>}
 			<Table
-				className={clsx([styles._local, props?.name ? styles.inline : ''])}
+				className={clsx([
+					styles._local,
+					props?.name && props?.selectable !== true ? styles.inline : ''
+				])}
 				dataSource={data || []}
 				columns={columns}
 				sticky={props?.name || props?.custom ? false : { offsetHeader: 52 }}
 				rowKey={(item) => item.id}
-				pagination={false}
+				pagination={props?.selectable ? pagination : false}
+				rowSelection={
+					props?.selectable
+						? {
+								type: 'checkbox',
+								onChange(v, items) {
+									props.setSelected?.(items)
+								}
+						  }
+						: (null as any)
+				}
+				onChange={(page) => {
+					getData({ page: page.current, pagesize: page.pageSize })
+				}}
 				{...props}
 				{...other_props}
 			/>

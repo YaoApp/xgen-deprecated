@@ -12,7 +12,7 @@ import styles from './index.less'
 
 const { useForm } = Form
 
-const Index = ({ setting }: any) => {
+const Index = ({ inModal, setting, search }: any) => {
 	const params = useParams<{ name: string }>()
 	const [form] = useForm()
 	const { getFieldsValue, setFieldsValue, resetFields } = form
@@ -21,7 +21,7 @@ const Index = ({ setting }: any) => {
 	const query = history.location.query
 	const { messages } = useIntl()
 
-	const { base, more, visible_btn_more } = useCalcLayout(filters, setting)
+	const { base, more, visible_btn_more } = useCalcLayout(filters, setting, inModal)
 
 	useEffect(() => {
 		if (!Object.keys(query as any).length) return resetFields()
@@ -30,6 +30,8 @@ const Index = ({ setting }: any) => {
 	}, [query])
 
 	const onFinish = (v: any) => {
+		if (search) return search(v)
+
 		history.push({
 			pathname: history.location.pathname,
 			query: {
@@ -56,7 +58,6 @@ const Index = ({ setting }: any) => {
 			form={form}
 			name={`form_filter_${history.location.pathname}`}
 			onFinish={onFinish}
-			onReset={onReset}
 		>
 			<Row gutter={16} justify='space-between' style={{ marginBottom: 20 }}>
 				{base.map((item: any, index: number) => (
@@ -85,12 +86,13 @@ const Index = ({ setting }: any) => {
 				<Col span={2}>
 					<Button
 						className='w_100 flex justify_center align_center'
-						htmlType='reset'
+						onClick={onReset}
 					>
 						{(messages as any).table.filter.reset}
 					</Button>
 				</Col>
 				{setting.list?.option?.actions &&
+					inModal !== true &&
 					setting.list?.option?.actions.map((item: any, index: number) => (
 						<Col span={item.width} key={index}>
 							<Button
@@ -118,7 +120,7 @@ const Index = ({ setting }: any) => {
 								></Button>
 							</Tooltip>
 						)}
-						{setting.list?.actions?.create && (
+						{setting.list?.actions?.create && inModal !== true && (
 							<Button
 								className='btn_add flex justify_center align_center ml_16'
 								type='primary'

@@ -18,6 +18,7 @@ export const useColumns = (
 	options: {
 		useInForm: boolean
 		custom: boolean
+		selectable?: boolean
 		save: (data: any, row_index: number) => void
 		edit: (id: string, name?: string, type?: string) => void
 	}
@@ -244,7 +245,7 @@ export const useColumns = (
 			return total
 		}, [])
 
-		if (_operation?.width !== 0) {
+		if (_operation?.width !== 0 && options.selectable !== true) {
 			columns.push(Options({ _operation, options, params, save: onFinish }))
 		}
 

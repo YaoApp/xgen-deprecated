@@ -4,7 +4,7 @@ interface IProps {
 	formId: string
 	formName: string
 	settingApi?: string
-	edit: (id: string, name: string, type?: string) => Promise<void>
+	edit: (id: string, name: string, type?: string, settingApi?: string) => Promise<void>
 }
 
 const Index = (props: IProps) => {

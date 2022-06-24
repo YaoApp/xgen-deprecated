@@ -34,7 +34,7 @@ const Index = (props: IProps) => {
 		closable: false,
 		zIndex: 1000,
 		bodyStyle: { padding: 0 },
-		wrapClassName: 'custom_modal',
+		wrapClassName: 'custom_modal chart',
 		onCancel: () => setVisibleModal(false)
 	}
 
