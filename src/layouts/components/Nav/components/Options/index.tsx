@@ -5,6 +5,7 @@ import { history, NavLink, useIntl } from 'umi'
 import { Icon } from '@/components'
 import { login_url } from '@/entry'
 
+import Notification from '../Notification'
 import styles from './index.less'
 
 import type { IPropsOptions } from '@/layouts/type'
@@ -64,6 +65,9 @@ const Index = (props: IPropsOptions) => {
 
 	return (
 		<div className={styles._local}>
+			{app_info?.option?.notification && (
+				<Notification {...app_info?.option?.notification}></Notification>
+			)}
 			{!app_info?.option?.hide_user && (
 				<Tooltip title={layout_messages.account} placement='right'>
 					<NavLink

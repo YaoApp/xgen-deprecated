@@ -23,6 +23,10 @@ export interface IModelApp {
 			nav_menu: string
 			hide_user?: boolean
 			hide_menu?: boolean
+			notification?: {
+				path: string
+				protocol: string
+			}
 			login: {
 				image?: {
 					admin?: string

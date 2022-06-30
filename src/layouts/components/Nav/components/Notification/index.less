@@ -1,0 +1,56 @@
+._local {
+	width: 100%;
+
+	:global {
+		.ant-tabs-nav {
+			margin-bottom: 0;
+
+			.ant-tabs-nav-wrap {
+				padding: 0 24px;
+				border-bottom: 1px solid var(--color_border);
+			}
+		}
+
+		.ant-tabs-content-holder {
+			overflow-y: scroll;
+			padding: 0 24px;
+			height: calc(100vh - 57px - 46px);
+		}
+
+		.notification_item {
+			.message_items {
+				padding-bottom: 18px;
+
+				.message_item {
+					padding: 18px 0;
+					border-bottom: 1px solid var(--color_border);
+
+					&:last-child {
+						border: none;
+					}
+
+					.header {
+						margin-bottom: 12px;
+
+						.title {
+							font-weight: bold;
+						}
+
+						.at {
+							opacity: 0.4;
+						}
+					}
+
+					.status {
+						top: 28px;
+						left: -12px;
+						width: 6px;
+						height: 6px;
+						border-radius: 50%;
+						background-color: var(--color_danger);
+					}
+				}
+			}
+		}
+	}
+}
