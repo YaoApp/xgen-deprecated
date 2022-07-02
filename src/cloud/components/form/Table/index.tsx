@@ -44,6 +44,7 @@ const Index = (props: IProps) => {
 		total: 0,
 		showSizeChanger: true
 	})
+	const [form_default_values, setFormDefaultValues] = useState<any>({})
 
 	useEffect(() => setFormName(props.name || ''), [props.name])
 
@@ -161,7 +162,13 @@ const Index = (props: IProps) => {
 		setFormData(data)
 	}
 
-	const edit = async (id: string, name?: string, type?: string, settingApi?: string) => {
+	const edit = async (
+		id: string,
+		name?: string,
+		type?: string,
+		settingApi?: string,
+		defaultValues?: Array<{ from: string; to: string } | string>
+	) => {
 		setFormData({})
 		setFormSetting({})
 
@@ -169,14 +176,20 @@ const Index = (props: IProps) => {
 
 		if (name) {
 			// 针对在 Table 页面中使用的 Table 上的 Form
-			await find(id, name, settingApi)
+			if (id !== '0') await find(id, name, settingApi)
 
 			setFormParams({ id: id, name, type: type || '' })
 		} else {
 			// 针对在 Form 页面中使用的 Table 上的 Form
-			await find(id, undefined, settingApi)
+			if (id !== '0') await find(id, undefined, settingApi)
 
 			setFormParams({ id: id, name: form_name, type: type || '' })
+		}
+
+		if (defaultValues) {
+			setFormDefaultValues(defaultValues)
+		} else {
+			setFormDefaultValues({})
 		}
 
 		setVisibleForm(true)
@@ -211,6 +224,7 @@ const Index = (props: IProps) => {
 		setting: Object.keys(form_setting).length ? form_setting : setting,
 		data: form_data,
 		params: form_params,
+		defaultValues: form_default_values,
 		onCancel: closeModal,
 		search: props.search, // 针对在 Table 页面中使用的 Table 数据的刷新
 		getData // 针对在 Form 页面中使用的 Table 数据的刷新

@@ -25,6 +25,7 @@ interface IProps {
 		type?: string
 	}
 	pathname?: string
+	defaultValues?: any
 	dispatch?: Dispatch
 	onCancel?: () => void
 	search?: () => void
@@ -32,7 +33,17 @@ interface IProps {
 }
 
 const Index = (props: IProps) => {
-	const { setting, data, params, pathname, dispatch, onCancel, getData, search } = props
+	const {
+		setting,
+		data,
+		params,
+		pathname,
+		defaultValues,
+		dispatch,
+		onCancel,
+		getData,
+		search
+	} = props
 	const [type, setType] = useState('')
 	const [form] = useForm()
 	const fieldset = useFieldset(setting)
@@ -47,6 +58,13 @@ const Index = (props: IProps) => {
 
 		setFieldsValue(data)
 	}, [params, data])
+
+	useEffect(() => {
+		if (!defaultValues) return
+		if (!Object.keys(defaultValues).length) return
+
+		setFieldsValue(defaultValues)
+	}, [defaultValues])
 
 	useEffect(() => {
 		if (pathname && dispatch) {

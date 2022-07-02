@@ -13,7 +13,7 @@ const Index = ({ _operation, options, params, save }: any) => {
 	const onItem = (it: any, item: any) => {
 		if (it?.type) {
 			const form_name = it?.formName || params.name
-			const form_id = it?.formId ? getDeepValueByText(it?.formId, item) : item.id
+			const form_id = it?.formId ? getDeepValueByText(it?.formId, item) : '0'
 
 			if (it?.useModal) {
 				if (it?.type === 'view') {
@@ -22,7 +22,29 @@ const Index = ({ _operation, options, params, save }: any) => {
 					// console.log('chartModal')
 					options.edit(form_id, form_name) // should be open chartModal
 				} else {
-					options.edit(form_id, form_name)
+					let defaultValues: any
+
+					if (it?.defaultValues) {
+						defaultValues = it.defaultValues.reduce(
+							(total: any, key: any) => {
+								if (typeof key === 'string') {
+									total[
+										key.replace(':', '')
+									] = getDeepValueByText(key, item)
+								} else {
+									total[key.to] = getDeepValueByText(
+										key.from,
+										item
+									)
+								}
+
+								return total
+							},
+							[]
+						)
+					}
+
+					options.edit(form_id, form_name, 'edit', undefined, defaultValues)
 				}
 			} else {
 				if (it?.type === 'view') {
