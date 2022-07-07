@@ -12,8 +12,15 @@ const { confirm } = Modal
 const Index = ({ _operation, options, params, save }: any) => {
 	const onItem = (it: any, item: any) => {
 		if (it?.type) {
+			const is_edit = !it?.formName && !it?.formId
 			const form_name = it?.formName || params.name
-			const form_id = it?.formId ? getDeepValueByText(it?.formId, item) : '0'
+			let form_id
+
+			if (is_edit) {
+				form_id = item.id
+			} else {
+				form_id = it?.formId ? getDeepValueByText(it?.formId, item) : '0'
+			}
 
 			if (it?.useModal) {
 				if (it?.type === 'view') {
