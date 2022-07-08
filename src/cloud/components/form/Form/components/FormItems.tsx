@@ -66,6 +66,10 @@ const Index = (props: IProps) => {
 				other_props['queryDataSource'] = data
 			}
 
+			if (it.edit.props.type === 'statusBar') {
+				if (value?.hidden) return null
+			}
+
 			return (
 				<Col span={it.span} key={idx}>
 					{!it.edit.props?.hide_label && (

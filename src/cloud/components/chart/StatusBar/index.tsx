@@ -11,6 +11,7 @@ interface IProps {
 	data: {
 		max: number
 		value: number
+		hidden?: boolean
 	}
 	height?: number
 }
