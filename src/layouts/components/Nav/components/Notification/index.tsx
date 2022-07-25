@@ -24,8 +24,13 @@ const Content = ({ messages, sendMessage, setVisibleNotification }: any) => {
 									sendMessage(
 										JSON.stringify({
 											FROM: 'client',
-											type: item.type,
-											id: message.id
+											content: {
+												action: 'clear',
+												data: {
+													type: item.type,
+													id: message.id
+												}
+											}
 										})
 									)
 
@@ -61,6 +66,17 @@ const Index = ({ path, protocol }: any) => {
 	const [data, setData] = useState<any>({})
 	const { sendMessage } = useWebSocket(path, {
 		protocols: protocol,
+		onOpen(_, ws) {
+			ws.send(
+				JSON.stringify({
+					FROM: 'client',
+					content: {
+						action: 'open',
+						data: localStorage.getItem('token')
+					}
+				})
+			)
+		},
 		onMessage(event) {
 			if (!event.data) return
 
