@@ -72,7 +72,7 @@ const Index = ({ path, protocol }: any) => {
 					FROM: 'client',
 					content: {
 						action: 'open',
-						data: localStorage.getItem('token')
+						data: sessionStorage.getItem('token')
 					}
 				})
 			)
