@@ -1,0 +1,53 @@
+._local {
+	width: calc(100% - 360px);
+	padding: 18px;
+
+	:global {
+		.title_wrap {
+			height: 50px;
+			padding-bottom: 18px;
+
+			.form_fileds_title {
+				font-weight: 500;
+			}
+		}
+
+		.droppable_wrap {
+			min-height: calc(100% - 50px);
+
+			.widget_item {
+				margin-bottom: 18px;
+
+				.top_wrap {
+					margin-bottom: 9px;
+
+					.label {
+						line-height: 1;
+					}
+
+					.actions_wrap {
+						.icon_remove {
+							padding: 0 9px;
+						}
+
+						.icon_setting {
+							padding: 0 9px;
+						}
+
+						.icon_move {
+							cursor: grab;
+							margin-left: 9px;
+						}
+
+						.icon {
+							&:hover {
+								background-color: var(--color_bg_menu);
+								color: var(--color_main) !important;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
