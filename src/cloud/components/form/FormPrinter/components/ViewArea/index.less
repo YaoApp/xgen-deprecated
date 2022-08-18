@@ -1,11 +1,11 @@
 ._local {
 	width: calc(100% - 360px);
-	padding: 18px;
 
 	:global {
 		.title_wrap {
-			height: 50px;
-			padding-bottom: 18px;
+			height: 59px;
+			padding: 18px;
+			padding-bottom: 24px;
 
 			.form_fileds_title {
 				font-weight: 500;
@@ -13,10 +13,21 @@
 		}
 
 		.droppable_wrap {
-			min-height: calc(100% - 50px);
+			min-height: calc(100% - 59px);
+			padding: 0 9px;
 
 			.widget_item {
-				margin-bottom: 18px;
+				padding: 9px;
+				outline: 1px dashed transparent;
+				border-radius: 6px;
+
+				&:last-child {
+					margin-bottom: 18px;
+				}
+
+				&.active {
+					outline-color: var(--color_main);
+				}
 
 				.top_wrap {
 					margin-bottom: 9px;
@@ -26,24 +37,16 @@
 					}
 
 					.actions_wrap {
-						.icon_remove {
-							padding: 0 9px;
-						}
-
-						.icon_setting {
-							padding: 0 9px;
-						}
-
-						.icon_move {
-							cursor: grab;
-							margin-left: 9px;
-						}
-
 						.icon {
 							&:hover {
 								background-color: var(--color_bg_menu);
 								color: var(--color_main) !important;
 							}
+						}
+
+						.icon_move {
+							margin-left: 12px;
+							cursor: grab;
 						}
 					}
 				}

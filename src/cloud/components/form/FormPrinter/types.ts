@@ -5,7 +5,9 @@ import type Model from './model'
 
 export interface Widget {
 	id: WidgetTypes
-	bind?: string
+	title: string
+	bind: string
+	width: number
 	props: { [key: string]: any }
 }
 
@@ -13,7 +15,7 @@ export interface IPropsActionArea {
 	active_tab: TabTypes
 	widgets: Array<Widget>
 	current_widget: Widget | null
-	setCurrentWidget: (settings: Widget) => void
+	setCurrentWidget: (settings: any) => void
 	setActiveTab: (active_tab: TabTypes) => void
 }
 
@@ -28,6 +30,7 @@ export interface IPropsAttributesArea {
 
 export interface IPropsViewArea {
 	widgets: Array<Widget>
+	focusing: Model['focusing']
 	setWidgets: (...args: any) => void
 	removeWidget: (index: number) => void
 	setFocusing: (focusing: Model['focusing']) => void

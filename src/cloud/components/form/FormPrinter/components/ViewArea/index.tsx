@@ -10,7 +10,7 @@ import styles from './index.less'
 import type { IPropsViewArea } from '../../types'
 
 const Index = (props: IPropsViewArea) => {
-	const { widgets, setWidgets, removeWidget, setFocusing } = props
+	const { widgets, focusing, setWidgets, removeWidget, setFocusing } = props
 
 	return (
 		<div className={clsx([styles._local, 'border_box flex flex_column'])}>
@@ -25,26 +25,41 @@ const Index = (props: IPropsViewArea) => {
 					list={widgets}
 					setList={setWidgets}
 					animation={300}
+					handle='.icon_move'
 					group={{ name: 'widgets', pull: false }}
 					style={{ minHeight: '100%' }}
 				>
 					{widgets.map((item, index) => (
-						<div className='widget_item flex flex_column' key={index}>
+						<div
+							className={clsx([
+								'widget_item flex flex_column border_box',
+								focusing === index && 'active'
+							])}
+							key={index}
+							onClick={() => setFocusing(index)}
+						>
 							<div className='top_wrap flex justify_between align_center'>
-								<span className='label'>Filed Name</span>
+								<div className='label'>
+									{item.title ? item.title : 'title'}
+									<span className='ml_6 mr_6'>·</span>
+									{item.bind ? item.bind : 'bind'}
+								</div>
 								<div className='actions_wrap flex align_center'>
-									<Icon
-										className='icon_remove icon cursor_point clickable'
-										name='icon-trash-2'
-										size={16}
-										onClick={() => removeWidget(index)}
-									></Icon>
-									<Icon
-										className='icon_setting icon cursor_point clickable'
-										name='icon-settings'
-										size={16}
-										onClick={() => setFocusing(index)}
-									></Icon>
+									<div
+										className='icon_wrap flex'
+										onClick={(e) => {
+											e.stopPropagation()
+
+											setFocusing(-1)
+											removeWidget(index)
+										}}
+									>
+										<Icon
+											className='icon_remove icon cursor_point clickable'
+											name='icon-trash-2'
+											size={16}
+										></Icon>
+									</div>
 									<Icon
 										className='icon_move icon'
 										name='icon-move'

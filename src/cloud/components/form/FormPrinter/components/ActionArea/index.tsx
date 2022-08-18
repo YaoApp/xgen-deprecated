@@ -37,7 +37,7 @@ const Index = (props: IPropsActionArea) => {
 					<WidgetsArea {...props_widgets_area} />
 				</TabPane>
 				<TabPane tab='Attributes' key='Attributes'>
-					<AttributesArea {...props_attributes_area} />
+					{current_widget && <AttributesArea {...props_attributes_area} />}
 				</TabPane>
 			</Tabs>
 		</div>

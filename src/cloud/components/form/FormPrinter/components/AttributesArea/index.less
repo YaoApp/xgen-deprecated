@@ -1,9 +1,27 @@
 ._local {
-	width: 100%;
-
 	:global {
-		.item_wrap {
-			background-color: red;
+		.attr_item {
+			margin-bottom: 18px;
+
+			&:last-child {
+				margin-bottom: 36px;
+			}
+
+			.label {
+				line-height: 1;
+				margin-bottom: 9px;
+			}
+
+			.value {
+				height: 36px;
+			}
+		}
+
+		.boolean_wrap {
+			height: 38px;
+			padding: 0 11px;
+			background-color: var(--color_bg_menu);
+			border-radius: 6px;
 		}
 	}
 }
