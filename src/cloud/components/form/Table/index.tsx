@@ -262,7 +262,10 @@ const Index = (props: IProps) => {
 		search: (v: any) => {
 			getData(v)
 		}
-	}
+      }
+      
+      console.log(setting?.list?.option?.useCompactTableStyle);
+      
 
 	return (
 		<div className='flex flex_column'>
@@ -295,7 +298,8 @@ const Index = (props: IProps) => {
 			<Table
 				className={clsx([
 					styles._local,
-					props?.name && props?.selectable !== true ? styles.inline : ''
+                              props?.name && props?.selectable !== true ? styles.inline : '',
+                              setting?.list?.option?.useCompactTableStyle&&styles.compact
 				])}
 				dataSource={data || []}
 				columns={columns}

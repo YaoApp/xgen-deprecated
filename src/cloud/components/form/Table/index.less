@@ -1,6 +1,38 @@
 ._local {
 	width: 100%;
 
+      &.compact{
+            table {
+                  border-spacing: 0 !important;
+                  border-collapse: collapse !important;
+                  border-right: 1px solid #000000;
+                  border-bottom: 1px solid #000000;
+
+                  thead {
+                        tr {
+                              th {
+                                    padding: 6px;
+                                    border-left: 1px solid #000000;
+                                    border-top: 1px solid #000000;
+                              }
+                        }
+                  }
+
+			tbody {
+				tr {
+					td {
+                                    height: unset !important;
+                                    padding: 0;
+						border: none !important;
+                                    border-radius: 0 !important;
+                                    border-left: 1px solid #000000 !important;
+                                    border-top: 1px solid #000000 !important;
+					}
+				}
+			}
+		}
+      }
+
 	&.inline {
 		margin-bottom: 20px;
 		border-radius: 6px;

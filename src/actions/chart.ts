@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import pathToRegexp from 'path-to-regexp'
+import { pathToRegexp } from 'path-to-regexp'
 import { history } from 'umi'
 
 import { getSetting } from '@/services/app'
